@@ -1,0 +1,513 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8964D63E212BA38400CEF7D7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8964D63D212BA38400CEF7D7 /* Assets.xcassets */; };
+		8964D641212BA38400CEF7D7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8964D63F212BA38400CEF7D7 /* Main.storyboard */; };
+		8964D658212BA57600CEF7D7 /* librtmidi.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8964D5CB212B775000CEF7D7 /* librtmidi.4.dylib */; };
+		8964D659212BA58200CEF7D7 /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8919C2A221293C4300CEF7D7 /* CoreMIDI.framework */; };
+		8964D660212BC44900CEF7D7 /* Workspace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8965550F212788B600CEF7D7 /* Workspace.cpp */; };
+		8964D661212BC44900CEF7D7 /* SessionRunner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8919C28E2128EAEE00CEF7D7 /* SessionRunner.cpp */; };
+		8964D662212BC44900CEF7D7 /* Session.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8965550C21277C8800CEF7D7 /* Session.cpp */; };
+		8964D663212BC44900CEF7D7 /* AtomPacket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8964D5C7212B44D600CEF7D7 /* AtomPacket.cpp */; };
+		8964D664212BC44900CEF7D7 /* Atom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 896554FA2127443B00CEF7D7 /* Atom.cpp */; };
+		8964D665212BC44900CEF7D7 /* Synth.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 896555122127A26800CEF7D7 /* Synth.cpp */; };
+		8964D666212BC44900CEF7D7 /* Sample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 896555182127A83800CEF7D7 /* Sample.cpp */; };
+		8964D668212BC44900CEF7D7 /* Pad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8964D5CD212B7EA100CEF7D7 /* Pad.cpp */; };
+		8964D669212BC44900CEF7D7 /* Color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8964D5D0212B7ECE00CEF7D7 /* Color.cpp */; };
+		8964D66A212BC44900CEF7D7 /* PatternView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8964D5D4212B855100CEF7D7 /* PatternView.cpp */; };
+		8964D66B212BC44900CEF7D7 /* SamplePatternController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8964D5D7212B884300CEF7D7 /* SamplePatternController.cpp */; };
+		8964D66C212BC44900CEF7D7 /* SampleViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8964D5DA212B989C00CEF7D7 /* SampleViewController.cpp */; };
+		8964D66D212BC44900CEF7D7 /* CircuitView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8964D5DD212B998700CEF7D7 /* CircuitView.cpp */; };
+		8964D66E212BC44900CEF7D7 /* CircuitController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8964D5E0212B9B6100CEF7D7 /* CircuitController.cpp */; };
+		8964D670212BC44900CEF7D7 /* Bridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8964D65D212BBCA200CEF7D7 /* Bridge.cpp */; };
+		8964D671212BC45300CEF7D7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8964D638212BA38300CEF7D7 /* AppDelegate.m */; };
+		8964D672212BC45300CEF7D7 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8964D63B212BA38300CEF7D7 /* ViewController.mm */; };
+		8964D673212BC45300CEF7D7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8964D643212BA38400CEF7D7 /* main.m */; };
+		89A039B2212DD72D00CEF7D7 /* SynthPatternController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89A039B0212DD72D00CEF7D7 /* SynthPatternController.cpp */; };
+		89A13C2D212CBB7500CEF7D7 /* ScreenController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89A13C2B212CBB7500CEF7D7 /* ScreenController.cpp */; };
+		89A13C33212D0E0500CEF7D7 /* Scale.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89A13C31212D0E0500CEF7D7 /* Scale.cpp */; };
+		89A3CF9C212DDE3900CEF7D7 /* KeyboardView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89A3CF9A212DDE3900CEF7D7 /* KeyboardView.cpp */; };
+		89A3CF9F212E1B8400CEF7D7 /* SynthViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89A3CF9D212E1B8400CEF7D7 /* SynthViewController.cpp */; };
+		89A3CFA2212E1ECD00CEF7D7 /* KeyboardController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89A3CFA0212E1ECD00CEF7D7 /* KeyboardController.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		8919C28E2128EAEE00CEF7D7 /* SessionRunner.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SessionRunner.cpp; sourceTree = "<group>"; };
+		8919C28F2128EAEE00CEF7D7 /* SessionRunner.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SessionRunner.hpp; sourceTree = "<group>"; };
+		8919C2922128EB7200CEF7D7 /* ChannelRunner.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ChannelRunner.hpp; sourceTree = "<group>"; };
+		8919C29B2129359400CEF7D7 /* MidiController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MidiController.hpp; sourceTree = "<group>"; };
+		8919C2A221293C4300CEF7D7 /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
+		8919C2A421293C5800CEF7D7 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		8919C2A621293C6900CEF7D7 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		895E63DC21288F7800CEF7D7 /* PatternChainRunner.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PatternChainRunner.hpp; sourceTree = "<group>"; };
+		8964D5C7212B44D600CEF7D7 /* AtomPacket.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AtomPacket.cpp; sourceTree = "<group>"; };
+		8964D5CB212B775000CEF7D7 /* librtmidi.4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = librtmidi.4.dylib; path = ../homebrew/Cellar/rtmidi/3.0.0/lib/librtmidi.4.dylib; sourceTree = "<group>"; };
+		8964D5CD212B7EA100CEF7D7 /* Pad.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Pad.cpp; sourceTree = "<group>"; };
+		8964D5CE212B7EA100CEF7D7 /* Pad.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Pad.hpp; sourceTree = "<group>"; };
+		8964D5D0212B7ECE00CEF7D7 /* Color.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Color.cpp; sourceTree = "<group>"; };
+		8964D5D1212B7ECE00CEF7D7 /* Color.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Color.hpp; sourceTree = "<group>"; };
+		8964D5D4212B855100CEF7D7 /* PatternView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PatternView.cpp; sourceTree = "<group>"; };
+		8964D5D5212B855100CEF7D7 /* PatternView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PatternView.hpp; sourceTree = "<group>"; };
+		8964D5D7212B884300CEF7D7 /* SamplePatternController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SamplePatternController.cpp; sourceTree = "<group>"; };
+		8964D5D8212B884300CEF7D7 /* SamplePatternController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SamplePatternController.hpp; sourceTree = "<group>"; };
+		8964D5DA212B989C00CEF7D7 /* SampleViewController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SampleViewController.cpp; sourceTree = "<group>"; };
+		8964D5DB212B989C00CEF7D7 /* SampleViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SampleViewController.hpp; sourceTree = "<group>"; };
+		8964D5DD212B998700CEF7D7 /* CircuitView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CircuitView.cpp; sourceTree = "<group>"; };
+		8964D5DE212B998700CEF7D7 /* CircuitView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CircuitView.hpp; sourceTree = "<group>"; };
+		8964D5E0212B9B6100CEF7D7 /* CircuitController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CircuitController.cpp; sourceTree = "<group>"; };
+		8964D5E1212B9B6100CEF7D7 /* CircuitController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CircuitController.hpp; sourceTree = "<group>"; };
+		8964D5E3212BA0AA00CEF7D7 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		8964D635212BA38300CEF7D7 /* CircuitApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CircuitApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8964D637212BA38300CEF7D7 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		8964D638212BA38300CEF7D7 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		8964D63A212BA38300CEF7D7 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		8964D63B212BA38300CEF7D7 /* ViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
+		8964D63D212BA38400CEF7D7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8964D640212BA38400CEF7D7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		8964D642212BA38400CEF7D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8964D643212BA38400CEF7D7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		8964D645212BA38400CEF7D7 /* CircuitApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CircuitApp.entitlements; sourceTree = "<group>"; };
+		8964D65D212BBCA200CEF7D7 /* Bridge.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Bridge.cpp; sourceTree = "<group>"; };
+		8964D65E212BBCA200CEF7D7 /* Bridge.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Bridge.hpp; sourceTree = "<group>"; };
+		896554F42127405500CEF7D7 /* Pattern.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Pattern.hpp; sourceTree = "<group>"; };
+		896554F7212742A400CEF7D7 /* Step.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Step.hpp; sourceTree = "<group>"; };
+		896554FA2127443B00CEF7D7 /* Atom.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Atom.cpp; sourceTree = "<group>"; };
+		896554FB2127443B00CEF7D7 /* Atom.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Atom.hpp; sourceTree = "<group>"; };
+		896555072127653300CEF7D7 /* PatternChain.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PatternChain.hpp; sourceTree = "<group>"; };
+		8965550A212775E900CEF7D7 /* Channel.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Channel.hpp; sourceTree = "<group>"; };
+		8965550C21277C8800CEF7D7 /* Session.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Session.cpp; sourceTree = "<group>"; };
+		8965550D21277C8800CEF7D7 /* Session.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Session.hpp; sourceTree = "<group>"; };
+		8965550F212788B600CEF7D7 /* Workspace.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Workspace.cpp; sourceTree = "<group>"; };
+		89655510212788B600CEF7D7 /* Workspace.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Workspace.hpp; sourceTree = "<group>"; };
+		896555122127A26800CEF7D7 /* Synth.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Synth.cpp; sourceTree = "<group>"; };
+		896555132127A26800CEF7D7 /* Synth.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Synth.hpp; sourceTree = "<group>"; };
+		896555162127A2E400CEF7D7 /* TypeDefs.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TypeDefs.hpp; sourceTree = "<group>"; };
+		896555182127A83800CEF7D7 /* Sample.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Sample.cpp; sourceTree = "<group>"; };
+		896555192127A83800CEF7D7 /* Sample.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Sample.hpp; sourceTree = "<group>"; };
+		899F2078212A150000CEF7D7 /* AtomPacket.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AtomPacket.hpp; sourceTree = "<group>"; };
+		89A039B0212DD72D00CEF7D7 /* SynthPatternController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SynthPatternController.cpp; sourceTree = "<group>"; };
+		89A039B1212DD72D00CEF7D7 /* SynthPatternController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SynthPatternController.hpp; sourceTree = "<group>"; };
+		89A13C2B212CBB7500CEF7D7 /* ScreenController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ScreenController.cpp; sourceTree = "<group>"; };
+		89A13C2C212CBB7500CEF7D7 /* ScreenController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ScreenController.hpp; sourceTree = "<group>"; };
+		89A13C31212D0E0500CEF7D7 /* Scale.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Scale.cpp; sourceTree = "<group>"; };
+		89A13C32212D0E0500CEF7D7 /* Scale.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Scale.hpp; sourceTree = "<group>"; };
+		89A3CF9A212DDE3900CEF7D7 /* KeyboardView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KeyboardView.cpp; sourceTree = "<group>"; };
+		89A3CF9B212DDE3900CEF7D7 /* KeyboardView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = KeyboardView.hpp; sourceTree = "<group>"; };
+		89A3CF9D212E1B8400CEF7D7 /* SynthViewController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SynthViewController.cpp; sourceTree = "<group>"; };
+		89A3CF9E212E1B8400CEF7D7 /* SynthViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SynthViewController.hpp; sourceTree = "<group>"; };
+		89A3CFA0212E1ECD00CEF7D7 /* KeyboardController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KeyboardController.cpp; sourceTree = "<group>"; };
+		89A3CFA1212E1ECD00CEF7D7 /* KeyboardController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = KeyboardController.hpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8964D632212BA38300CEF7D7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8964D659212BA58200CEF7D7 /* CoreMIDI.framework in Frameworks */,
+				8964D658212BA57600CEF7D7 /* librtmidi.4.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		8919C2A121293C4300CEF7D7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8964D5E3212BA0AA00CEF7D7 /* Cocoa.framework */,
+				8964D5CB212B775000CEF7D7 /* librtmidi.4.dylib */,
+				8919C2A621293C6900CEF7D7 /* CoreAudio.framework */,
+				8919C2A421293C5800CEF7D7 /* CoreFoundation.framework */,
+				8919C2A221293C4300CEF7D7 /* CoreMIDI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8964D636212BA38300CEF7D7 /* CircuitApp */ = {
+			isa = PBXGroup;
+			children = (
+				8964D637212BA38300CEF7D7 /* AppDelegate.h */,
+				8964D638212BA38300CEF7D7 /* AppDelegate.m */,
+				8964D63A212BA38300CEF7D7 /* ViewController.h */,
+				8964D63B212BA38300CEF7D7 /* ViewController.mm */,
+				8964D63D212BA38400CEF7D7 /* Assets.xcassets */,
+				8964D63F212BA38400CEF7D7 /* Main.storyboard */,
+				8964D642212BA38400CEF7D7 /* Info.plist */,
+				8964D643212BA38400CEF7D7 /* main.m */,
+				8964D645212BA38400CEF7D7 /* CircuitApp.entitlements */,
+			);
+			path = CircuitApp;
+			sourceTree = "<group>";
+		};
+		896554E021273F5E00CEF7D7 = {
+			isa = PBXGroup;
+			children = (
+				896554EB21273F5E00CEF7D7 /* Circuit */,
+				8964D636212BA38300CEF7D7 /* CircuitApp */,
+				896554EA21273F5E00CEF7D7 /* Products */,
+				8919C2A121293C4300CEF7D7 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		896554EA21273F5E00CEF7D7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8964D635212BA38300CEF7D7 /* CircuitApp.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		896554EB21273F5E00CEF7D7 /* Circuit */ = {
+			isa = PBXGroup;
+			children = (
+				896555162127A2E400CEF7D7 /* TypeDefs.hpp */,
+				89A13C31212D0E0500CEF7D7 /* Scale.cpp */,
+				89A13C32212D0E0500CEF7D7 /* Scale.hpp */,
+				8965550F212788B600CEF7D7 /* Workspace.cpp */,
+				89655510212788B600CEF7D7 /* Workspace.hpp */,
+				8919C28E2128EAEE00CEF7D7 /* SessionRunner.cpp */,
+				8919C28F2128EAEE00CEF7D7 /* SessionRunner.hpp */,
+				8919C2922128EB7200CEF7D7 /* ChannelRunner.hpp */,
+				895E63DC21288F7800CEF7D7 /* PatternChainRunner.hpp */,
+				8965550C21277C8800CEF7D7 /* Session.cpp */,
+				8965550D21277C8800CEF7D7 /* Session.hpp */,
+				8965550A212775E900CEF7D7 /* Channel.hpp */,
+				896555072127653300CEF7D7 /* PatternChain.hpp */,
+				896554F42127405500CEF7D7 /* Pattern.hpp */,
+				896554F7212742A400CEF7D7 /* Step.hpp */,
+				8964D5C7212B44D600CEF7D7 /* AtomPacket.cpp */,
+				899F2078212A150000CEF7D7 /* AtomPacket.hpp */,
+				896554FA2127443B00CEF7D7 /* Atom.cpp */,
+				896554FB2127443B00CEF7D7 /* Atom.hpp */,
+				896555122127A26800CEF7D7 /* Synth.cpp */,
+				896555132127A26800CEF7D7 /* Synth.hpp */,
+				896555182127A83800CEF7D7 /* Sample.cpp */,
+				896555192127A83800CEF7D7 /* Sample.hpp */,
+				8919C29B2129359400CEF7D7 /* MidiController.hpp */,
+				8964D5CD212B7EA100CEF7D7 /* Pad.cpp */,
+				8964D5CE212B7EA100CEF7D7 /* Pad.hpp */,
+				8964D5D0212B7ECE00CEF7D7 /* Color.cpp */,
+				8964D5D1212B7ECE00CEF7D7 /* Color.hpp */,
+				89A3CF9A212DDE3900CEF7D7 /* KeyboardView.cpp */,
+				89A3CF9B212DDE3900CEF7D7 /* KeyboardView.hpp */,
+				89A3CFA0212E1ECD00CEF7D7 /* KeyboardController.cpp */,
+				89A3CFA1212E1ECD00CEF7D7 /* KeyboardController.hpp */,
+				8964D5D4212B855100CEF7D7 /* PatternView.cpp */,
+				8964D5D5212B855100CEF7D7 /* PatternView.hpp */,
+				8964D5D7212B884300CEF7D7 /* SamplePatternController.cpp */,
+				8964D5D8212B884300CEF7D7 /* SamplePatternController.hpp */,
+				89A039B0212DD72D00CEF7D7 /* SynthPatternController.cpp */,
+				89A039B1212DD72D00CEF7D7 /* SynthPatternController.hpp */,
+				8964D5DA212B989C00CEF7D7 /* SampleViewController.cpp */,
+				8964D5DB212B989C00CEF7D7 /* SampleViewController.hpp */,
+				89A3CF9D212E1B8400CEF7D7 /* SynthViewController.cpp */,
+				89A3CF9E212E1B8400CEF7D7 /* SynthViewController.hpp */,
+				8964D5DD212B998700CEF7D7 /* CircuitView.cpp */,
+				8964D5DE212B998700CEF7D7 /* CircuitView.hpp */,
+				89A13C2B212CBB7500CEF7D7 /* ScreenController.cpp */,
+				89A13C2C212CBB7500CEF7D7 /* ScreenController.hpp */,
+				8964D5E0212B9B6100CEF7D7 /* CircuitController.cpp */,
+				8964D5E1212B9B6100CEF7D7 /* CircuitController.hpp */,
+				8964D65D212BBCA200CEF7D7 /* Bridge.cpp */,
+				8964D65E212BBCA200CEF7D7 /* Bridge.hpp */,
+			);
+			path = Circuit;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8964D634212BA38300CEF7D7 /* CircuitApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8964D646212BA38400CEF7D7 /* Build configuration list for PBXNativeTarget "CircuitApp" */;
+			buildPhases = (
+				8964D631212BA38300CEF7D7 /* Sources */,
+				8964D632212BA38300CEF7D7 /* Frameworks */,
+				8964D633212BA38300CEF7D7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CircuitApp;
+			productName = CircuitApp;
+			productReference = 8964D635212BA38300CEF7D7 /* CircuitApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		896554E121273F5E00CEF7D7 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0940;
+				ORGANIZATIONNAME = "Yue Wang";
+				TargetAttributes = {
+					8964D634212BA38300CEF7D7 = {
+						CreatedOnToolsVersion = 9.4.1;
+					};
+				};
+			};
+			buildConfigurationList = 896554E421273F5E00CEF7D7 /* Build configuration list for PBXProject "Circuit" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 896554E021273F5E00CEF7D7;
+			productRefGroup = 896554EA21273F5E00CEF7D7 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8964D634212BA38300CEF7D7 /* CircuitApp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8964D633212BA38300CEF7D7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8964D63E212BA38400CEF7D7 /* Assets.xcassets in Resources */,
+				8964D641212BA38400CEF7D7 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8964D631212BA38300CEF7D7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8964D671212BC45300CEF7D7 /* AppDelegate.m in Sources */,
+				89A13C2D212CBB7500CEF7D7 /* ScreenController.cpp in Sources */,
+				8964D672212BC45300CEF7D7 /* ViewController.mm in Sources */,
+				8964D673212BC45300CEF7D7 /* main.m in Sources */,
+				89A3CFA2212E1ECD00CEF7D7 /* KeyboardController.cpp in Sources */,
+				8964D660212BC44900CEF7D7 /* Workspace.cpp in Sources */,
+				8964D661212BC44900CEF7D7 /* SessionRunner.cpp in Sources */,
+				8964D662212BC44900CEF7D7 /* Session.cpp in Sources */,
+				8964D663212BC44900CEF7D7 /* AtomPacket.cpp in Sources */,
+				8964D664212BC44900CEF7D7 /* Atom.cpp in Sources */,
+				8964D665212BC44900CEF7D7 /* Synth.cpp in Sources */,
+				8964D666212BC44900CEF7D7 /* Sample.cpp in Sources */,
+				8964D668212BC44900CEF7D7 /* Pad.cpp in Sources */,
+				8964D669212BC44900CEF7D7 /* Color.cpp in Sources */,
+				8964D66A212BC44900CEF7D7 /* PatternView.cpp in Sources */,
+				89A3CF9F212E1B8400CEF7D7 /* SynthViewController.cpp in Sources */,
+				8964D66B212BC44900CEF7D7 /* SamplePatternController.cpp in Sources */,
+				89A039B2212DD72D00CEF7D7 /* SynthPatternController.cpp in Sources */,
+				8964D66C212BC44900CEF7D7 /* SampleViewController.cpp in Sources */,
+				8964D66D212BC44900CEF7D7 /* CircuitView.cpp in Sources */,
+				8964D66E212BC44900CEF7D7 /* CircuitController.cpp in Sources */,
+				89A13C33212D0E0500CEF7D7 /* Scale.cpp in Sources */,
+				8964D670212BC44900CEF7D7 /* Bridge.cpp in Sources */,
+				89A3CF9C212DDE3900CEF7D7 /* KeyboardView.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		8964D63F212BA38400CEF7D7 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8964D640212BA38400CEF7D7 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		8964D647212BA38400CEF7D7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ADDRESS_SANITIZER_CONTAINER_OVERFLOW = YES;
+				CODE_SIGN_ENTITLEMENTS = CircuitApp/CircuitApp.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				INFOPLIST_FILE = CircuitApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.wangyue.CircuitApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALID_ARCHS = x86_64;
+			};
+			name = Debug;
+		};
+		8964D648212BA38400CEF7D7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ADDRESS_SANITIZER_CONTAINER_OVERFLOW = YES;
+				CODE_SIGN_ENTITLEMENTS = CircuitApp/CircuitApp.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				INFOPLIST_FILE = CircuitApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.wangyue.CircuitApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALID_ARCHS = x86_64;
+			};
+			name = Release;
+		};
+		896554EE21273F5E00CEF7D7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ADDRESS_SANITIZER_CONTAINER_OVERFLOW = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "~/homebrew/include";
+				LIBRARY_SEARCH_PATHS = "~/homebrew/lib";
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		896554EF21273F5E00CEF7D7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ADDRESS_SANITIZER_CONTAINER_OVERFLOW = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "~/homebrew/include";
+				LIBRARY_SEARCH_PATHS = "~/homebrew/lib";
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		8964D646212BA38400CEF7D7 /* Build configuration list for PBXNativeTarget "CircuitApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8964D647212BA38400CEF7D7 /* Debug */,
+				8964D648212BA38400CEF7D7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		896554E421273F5E00CEF7D7 /* Build configuration list for PBXProject "Circuit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				896554EE21273F5E00CEF7D7 /* Debug */,
+				896554EF21273F5E00CEF7D7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 896554E121273F5E00CEF7D7 /* Project object */;
+}
