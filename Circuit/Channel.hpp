@@ -27,7 +27,7 @@ public:
   }
 
   virtual ~ChannelBase() {
-    for (size_t i = 0; i < _patterns.size(); ++i) {
+    for (PatternIndex i = 0; i < _patterns.size(); ++i) {
       Pattern<AtomClass> *pattern = _patterns[i];
       delete pattern;
     }
@@ -62,7 +62,7 @@ public:
   void InitializeChannel() {
     _patterns.reserve(_pattern_capacity);
     Pattern<AtomClass> *initial_pattern = nullptr;
-    for (size_t i = 0; i < _pattern_capacity; ++i) {
+    for (PatternIndex i = 0; i < _pattern_capacity; ++i) {
       Pattern<AtomClass> *pattern = new Pattern<AtomClass>(GetThisPointer());
       if (i == 0) {
         initial_pattern = pattern;

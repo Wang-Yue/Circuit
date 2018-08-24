@@ -8,7 +8,7 @@
 
 #include "SampleViewController.hpp"
 #include "CircuitView.hpp"
-#include "SamplePatternController.hpp"
+#include "SamplePatternViewController.hpp"
 #include "SessionRunner.hpp"
 #include "ChannelRunner.hpp"
 #include "PatternChainRunner.hpp"
@@ -19,32 +19,32 @@ SampleViewController::SampleViewController(CircuitController *parent, const std:
     PadIndex start_index = index * kStepCapacity;
     std::vector<Pad *> pads = GetView()->GetPads(start_index, kStepCapacity);
     Pattern<Sample> *pattern = GetCurrentSamplePattern(index);
-    SamplePatternController *controller = new SamplePatternController(pads, pattern);
+    SamplePatternViewController *controller = new SamplePatternViewController(pads, pattern);
     _controllers[index] = controller;
   }
 }
 SampleViewController::~SampleViewController() {
-  for (const std::pair<ChannelIndex, SamplePatternController *> pair : _controllers) {
-    SamplePatternController *controller = pair.second;
+  for (const std::pair<ChannelIndex, SamplePatternViewController *> pair : _controllers) {
+    SamplePatternViewController *controller = pair.second;
     delete controller;
   }
 }
 
-void SampleViewController::SetupController(ChannelIndex index, SamplePatternController *controller) {
+void SampleViewController::SetupController(ChannelIndex index, SamplePatternViewController *controller) {
   controller->SetPattern(GetCurrentSamplePattern(index));
 }
 
 void SampleViewController::TickStep() {
   for (auto &p : _controllers) {
     ChannelIndex index = p.first;
-    SamplePatternController *controller = p.second;
+    SamplePatternViewController *controller = p.second;
     SetupController(index, controller);
   }
 
   for (auto &p : _controllers) {
     ChannelIndex index = p.first;
     PatternChainRunner<Sample> * runner = GetSamplePatternChainRunner(index);
-    SamplePatternController *controller = p.second;
+    SamplePatternViewController *controller = p.second;
     controller->TickStep(runner->GetStepCounter());
   }
 }

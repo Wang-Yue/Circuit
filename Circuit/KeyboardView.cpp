@@ -104,7 +104,9 @@ public:
       return;
     }
     Note note = _pad_note_mapping[pad_index];
-    _delegate->Tap(note);
+    if (_delegate) {
+      _delegate->Tap(note);
+    }
   }
   virtual void Release(Pad *pad) override {
     PadIndex pad_index = pad->GetPadIndex();
@@ -112,7 +114,9 @@ public:
       return;
     }
     Note note = _pad_note_mapping[pad_index];
-    _delegate->Release(note);
+    if (_delegate) {
+      _delegate->Release(note);
+    }
   }
 private:
   const Note _base_note;
@@ -177,11 +181,15 @@ void KeyboardView::Highlight(const Note &note) {
 }
   
 void KeyboardView::Tap(const Note &note)  {
-  _delegate->Tap(note);
+  if (_delegate) {
+    _delegate->Tap(note);
+  }
 }
 
 void KeyboardView::Release(const Note &note) {
-  _delegate->Release(note);
-}
+  if (_delegate) {
+    _delegate->Release(note);
+  }
+  }
 
 

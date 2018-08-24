@@ -11,21 +11,24 @@
 
 #include "ScreenController.hpp"
 
-#include "SynthPatternController.hpp"
-#include "KeyboardController.hpp"
+#include "SynthPatternViewController.hpp"
+#include "KeyboardViewController.hpp"
 
 #include "TypeDefs.hpp"
 #include <vector>
 #include <set>
 
-
 class CircuitController;
 
-class SynthPatternController;
-class KeyboardController;
+class SynthPatternViewController;
+class KeyboardViewController;
 class Synth;
 
-class SynthViewController : public ScreenController, public SynthPatternControllerDelegate, public KeyboardControllerDelegate {
+class SynthViewController :
+public ScreenController,
+public SynthPatternViewControllerDelegate,
+public KeyboardViewControllerDelegate {
+  
 public:
   SynthViewController(CircuitController *parent,
                       const ChannelIndex &channel,
@@ -38,8 +41,8 @@ public:
   virtual void ReleaseNote(const Note &note) override;
 private:
   const ChannelIndex _channel_index;
-  SynthPatternController *_synth_controller;
-  KeyboardController *_keyboard_controller;
+  SynthPatternViewController *_synth_controller;
+  KeyboardViewController *_keyboard_controller;
   std::map<Synth *, Note> _active_atoms;
 };
 

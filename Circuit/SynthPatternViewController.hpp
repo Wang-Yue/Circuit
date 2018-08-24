@@ -1,13 +1,13 @@
 //
-//  SynthPatternController.hpp
+//  SynthPatternViewController.hpp
 //  CircuitApp
 //
 //  Created by Yue Wang on 8/19/18.
 //  Copyright © 2018 Yue Wang. All rights reserved.
 //
 
-#ifndef SynthPatternController_hpp
-#define SynthPatternController_hpp
+#ifndef SynthPatternViewController_hpp
+#define SynthPatternViewController_hpp
 
 #include "PatternView.hpp"
 #include <map>
@@ -18,18 +18,18 @@
 #include "Step.hpp"
 
 
-class SynthPatternControllerDelegate {
+class SynthPatternViewControllerDelegate {
 public:
   virtual void SelectStep(Step<Synth> *step) = 0;
   virtual void ReleaseStep() = 0;
 };
 
 
-class SynthPatternController : PatternViewDelegate {
+class SynthPatternViewController : PatternViewDelegate {
 public:
-  SynthPatternController(const std::vector<Pad *> &pads,
+  SynthPatternViewController(const std::vector<Pad *> &pads,
                          Pattern<Synth> *pattern,
-                         SynthPatternControllerDelegate *delegate) : _delegate(delegate) {
+                         SynthPatternViewControllerDelegate *delegate) : _delegate(delegate) {
     std::map<StepIndex, Pad *> step_pad_mapping;
     for (StepIndex i = 0; i < pads.size(); ++i) {
       step_pad_mapping[i] = pads[i];
@@ -46,7 +46,7 @@ public:
     _pattern = pattern;
   }
   
-  virtual ~SynthPatternController(){
+  virtual ~SynthPatternViewController(){
     delete _view;
   }
   virtual void Tap(const StepIndex &step_index) override {
@@ -107,8 +107,8 @@ public:
 private:
   std::set<StepIndex> _selected_index;
   Step<Synth> *_selected_step;
-  SynthPatternControllerDelegate *_delegate;
+  SynthPatternViewControllerDelegate *_delegate;
   PatternView *_view;
   Pattern<Synth> *_pattern;
 };
-#endif /* SynthPatternController_hpp */
+#endif /* SynthPatternViewController_hpp */

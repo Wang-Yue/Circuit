@@ -1,13 +1,13 @@
 //
-//  SamplePatternController.hpp
+//  SamplePatternViewController.hpp
 //  Circuit
 //
 //  Created by Yue Wang on 8/19/18.
 //  Copyright © 2018 Yue Wang. All rights reserved.
 //
 
-#ifndef SamplePatternController_hpp
-#define SamplePatternController_hpp
+#ifndef SamplePatternViewController_hpp
+#define SamplePatternViewController_hpp
 
 #include "PatternView.hpp"
 #include <map>
@@ -16,9 +16,9 @@
 #include "Step.hpp"
 
 
-class SamplePatternController : PatternViewDelegate {
+class SamplePatternViewController : PatternViewDelegate {
 public:
-  SamplePatternController(const std::vector<Pad *> &pads, Pattern<Sample> *pattern) {
+  SamplePatternViewController(const std::vector<Pad *> &pads, Pattern<Sample> *pattern) {
     std::map<StepIndex, Pad *> step_pad_mapping;
     for (StepIndex i = 0; i < pads.size(); ++i) {
       step_pad_mapping[i] = pads[i];
@@ -35,7 +35,7 @@ public:
     _pattern = pattern;
   }
   
-  virtual ~SamplePatternController(){
+  virtual ~SamplePatternViewController(){
     delete _view;
   }
   virtual void Tap(const StepIndex &step_index) override {
@@ -80,4 +80,4 @@ private:
   Pattern<Sample> *_pattern;
 };
 
-#endif /* SamplePatternController_hpp */
+#endif /* SamplePatternViewController_hpp */

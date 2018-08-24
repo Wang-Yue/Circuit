@@ -14,12 +14,12 @@
 
 SessionRunner::SessionRunner(Session *session) :
 _session(session) {
-  size_t synth_channel_count = session->GetSynthChannelCount();
+  ChannelIndex synth_channel_count = session->GetSynthChannelCount();
   for (int i = 0; i < synth_channel_count; ++i) {
     ChannelRunner<Synth> *runner = new ChannelRunner<Synth>(session->GetSynthChannel(i));
     _synth_channel_runners.push_back(runner);
   }
-  size_t sample_channel_count = session->GetSampleChannelCount();
+  ChannelIndex sample_channel_count = session->GetSampleChannelCount();
   for (int i = 0; i < sample_channel_count; ++i) {
     ChannelRunner<Sample> *runner = new ChannelRunner<Sample>(session->GetSampleChannel(i));
     _sample_channel_runners.push_back(runner);

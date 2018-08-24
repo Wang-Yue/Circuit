@@ -15,9 +15,11 @@
 
 typedef uint8_t Velocity;
 static const Velocity kDefaultVelocity = 96;
+static const Velocity kDiscreteVelocityValues = 128;
 
 typedef uint8_t Gate;
-static const Gate kDefaultGate = 6;
+static const Gate kDiscreteGateValues = 128;
+static const Gate kDefaultGate = 8;
 
 typedef uint8_t Volume;
 static const Volume kDefaultVolume = 127;
@@ -36,7 +38,7 @@ static const size_t kSynthPolyphonyCapacity = 6;
 static const size_t kSamplePolyphonyCapacity = 1;
 
 static const StepIndex kStepCapacity = 16;
-static const size_t kPatternCapacity = 8;
+static const PatternIndex kPatternCapacity = 8;
 
 typedef int8_t Automation;
 

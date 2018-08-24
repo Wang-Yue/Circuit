@@ -19,17 +19,17 @@ static const size_t kSampleChannelsCapacity = 4;
 Session::Session() : Session(kSynthChannelsCapacity, kSampleChannelsCapacity){
 }
 
-Session::Session(const size_t &synth_channels_capacity,
-                 const size_t &sample_channels_capacity){
+Session::Session(const ChannelIndex &synth_channels_capacity,
+                 const ChannelIndex &sample_channels_capacity){
   _tonic_degree = 0;
   _synth_channels.reserve(synth_channels_capacity);
   _sample_channels.reserve(sample_channels_capacity);
-  for (size_t i = 0; i < synth_channels_capacity; ++i) {
+  for (ChannelIndex i = 0; i < synth_channels_capacity; ++i) {
     Channel<Synth> *channel = new Channel<Synth>(this);
     channel->InitializeChannel();
     _synth_channels.push_back(channel);
   }
-  for (size_t i = 0; i < sample_channels_capacity; ++i) {
+  for (ChannelIndex i = 0; i < sample_channels_capacity; ++i) {
     Channel<Sample> *channel = new Channel<Sample>(this);
     channel->InitializeChannel();
     _sample_channels.push_back(channel);
@@ -40,11 +40,11 @@ Session::Session(const size_t &synth_channels_capacity,
 }
 
 Session::~Session() {
-  for (size_t i = 0; i < _synth_channels.size(); ++i) {
+  for (ChannelIndex i = 0; i < _synth_channels.size(); ++i) {
     Channel<Synth> *c = _synth_channels[i];
     delete c;
   }
-  for (size_t i = 0; i < _sample_channels.size(); ++i) {
+  for (ChannelIndex i = 0; i < _sample_channels.size(); ++i) {
     Channel<Sample> *c = _sample_channels[i];
     delete c;
   }
@@ -68,19 +68,19 @@ const Note Session::GetBaseNote() const {
 }
 
 
-Channel<Synth> *Session::GetSynthChannel(const size_t &channel_index) const {
+Channel<Synth> *Session::GetSynthChannel(const ChannelIndex &channel_index) const {
   return _synth_channels[channel_index];
 }
 
-size_t Session::GetSynthChannelCount() const {
+ChannelIndex Session::GetSynthChannelCount() const {
   return _synth_channels.size();
 }
 
-Channel<Sample> *Session::GetSampleChannel(const size_t &channel_index) const {
+Channel<Sample> *Session::GetSampleChannel(const ChannelIndex &channel_index) const {
   return _sample_channels[channel_index];
 }
 
-size_t Session::GetSampleChannelCount() const {
+ChannelIndex Session::GetSampleChannelCount() const {
   return _sample_channels.size();
 }
 

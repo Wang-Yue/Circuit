@@ -195,6 +195,7 @@ public:
 private:
   void SendStartCommand(const Synth *atom) {
     Note note = atom->GetNote();
+    // TODO : Is this correct? what if the current session is changed?
     Session *session = _channel->GetSession();
     Note converted_note = ConvertNoteScale(note, session->GetBaseNote().scale);
     MIDINote midi = NoteToMIDI(converted_note, session->GetTonicDegree());

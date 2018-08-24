@@ -18,8 +18,8 @@
 
 class MidiControllerDelegate {
 public:
-  virtual void TapNote(const Note &note) = 0;
-  virtual void ReleaseNote(const Note &note) = 0;
+  virtual void NoteOn(const Note &note) = 0;
+  virtual void NoteOff(const Note &note) = 0;
 };
 
 class MidiController {
@@ -61,14 +61,14 @@ public:
       Note note = MIDIToNote(message[1], ScaleChromatic, 0);
       std::cout << static_cast<int>(note.octave) << " " << static_cast<int>(note.degree) << std::endl;
       if (_delegate) {
-        _delegate->TapNote(note);
+        _delegate->NoteOn(note);
         return true;
       }
     }
     if (nBytes && message[0] == 128) {
       Note note = MIDIToNote(message[1], ScaleChromatic, 0);
       if (_delegate) {
-        _delegate->ReleaseNote(note);
+        _delegate->NoteOff(note);
         return true;
       }
     }

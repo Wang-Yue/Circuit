@@ -64,6 +64,24 @@ public:
     }
   }
 
+  Gate GetGate() const  {
+    Gate gate = 0;
+    std::vector<AtomClass *> atoms = GetAtoms();
+    for (AtomClass *atom : atoms) {
+      Gate atom_gate = atom->GetGate();
+      if (atom_gate > gate) {
+        gate = atom_gate;
+      }
+    }
+    return gate;
+  }
+
+  void SetGate(const Gate &gate)  {
+    std::vector<AtomClass *> atoms = GetAtoms();
+    for (AtomClass *atom : atoms) {
+      atom->SetGate(gate);
+    }
+  }
 
 
 protected:

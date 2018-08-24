@@ -82,17 +82,17 @@ public:
     step->AddAtom(atom);
   }
   
-  size_t GetPatternCounter() const  {
+  PatternIndex GetPatternCounter() const  {
     return _pattern_counter;
   }
-  size_t GetStepCounter() const  {
+  StepIndex GetStepCounter() const  {
     return _step_counter;
   }
 private:
   PatternChain<AtomClass> *_pattern_chain;
   Pattern<AtomClass> *_remaining_pattern;
-  size_t _pattern_counter;
-  size_t _step_counter;
+  PatternIndex _pattern_counter;
+  StepIndex _step_counter;
 };
 
 #endif /* PatternChainRunner_hpp */

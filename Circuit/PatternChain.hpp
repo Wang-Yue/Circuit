@@ -11,7 +11,7 @@
 
 #include <vector>
 
-static const size_t kPatternChainCapacity = 32;
+static const PatternIndex kPatternChainCapacity = 32;
 
 
 class Atom;
@@ -40,13 +40,13 @@ public:
     AddPattern(pattern);
   }
 
-  size_t GetPatternCount() const  {
+  PatternIndex GetPatternCount() const  {
     return _patterns.size();
   }
 
 
   // NotNull
-  Pattern<AtomClass> *GetPattern(const size_t &pattern_index) const {
+  Pattern<AtomClass> *GetPattern(const PatternIndex &pattern_index) const {
     if (pattern_index >= _patterns.size()) {
       throw std::out_of_range("Exceed maximum pattern steps.");
     }
@@ -54,18 +54,18 @@ public:
   }
   
   // NotNull
-  Step<AtomClass> *GetStep(const size_t &pattern_index, const StepIndex &step_index) const  {
+  Step<AtomClass> *GetStep(const PatternIndex &pattern_index, const StepIndex &step_index) const  {
     Pattern<AtomClass> *pattern = GetPattern(pattern_index);
     return pattern->GetStep(step_index);
   }
 
 private:
-  PatternChain(Pattern<AtomClass> *initial_pattern, const size_t &pattern_chain_capacity) :
+  PatternChain(Pattern<AtomClass> *initial_pattern, const PatternIndex &pattern_chain_capacity) :
   _pattern_chain_capacity(pattern_chain_capacity) {
     _patterns.reserve(pattern_chain_capacity);
     Reset(initial_pattern);
   }
   std::vector<Pattern<AtomClass> *>  _patterns;
-  const size_t _pattern_chain_capacity;
+  const PatternIndex _pattern_chain_capacity;
 };
 #endif /* PatternChain_hpp */

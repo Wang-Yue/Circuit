@@ -10,12 +10,12 @@
 
 #include "SampleViewController.hpp"
 #include "CircuitView.hpp"
-#include "SynthPatternController.hpp"
+#include "SynthPatternViewController.hpp"
 #include "SessionRunner.hpp"
 #include "ChannelRunner.hpp"
 #include "PatternChainRunner.hpp"
 #include "Session.hpp"
-#include "KeyboardController.hpp"
+#include "KeyboardViewController.hpp"
 
 
 SynthViewController::SynthViewController(CircuitController *parent,
@@ -27,12 +27,12 @@ SynthViewController::SynthViewController(CircuitController *parent,
     keyboard_pads_count -= kStepCapacity;
     std::vector<Pad *> pattern_pads = GetView()->GetPads(keyboard_pads_count, kStepCapacity);
     Pattern<Synth> *pattern = GetCurrentSynthPattern(channel);
-    _synth_controller = new SynthPatternController(pattern_pads, pattern, this);
+    _synth_controller = new SynthPatternViewController(pattern_pads, pattern, this);
   }
   std::vector<Pad *> keyboard_pads = GetView()->GetPads(0, keyboard_pads_count);
   Note base_note = GetCurrentSession()->GetBaseNote();
   Degree tonic_degree = GetCurrentSession()->GetTonicDegree();
-  _keyboard_controller = new KeyboardController(base_note, tonic_degree, keyboard_pads, this);
+  _keyboard_controller = new KeyboardViewController(base_note, tonic_degree, keyboard_pads, this);
 }
 
 SynthViewController::~SynthViewController() {
@@ -73,11 +73,11 @@ void SynthViewController::TickStep() {
 }
 
 void SynthViewController::SelectStep(Step<Synth> *step) {
-  _keyboard_controller->SetStep(step);
+  _keyboard_controller->SetEditingStep(step);
 }
 
 void SynthViewController::ReleaseStep() {
-  _keyboard_controller->SetStep(nullptr);
+  _keyboard_controller->SetEditingStep(nullptr);
 }
 
 void SynthViewController::TapNote(const Note &note) {

@@ -17,7 +17,7 @@
 
 class CircuitController;
 
-class SamplePatternController;
+class SamplePatternViewController;
 class Sample;
 
 class SampleViewController : public ScreenController {
@@ -29,8 +29,8 @@ public:
   virtual void TickStep() override;
 
 private:
-  void SetupController(ChannelIndex index, SamplePatternController *controller);
+  void SetupController(ChannelIndex index, SamplePatternViewController *controller);
   // TODO: make a base view controller.
-  std::map<ChannelIndex, SamplePatternController *> _controllers;
+  std::map<ChannelIndex, SamplePatternViewController *> _controllers;
 };
 #endif /* SampleViewController_hpp */
