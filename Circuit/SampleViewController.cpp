@@ -34,7 +34,7 @@ void SampleViewController::SetupController(ChannelIndex index, SamplePatternView
   controller->SetPattern(GetCurrentSamplePattern(index));
 }
 
-void SampleViewController::TickStep() {
+void SampleViewController::Update() {
   for (auto &p : _controllers) {
     ChannelIndex index = p.first;
     SamplePatternViewController *controller = p.second;
@@ -47,4 +47,8 @@ void SampleViewController::TickStep() {
     SamplePatternViewController *controller = p.second;
     controller->TickStep(runner->GetStepCounter());
   }
+}
+
+void SampleViewController::UpdateEditingMode() {
+  // TODO.
 }

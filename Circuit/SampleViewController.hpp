@@ -24,10 +24,8 @@ class SampleViewController : public ScreenController {
 public:
   SampleViewController(CircuitController *parent, const std::vector<ChannelIndex> &channels);
   virtual ~SampleViewController();
-
-
-  virtual void TickStep() override;
-
+  virtual void Update() override;
+  virtual void UpdateEditingMode() override;
 private:
   void SetupController(ChannelIndex index, SamplePatternViewController *controller);
   // TODO: make a base view controller.

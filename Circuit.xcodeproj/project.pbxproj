@@ -38,6 +38,7 @@
 		89A3CF9C212DDE3900CEF7D7 /* KeyboardView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89A3CF9A212DDE3900CEF7D7 /* KeyboardView.cpp */; };
 		89A3CF9F212E1B8400CEF7D7 /* SynthViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89A3CF9D212E1B8400CEF7D7 /* SynthViewController.cpp */; };
 		89A3CFA2212E1ECD00CEF7D7 /* KeyboardViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89A3CFA0212E1ECD00CEF7D7 /* KeyboardViewController.cpp */; };
+		89EF1F042131CF5C00CEF7D7 /* UIDefs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89EF1F022131CF5C00CEF7D7 /* UIDefs.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -115,6 +116,8 @@
 		89A3CF9E212E1B8400CEF7D7 /* SynthViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SynthViewController.hpp; sourceTree = "<group>"; };
 		89A3CFA0212E1ECD00CEF7D7 /* KeyboardViewController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KeyboardViewController.cpp; sourceTree = "<group>"; };
 		89A3CFA1212E1ECD00CEF7D7 /* KeyboardViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = KeyboardViewController.hpp; sourceTree = "<group>"; };
+		89EF1F022131CF5C00CEF7D7 /* UIDefs.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = UIDefs.cpp; sourceTree = "<group>"; };
+		89EF1F032131CF5C00CEF7D7 /* UIDefs.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = UIDefs.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -238,6 +241,8 @@
 				8964D5E1212B9B6100CEF7D7 /* CircuitController.hpp */,
 				8964D65D212BBCA200CEF7D7 /* Bridge.cpp */,
 				8964D65E212BBCA200CEF7D7 /* Bridge.hpp */,
+				89EF1F022131CF5C00CEF7D7 /* UIDefs.cpp */,
+				89EF1F032131CF5C00CEF7D7 /* UIDefs.hpp */,
 			);
 			path = Circuit;
 			sourceTree = "<group>";
@@ -318,6 +323,7 @@
 				8964D673212BC45300CEF7D7 /* main.m in Sources */,
 				89A3CFA2212E1ECD00CEF7D7 /* KeyboardViewController.cpp in Sources */,
 				8964D660212BC44900CEF7D7 /* Workspace.cpp in Sources */,
+				89EF1F042131CF5C00CEF7D7 /* UIDefs.cpp in Sources */,
 				8964D661212BC44900CEF7D7 /* SessionRunner.cpp in Sources */,
 				8964D662212BC44900CEF7D7 /* Session.cpp in Sources */,
 				8964D663212BC44900CEF7D7 /* AtomPacket.cpp in Sources */,

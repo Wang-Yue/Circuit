@@ -13,39 +13,7 @@
 
 #include <vector>
 
-
-static const PadIndex kRegularPadCount = 32;
-
-enum CircuitPad : PadIndex {
-  PadRegular = 0,
-  PadNote = kRegularPadCount,
-  PadGate,
-  PadVelocity,
-  PadNudge,
-  PadLength,
-  PadScale,
-  PadOctUp,
-  PadOctDown,
-  PadTempo,
-  PadSwing,
-  PadClear,
-  PadDuplicate,
-  PadSave,
-  PadSessions,
-  PadShift,
-  PadPatterns,
-  PadMixer,
-  PadFX,
-  PadRecord,
-  PadPlay,
-  PadSynth1,
-  PadSynth2,
-  PadDrum1,
-  PadDrum2,
-  PadDrum3,
-  PadDrum4,
-  PadUnknown,
-};
+#include "UIDefs.hpp"
 
 class CircuitView {
 public:

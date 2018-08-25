@@ -63,26 +63,24 @@ public:
       return 0;
     }
   }
-
-  Gate GetGate() const  {
-    Gate gate = 0;
+  
+  Velocity GetVelocity() const {
+    Velocity velocity = 0;
     std::vector<AtomClass *> atoms = GetAtoms();
     for (AtomClass *atom : atoms) {
-      Gate atom_gate = atom->GetGate();
-      if (atom_gate > gate) {
-        gate = atom_gate;
+      Velocity atom_velocity = atom->GetVelocity();
+      if (atom_velocity > velocity) {
+        velocity = atom_velocity;
       }
     }
-    return gate;
+    return velocity;
   }
-
-  void SetGate(const Gate &gate)  {
+  void SetVelocity(const Velocity &velocity) {
     std::vector<AtomClass *> atoms = GetAtoms();
     for (AtomClass *atom : atoms) {
-      atom->SetGate(gate);
+      atom->SetVelocity(velocity);
     }
   }
-
 
 protected:
   StepBase(Pattern<AtomClass> * const parent, const size_t &polyphony_capacity) :
@@ -139,10 +137,37 @@ public:
     _is_sample_flip = is_sample_flip;
   }
   
-  bool SetIsSampleFlip() const {
+  bool GetIsSampleFlip() const {
     return _is_sample_flip;
   }
   
+  void SetIsTie(const bool &tie) {
+    _is_tie = tie;
+  }
+  
+  bool GetIsTie() const {
+    return _is_tie;
+  }
+  
+  Gate GetGate() const  {
+    Gate gate = 0;
+    std::vector<Synth *> atoms = GetAtoms();
+    for (Synth *atom : atoms) {
+      Gate atom_gate = atom->GetGate();
+      if (atom_gate > gate) {
+        gate = atom_gate;
+      }
+    }
+    return gate;
+  }
+  
+  void SetGate(const Gate &gate)  {
+    std::vector<Synth *> atoms = GetAtoms();
+    for (Synth *atom : atoms) {
+      atom->SetGate(gate);
+    }
+  }
+
   
   Synth *AddNote(const Note &note)  {
     std::vector<Synth *> atoms = GetAtoms();
@@ -195,6 +220,7 @@ public:
 private:
   Microstep _microstep_delay;
   bool _is_sample_flip;
+  bool _is_tie;
 };
 
 #endif /* Step_hpp */

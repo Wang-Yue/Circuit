@@ -22,7 +22,7 @@ class LengthViewController : public LengthViewDelegate {
   
 public:
   LengthViewController(const std::vector<Pad *> &pads) :
-  _pattern(nullptr), _companion_pattern(nullptr) {
+  _pattern(nullptr), _companian_pattern(nullptr) {
     _view = new LengthView(pads, this);
   }
   
@@ -31,19 +31,19 @@ public:
   }
   
   void SetPattern(Pattern<AtomClass> *pattern, Pattern<AtomClass> *companion_pattern) {
-    if (_pattern == pattern && _companion_pattern == companion_pattern) {
+    if (_pattern == pattern && _companian_pattern == companion_pattern) {
       return;
     }
     _pattern = pattern;
-    _companion_pattern = companion_pattern;
+    _companian_pattern = companion_pattern;
   }
   
   virtual void Tap(const StepIndex &length) override {
     if (_pattern) {
       _pattern->SetLength(length);
     }
-    if (_companion_pattern) {
-      _companion_pattern->SetLength(length);
+    if (_companian_pattern) {
+      _companian_pattern->SetLength(length);
     }
   }
   

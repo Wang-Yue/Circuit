@@ -10,6 +10,7 @@
 #define Color_hpp
 
 #include "TypeDefs.hpp"
+#include "UIDefs.hpp"
 
 class Color {
 public:

@@ -10,6 +10,7 @@
 #define ScreenController_hpp
 
 #include "TypeDefs.hpp"
+#include "UIDefs.hpp"
 
 class CircuitView;
 class CircuitController;
@@ -25,8 +26,10 @@ class ScreenController {
 public:
   ScreenController(CircuitController *parent);
   virtual ~ScreenController();
-  virtual void TickStep() = 0;
+  virtual void Update() = 0;
   CircuitView *GetView() const;
+  virtual void UpdateEditingMode() = 0;
+
 protected:
   Session *GetCurrentSession();
   SessionRunner *GetSessionRunner();
@@ -36,7 +39,14 @@ protected:
   PatternChainRunner<Synth> *GetSynthPatternChainRunner(const ChannelIndex &index);
   ChannelRunner<Sample> *GetSampleChannelRunner(const ChannelIndex &index);
   ChannelRunner<Synth> *GetSynthChannelRunner(const ChannelIndex &index);
-//  virtual void TickMicroStep() = 0;
+  
+  bool IsStopped() const;
+  bool IsPlaying() const;
+  bool IsRecording() const;
+  
+  enum CircuitEditingMode GetEditingMode() const;
+  
+  
 protected:
   CircuitView *_view;
   CircuitController *_parent;

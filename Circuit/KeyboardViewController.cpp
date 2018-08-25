@@ -46,7 +46,7 @@ void KeyboardViewController::Release(const Note &note) {
   }
 }
 
-void KeyboardViewController::TickStep() {
+void KeyboardViewController::Update() {
   _view->AllNotesOff();
   ShowStepNotes();
 }

@@ -94,12 +94,6 @@ struct Note {
   Degree degree;
 };
 
-// UI defs.
 
-typedef uint8_t PadIndex;
-static const PadIndex kPadsInRow = 8;
-
-typedef uint8_t ColorBrightness;
-typedef uint32_t ColorCode;
 
 #endif /* TypeDefs_hpp */

@@ -33,7 +33,7 @@ public:
   virtual ~KeyboardViewController();
   
   void SetEditingStep(Step<Synth> *editing_step);
-  void TickStep();
+  void Update();
   void ShowPlayingNotes(const std::list<Note> &playing_notes);
   
   // KeyboardViewDelegate

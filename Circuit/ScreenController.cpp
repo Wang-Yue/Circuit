@@ -54,3 +54,19 @@ Session *ScreenController::GetCurrentSession() {
 SessionRunner *ScreenController::GetSessionRunner() {
   return _parent->GetSessionRunner();
 }
+
+bool ScreenController::IsStopped() const {
+  return _parent->IsStopped();
+}
+
+bool ScreenController::IsPlaying() const {
+  return _parent->IsPlaying();
+}
+
+bool ScreenController::IsRecording() const {
+  return _parent->IsRecording();
+}
+
+enum CircuitEditingMode ScreenController::GetEditingMode() const {
+  return _parent->GetEditingMode();
+  }

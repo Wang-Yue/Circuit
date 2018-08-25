@@ -23,6 +23,7 @@ void PressKey(int key) {
 void ReleaseKey(int key) {
   controller->GetPad(key)->Release();
 }
+
 uint32_t GetColor(int key) {
   return controller->GetPad(key)->GetColor().GetColorCode();
 }

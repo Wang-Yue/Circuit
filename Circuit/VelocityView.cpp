@@ -7,6 +7,7 @@
 //
 
 #include "VelocityView.hpp"
+#include "UIDefs.hpp"
 
 static const Color kZeroVelocityColor(0x00000000);
 static const ColorCode kFullVelocityColorCode = 0x000000ff;

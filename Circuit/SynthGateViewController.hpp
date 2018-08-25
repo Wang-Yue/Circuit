@@ -15,18 +15,18 @@
 #include "Pattern.hpp"
 #include "Step.hpp"
 
-#include "GateView.hpp"
+#include "SynthGateView.hpp"
 
 class SynthGateViewController : public SynthGateViewDelegate {
   
 public:
   SynthGateViewController(const std::vector<Pad *> &pads) :
   _current_step(nullptr), _current_editing_step(nullptr) {
-    _view = new GateView(pads, this);
+    _view = new SynthGateView(pads, this);
   }
   
   
-  virtual ~GateViewController() {
+  virtual ~SynthGateViewController() {
     delete _view;
   }
   

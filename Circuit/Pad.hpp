@@ -11,6 +11,7 @@
 
 #include "Color.hpp"
 #include "TypeDefs.hpp"
+#include "UIDefs.hpp"
 
 class Pad;
 
