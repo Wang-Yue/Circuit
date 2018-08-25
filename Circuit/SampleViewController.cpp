@@ -17,7 +17,7 @@ SampleViewController::SampleViewController(CircuitController *parent, const std:
 : ScreenController(parent) {
   for (ChannelIndex index : channels) {
     PadIndex start_index = index * kStepCapacity;
-    std::vector<Pad *> pads = GetView()->GetPads(start_index, kStepCapacity);
+    std::vector<Pad *> pads = GetView()->GetRegularPads(start_index, kStepCapacity);
     Pattern<Sample> *pattern = GetCurrentSamplePattern(index);
     SamplePatternViewController *controller = new SamplePatternViewController(pads, pattern);
     _controllers[index] = controller;

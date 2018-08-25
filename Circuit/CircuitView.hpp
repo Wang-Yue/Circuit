@@ -13,12 +13,44 @@
 
 #include <vector>
 
-static const PadIndex kPadCount = 32;
+
+static const PadIndex kRegularPadCount = 32;
+
+enum CircuitPad : PadIndex {
+  PadRegular = 0,
+  PadNote = kRegularPadCount,
+  PadGate,
+  PadVelocity,
+  PadNudge,
+  PadLength,
+  PadScale,
+  PadOctUp,
+  PadOctDown,
+  PadTempo,
+  PadSwing,
+  PadClear,
+  PadDuplicate,
+  PadSave,
+  PadSessions,
+  PadShift,
+  PadPatterns,
+  PadMixer,
+  PadFX,
+  PadRecord,
+  PadPlay,
+  PadSynth1,
+  PadSynth2,
+  PadDrum1,
+  PadDrum2,
+  PadDrum3,
+  PadDrum4,
+  PadUnknown,
+};
 
 class CircuitView {
 public:
   CircuitView() {
-    for (PadIndex i = 0; i < kPadCount; ++i) {
+    for (PadIndex i = 0; i < PadUnknown; ++i) {
       Pad *pad = new Pad(i);
       _pads.push_back(pad);
     }
@@ -28,16 +60,25 @@ public:
       delete pad;
     }
   }
-  std::vector<Pad *> GetPads(const PadIndex &start, const PadIndex &count) {
+  std::vector<Pad *> GetRegularPads(const PadIndex &start, const PadIndex &count) {
+    assert(count <= kRegularPadCount);
     std::vector<Pad *> pads;
-    for (PadIndex i = 0; i < count; ++i) {
+    for (PadIndex i = PadRegular; i < PadRegular + count; ++i) {
       pads.push_back(_pads[i + start]);
     }
     return pads;
   }
+  
   Pad *GetPad(const PadIndex &index) {
     return _pads[index];
   }
+  
+  Pad *GetControlPad(const PadIndex &index) {
+    assert(index >= kRegularPadCount);
+    assert(index < PadUnknown);
+    return _pads[PadNote];
+  }
+
 private:
   std::vector<Pad *> _pads;
 };

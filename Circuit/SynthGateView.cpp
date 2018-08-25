@@ -6,14 +6,14 @@
 //  Copyright © 2018 Yue Wang. All rights reserved.
 //
 
-#include "GateView.hpp"
+#include "SynthGateView.hpp"
 
 static const Color kZeroGateColor(0x00000000);
 static const ColorCode kFullGateColorCode = 0x000000ff;
 static const Color kFullGateColor(kFullGateColorCode);
 static const uint8_t kGateIncrementPerPad = 8;
 
-GateView::GateView(const std::vector<Pad *> &pads, GateViewDelegate *delegate):
+SynthGateView::SynthGateView(const std::vector<Pad *> &pads, SynthGateViewDelegate *delegate):
 _pads(pads), _delegate(delegate) {
   assert(pads.size() == kDiscreteGateValues / kGateIncrementPerPad);
   for (PadIndex i = 0; i < pads.size(); ++i) {
@@ -23,7 +23,7 @@ _pads(pads), _delegate(delegate) {
   }
 }
 
-void GateView::SetGate(const Gate &gate) {
+void SynthGateView::SetGate(const Gate &gate) {
   _previous_gate = gate;
   for (PadIndex i = 0; i < _pads.size(); ++i ){
     Pad *pad = _pads[i];
@@ -41,7 +41,7 @@ void GateView::SetGate(const Gate &gate) {
   }
 }
 
-void GateView::Tap(Pad *pad) {
+void SynthGateView::Tap(Pad *pad) {
   PadIndex pad_index = pad->GetPadIndex();
   PadIndex previous_pad = _previous_gate / kGateIncrementPerPad;
   Gate gate = 0;
@@ -60,6 +60,6 @@ void GateView::Tap(Pad *pad) {
   }
 }
 
-void GateView::Release(Pad *pad) {
+void SynthGateView::Release(Pad *pad) {
   // no-op.
 }

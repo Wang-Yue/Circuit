@@ -22,14 +22,16 @@ SynthViewController::SynthViewController(CircuitController *parent,
                                          const ChannelIndex &channel,
                                          const bool &expand_keyboard)
 : ScreenController(parent), _channel_index(channel), _synth_controller(nullptr), _keyboard_controller(nullptr) {
-  PadIndex keyboard_pads_count = kPadCount;
+  PadIndex keyboard_pads_count = kRegularPadCount;
   if (!expand_keyboard) {
     keyboard_pads_count -= kStepCapacity;
-    std::vector<Pad *> pattern_pads = GetView()->GetPads(keyboard_pads_count, kStepCapacity);
+    std::vector<Pad *> pattern_pads =
+        GetView()->GetRegularPads(keyboard_pads_count, kStepCapacity);
     Pattern<Synth> *pattern = GetCurrentSynthPattern(channel);
     _synth_controller = new SynthPatternViewController(pattern_pads, pattern, this);
   }
-  std::vector<Pad *> keyboard_pads = GetView()->GetPads(0, keyboard_pads_count);
+  std::vector<Pad *> keyboard_pads =
+      GetView()->GetRegularPads(0, keyboard_pads_count);
   Note base_note = GetCurrentSession()->GetBaseNote();
   Degree tonic_degree = GetCurrentSession()->GetTonicDegree();
   _keyboard_controller = new KeyboardViewController(base_note, tonic_degree, keyboard_pads, this);

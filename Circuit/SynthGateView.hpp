@@ -15,14 +15,14 @@
 #include "Pad.hpp"
 #include "Color.hpp"
 
-class GateViewDelegate {
+class SynthGateViewDelegate {
 public:
   virtual void Tap(const Gate &gate) = 0;
 };
 
-class GateView : public PadDelegate {
+class SynthGateView : public PadDelegate {
 public:
-  GateView(const std::vector<Pad *> &pads, GateViewDelegate *delegate);
+  SynthGateView(const std::vector<Pad *> &pads, SynthGateViewDelegate *delegate);
   void SetGate(const Gate &gate);
   virtual void Tap(Pad *pad) override;
   virtual void Release(Pad *pad) override;
@@ -31,7 +31,7 @@ private:
   Gate _previous_gate;
   // pad's own PadIndex -> index in _pads vector.
   std::map<PadIndex, PadIndex> _pad_index_mapping;
-  GateViewDelegate *_delegate;
+  SynthGateViewDelegate *_delegate;
 };
 
 #endif /* GateView_hpp */

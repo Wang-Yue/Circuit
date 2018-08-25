@@ -30,7 +30,7 @@
 		8964D672212BC45300CEF7D7 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8964D63B212BA38300CEF7D7 /* ViewController.mm */; };
 		8964D673212BC45300CEF7D7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8964D643212BA38400CEF7D7 /* main.m */; };
 		89A039B2212DD72D00CEF7D7 /* SynthPatternViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89A039B0212DD72D00CEF7D7 /* SynthPatternViewController.cpp */; };
-		89A0903721309E2400CEF7D7 /* GateView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89A0903521309E2400CEF7D7 /* GateView.cpp */; };
+		89A0903721309E2400CEF7D7 /* SynthGateView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89A0903521309E2400CEF7D7 /* SynthGateView.cpp */; };
 		89A0903A2130B1F800CEF7D7 /* VelocityView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89A090382130B1F800CEF7D7 /* VelocityView.cpp */; };
 		89A090402130BA5B00CEF7D7 /* LengthView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89A0903E2130BA5B00CEF7D7 /* LengthView.cpp */; };
 		89A13C2D212CBB7500CEF7D7 /* ScreenController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89A13C2B212CBB7500CEF7D7 /* ScreenController.cpp */; };
@@ -96,9 +96,9 @@
 		899F2078212A150000CEF7D7 /* AtomPacket.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AtomPacket.hpp; sourceTree = "<group>"; };
 		89A039B0212DD72D00CEF7D7 /* SynthPatternViewController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SynthPatternViewController.cpp; sourceTree = "<group>"; };
 		89A039B1212DD72D00CEF7D7 /* SynthPatternViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SynthPatternViewController.hpp; sourceTree = "<group>"; };
-		89A0903321309E1100CEF7D7 /* GateViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GateViewController.hpp; sourceTree = "<group>"; };
-		89A0903521309E2400CEF7D7 /* GateView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GateView.cpp; sourceTree = "<group>"; };
-		89A0903621309E2400CEF7D7 /* GateView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GateView.hpp; sourceTree = "<group>"; };
+		89A0903321309E1100CEF7D7 /* SynthGateViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SynthGateViewController.hpp; sourceTree = "<group>"; };
+		89A0903521309E2400CEF7D7 /* SynthGateView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SynthGateView.cpp; sourceTree = "<group>"; };
+		89A0903621309E2400CEF7D7 /* SynthGateView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SynthGateView.hpp; sourceTree = "<group>"; };
 		89A090382130B1F800CEF7D7 /* VelocityView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VelocityView.cpp; sourceTree = "<group>"; };
 		89A090392130B1F800CEF7D7 /* VelocityView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VelocityView.hpp; sourceTree = "<group>"; };
 		89A0903C2130B4D100CEF7D7 /* VelocityViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VelocityViewController.hpp; sourceTree = "<group>"; };
@@ -210,9 +210,9 @@
 				89A0903E2130BA5B00CEF7D7 /* LengthView.cpp */,
 				89A0903F2130BA5B00CEF7D7 /* LengthView.hpp */,
 				89A090422130BA6A00CEF7D7 /* LengthViewController.hpp */,
-				89A0903521309E2400CEF7D7 /* GateView.cpp */,
-				89A0903621309E2400CEF7D7 /* GateView.hpp */,
-				89A0903321309E1100CEF7D7 /* GateViewController.hpp */,
+				89A0903521309E2400CEF7D7 /* SynthGateView.cpp */,
+				89A0903621309E2400CEF7D7 /* SynthGateView.hpp */,
+				89A0903321309E1100CEF7D7 /* SynthGateViewController.hpp */,
 				89A090382130B1F800CEF7D7 /* VelocityView.cpp */,
 				89A090392130B1F800CEF7D7 /* VelocityView.hpp */,
 				89A0903C2130B4D100CEF7D7 /* VelocityViewController.hpp */,
@@ -331,7 +331,7 @@
 				8964D66B212BC44900CEF7D7 /* SamplePatternViewController.cpp in Sources */,
 				89A039B2212DD72D00CEF7D7 /* SynthPatternViewController.cpp in Sources */,
 				89A090402130BA5B00CEF7D7 /* LengthView.cpp in Sources */,
-				89A0903721309E2400CEF7D7 /* GateView.cpp in Sources */,
+				89A0903721309E2400CEF7D7 /* SynthGateView.cpp in Sources */,
 				8964D66C212BC44900CEF7D7 /* SampleViewController.cpp in Sources */,
 				8964D66D212BC44900CEF7D7 /* CircuitView.cpp in Sources */,
 				8964D66E212BC44900CEF7D7 /* CircuitController.cpp in Sources */,

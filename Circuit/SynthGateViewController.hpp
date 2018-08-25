@@ -17,11 +17,10 @@
 
 #include "GateView.hpp"
 
-template <typename AtomClass = Atom>
-class GateViewController : public GateViewDelegate {
+class SynthGateViewController : public SynthGateViewDelegate {
   
 public:
-  GateViewController(const std::vector<Pad *> &pads) :
+  SynthGateViewController(const std::vector<Pad *> &pads) :
   _current_step(nullptr), _current_editing_step(nullptr) {
     _view = new GateView(pads, this);
   }
@@ -31,14 +30,14 @@ public:
     delete _view;
   }
   
-  void SetCurrentStep(Step<AtomClass> *current_step) {
+  void SetCurrentStep(Step<Synth> *current_step) {
     if (current_step == _current_step) {
       return;
     }
     _current_step = current_step;
   }
   
-  void SetCurrentEditingStep(Step<AtomClass> *current_editing_step) {
+  void SetCurrentEditingStep(Step<Synth> *current_editing_step) {
     if (_current_editing_step == current_editing_step) {
       return;
     }
@@ -63,9 +62,9 @@ public:
   }
   
 private:
-  GateView *_view;
-  Step<AtomClass> *_current_step;
-  Step<AtomClass> *_current_editing_step;
+  SynthGateView *_view;
+  Step<Synth> *_current_step;
+  Step<Synth> *_current_editing_step;
 };
 
 #endif /* GateViewController_hpp */
