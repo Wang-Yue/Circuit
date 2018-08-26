@@ -23,6 +23,7 @@
 
 #include "SampleViewController.hpp"
 #include "SynthViewController.hpp"
+#include "ScaleViewController.hpp"
 #include "ScreenController.hpp"
 
 #include "UIDefs.hpp"
@@ -78,6 +79,13 @@ public:
     }
     const std::vector<ChannelIndex> channels({0, 1});
     _screen_controller = new SampleViewController(this, channels);
+  }
+ 
+  void SwitchToScaleMode() {
+    if (_screen_controller) {
+      delete _screen_controller;
+    }
+    _screen_controller = new ScaleViewController(this);
   }
   
   enum CircuitEditingMode GetEditingMode() const {
@@ -186,6 +194,9 @@ public:
     }
     if (index == PadLength) {
       _editing_mode = CircuitEditLengthMode;
+    }
+    if (index == PadScale) {
+      SwitchToScaleMode();
     }
     if (index == PadRecord) {
       if (_circuit_mode == CircuitPlayingMode) {

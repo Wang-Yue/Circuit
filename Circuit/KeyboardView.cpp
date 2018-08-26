@@ -49,14 +49,15 @@ public:
     }
     for (PadIndex index = size + 1; index < _pads.size(); ++index) {
       _pads[index]->SetColor(kDisabledKeyColor);
+      _pads[index]->SetDelegate(this);
     }
   }
   const std::vector<Pad *> shufflePads(const std::vector<Pad *> &pads, const Scale &scale) {
     if (scale == ScaleChromatic) {
       assert(pads.size() == kPadsInRow * 2);
-      static const char matrix[] = {8,1,9,2,10,11,4,12,5,13,6,14,15};
+      static const PadIndex matrix[] = {8,1,9,2,10,11,4,12,5,13,6,14,15, 0,3,7};
       std::vector<Pad *> result;
-      for (PadIndex pad = 0; pad <= kOctaveDegree + 1; ++pad) {
+      for (PadIndex pad = 0; pad < pads.size() + 1; ++pad) {
         result.push_back(pads[matrix[pad]]);
       }
       return result;
@@ -190,6 +191,6 @@ void KeyboardView::Release(const Note &note) {
   if (_delegate) {
     _delegate->Release(note);
   }
-  }
+}
 
 

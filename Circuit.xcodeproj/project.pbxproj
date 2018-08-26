@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8913D17121330C1C00CEF7D7 /* ScaleViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8913D16F21330C1B00CEF7D7 /* ScaleViewController.cpp */; };
+		8913D17421330FAF00CEF7D7 /* ScaleSelectionView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8913D17221330FAF00CEF7D7 /* ScaleSelectionView.cpp */; };
 		891883BF2132820900CEF7D7 /* NudgeView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 891883BD2132820900CEF7D7 /* NudgeView.cpp */; };
 		8964D63E212BA38400CEF7D7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8964D63D212BA38400CEF7D7 /* Assets.xcassets */; };
 		8964D641212BA38400CEF7D7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8964D63F212BA38400CEF7D7 /* Main.storyboard */; };
@@ -43,6 +45,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8913D16F21330C1B00CEF7D7 /* ScaleViewController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ScaleViewController.cpp; sourceTree = "<group>"; };
+		8913D17021330C1C00CEF7D7 /* ScaleViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ScaleViewController.hpp; sourceTree = "<group>"; };
+		8913D17221330FAF00CEF7D7 /* ScaleSelectionView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ScaleSelectionView.cpp; sourceTree = "<group>"; };
+		8913D17321330FAF00CEF7D7 /* ScaleSelectionView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ScaleSelectionView.hpp; sourceTree = "<group>"; };
 		891883BD2132820900CEF7D7 /* NudgeView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NudgeView.cpp; sourceTree = "<group>"; };
 		891883BE2132820900CEF7D7 /* NudgeView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NudgeView.hpp; sourceTree = "<group>"; };
 		891883C12132821E00CEF7D7 /* NudgeViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NudgeViewController.hpp; sourceTree = "<group>"; };
@@ -240,6 +246,10 @@
 				8964D5DB212B989C00CEF7D7 /* SampleViewController.hpp */,
 				89A3CF9D212E1B8400CEF7D7 /* SynthViewController.cpp */,
 				89A3CF9E212E1B8400CEF7D7 /* SynthViewController.hpp */,
+				8913D16F21330C1B00CEF7D7 /* ScaleViewController.cpp */,
+				8913D17021330C1C00CEF7D7 /* ScaleViewController.hpp */,
+				8913D17221330FAF00CEF7D7 /* ScaleSelectionView.cpp */,
+				8913D17321330FAF00CEF7D7 /* ScaleSelectionView.hpp */,
 				8964D5DD212B998700CEF7D7 /* CircuitView.cpp */,
 				8964D5DE212B998700CEF7D7 /* CircuitView.hpp */,
 				89A13C2B212CBB7500CEF7D7 /* ScreenController.cpp */,
@@ -327,6 +337,7 @@
 				89A0903A2130B1F800CEF7D7 /* VelocityView.cpp in Sources */,
 				89A13C2D212CBB7500CEF7D7 /* ScreenController.cpp in Sources */,
 				8964D672212BC45300CEF7D7 /* ViewController.mm in Sources */,
+				8913D17421330FAF00CEF7D7 /* ScaleSelectionView.cpp in Sources */,
 				891883BF2132820900CEF7D7 /* NudgeView.cpp in Sources */,
 				8964D673212BC45300CEF7D7 /* main.m in Sources */,
 				89A3CFA2212E1ECD00CEF7D7 /* KeyboardViewController.cpp in Sources */,
@@ -338,6 +349,7 @@
 				8964D664212BC44900CEF7D7 /* Atom.cpp in Sources */,
 				8964D665212BC44900CEF7D7 /* Synth.cpp in Sources */,
 				8964D666212BC44900CEF7D7 /* Sample.cpp in Sources */,
+				8913D17121330C1C00CEF7D7 /* ScaleViewController.cpp in Sources */,
 				8964D668212BC44900CEF7D7 /* Pad.cpp in Sources */,
 				8964D669212BC44900CEF7D7 /* Color.cpp in Sources */,
 				8964D66A212BC44900CEF7D7 /* PatternView.cpp in Sources */,
