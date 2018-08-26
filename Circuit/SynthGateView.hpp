@@ -13,7 +13,6 @@
 #include <map>
 #include "TypeDefs.hpp"
 #include "Pad.hpp"
-#include "Color.hpp"
 
 class SynthGateViewDelegate {
 public:

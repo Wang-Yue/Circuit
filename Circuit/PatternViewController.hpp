@@ -1,13 +1,13 @@
 //
-//  SynthPatternViewController.hpp
+//  PatternViewController.hpp
 //  CircuitApp
 //
 //  Created by Yue Wang on 8/19/18.
 //  Copyright © 2018 Yue Wang. All rights reserved.
 //
 
-#ifndef SynthPatternViewController_hpp
-#define SynthPatternViewController_hpp
+#ifndef PatternViewController_hpp
+#define PatternViewController_hpp
 
 #include "PatternView.hpp"
 #include <map>
@@ -17,19 +17,20 @@
 #include "Synth.hpp"
 #include "Step.hpp"
 
-
-class SynthPatternViewControllerDelegate {
+template <typename AtomClass = Atom>
+class PatternViewControllerDelegate {
 public:
-  virtual void SelectStep(Step<Synth> *step, const StepIndex &selected_index) = 0;
+  virtual void SelectStep(Step<AtomClass> *step, const StepIndex &selected_index) = 0;
   virtual void ReleaseStep(const StepIndex &selected_index) = 0;
 };
 
-
-class SynthPatternViewController : PatternViewDelegate {
+template <typename AtomClass = Atom>
+class PatternViewController : PatternViewDelegate {
 public:
-  SynthPatternViewController(const std::vector<Pad *> &pads,
-                         Pattern<Synth> *pattern,
-                         SynthPatternViewControllerDelegate *delegate) : _delegate(delegate) {
+  PatternViewController(const std::vector<Pad *> &pads,
+                         Pattern<AtomClass> *pattern,
+                         PatternViewControllerDelegate<AtomClass> *delegate):
+  _delegate(delegate) {
     std::map<StepIndex, Pad *> step_pad_mapping;
     for (StepIndex i = 0; i < pads.size(); ++i) {
       step_pad_mapping[i] = pads[i];
@@ -38,7 +39,7 @@ public:
     SetPattern(pattern);
   }
   
-  void SetPattern(Pattern<Synth> *pattern) {
+  void SetPattern(Pattern<AtomClass> *pattern) {
     if (pattern == _pattern) {
       return;
     }
@@ -46,12 +47,12 @@ public:
     _pattern = pattern;
   }
   
-  virtual ~SynthPatternViewController(){
+  virtual ~PatternViewController(){
     delete _view;
   }
   virtual void Tap(const StepIndex &step_index) override {
     if (_delegate) {
-      Step<Synth> *step = _pattern->GetStep(step_index);
+      Step<AtomClass> *step = _pattern->GetStep(step_index);
       _delegate->SelectStep(step, step_index);
     }
   }
@@ -62,12 +63,12 @@ public:
     }
   }
   
-  void SetSelectedStep(Step<Synth> *step, const StepIndex &index) {
+  void SetSelectedStep(Step<AtomClass> *step, const StepIndex &index) {
     _selected_step = step;
     _selected_index = index;
   }
   
-  void SetCurserStep(Step<Synth> *step, const StepIndex &index) {
+  void SetCurserStep(Step<AtomClass> *step, const StepIndex &index) {
     _curser_step = step;
     _curser_index = index;
   }
@@ -75,7 +76,7 @@ public:
   void Update() {
     StepIndex pattern_length = _pattern->GetLength();
     for (StepIndex i = 0; i < pattern_length; ++i) {
-      Step<Synth> *step = _pattern->GetStep(i);
+      Step<AtomClass> *step = _pattern->GetStep(i);
       bool note_available = step->GetAtoms().size() != 0;
       if (note_available) {
         _view->SetAvailable(i);
@@ -85,7 +86,7 @@ public:
     }
     StepIndex pattern_capacity = _pattern->GetCapacity();
     for (StepIndex i = pattern_length; i < pattern_capacity; ++i) {
-      Step<Synth> *step = _pattern->GetStep(i);
+      Step<AtomClass> *step = _pattern->GetStep(i);
       bool note_available = step->GetAtoms().size() != 0;
       if (note_available) {
         _view->SetGhost(i);
@@ -104,11 +105,11 @@ public:
   }
 private:
   StepIndex _selected_index;
-  Step<Synth> *_selected_step;
+  Step<AtomClass> *_selected_step;
   StepIndex _curser_index;
-  Step<Synth> *_curser_step;
-  SynthPatternViewControllerDelegate *_delegate;
+  Step<AtomClass> *_curser_step;
+  PatternViewControllerDelegate<AtomClass> *_delegate;
   PatternView *_view;
-  Pattern<Synth> *_pattern;
+  Pattern<AtomClass> *_pattern;
 };
-#endif /* SynthPatternViewController_hpp */
+#endif /* PatternViewController_hpp */

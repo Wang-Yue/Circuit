@@ -10,7 +10,7 @@
 
 #include "SampleViewController.hpp"
 #include "CircuitView.hpp"
-#include "SynthPatternViewController.hpp"
+#include "PatternViewController.hpp"
 #include "KeyboardViewController.hpp"
 #include "SessionRunner.hpp"
 #include "ChannelRunner.hpp"
@@ -85,7 +85,7 @@ void SynthViewController::UpdateEditingMode() {
   pads_count -= kStepCapacity;
   std::vector<Pad *> pattern_pads = GetView()->GetRegularPads(pads_count, kStepCapacity);
   Pattern<Synth> *pattern = GetCurrentSynthPattern(_channel_index);
-  _pattern_controller = new SynthPatternViewController(pattern_pads, pattern, this);
+  _pattern_controller = new PatternViewController<Synth>(pattern_pads, pattern, this);
 
   std::vector<Pad *> remaining_pads = GetView()->GetRegularPads(0, pads_count);
 

@@ -24,7 +24,6 @@
 		8964D668212BC44900CEF7D7 /* Pad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8964D5CD212B7EA100CEF7D7 /* Pad.cpp */; };
 		8964D669212BC44900CEF7D7 /* Color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8964D5D0212B7ECE00CEF7D7 /* Color.cpp */; };
 		8964D66A212BC44900CEF7D7 /* PatternView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8964D5D4212B855100CEF7D7 /* PatternView.cpp */; };
-		8964D66B212BC44900CEF7D7 /* SamplePatternViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8964D5D7212B884300CEF7D7 /* SamplePatternViewController.cpp */; };
 		8964D66C212BC44900CEF7D7 /* SampleViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8964D5DA212B989C00CEF7D7 /* SampleViewController.cpp */; };
 		8964D66D212BC44900CEF7D7 /* CircuitView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8964D5DD212B998700CEF7D7 /* CircuitView.cpp */; };
 		8964D66E212BC44900CEF7D7 /* CircuitController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8964D5E0212B9B6100CEF7D7 /* CircuitController.cpp */; };
@@ -32,7 +31,6 @@
 		8964D671212BC45300CEF7D7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8964D638212BA38300CEF7D7 /* AppDelegate.m */; };
 		8964D672212BC45300CEF7D7 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8964D63B212BA38300CEF7D7 /* ViewController.mm */; };
 		8964D673212BC45300CEF7D7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8964D643212BA38400CEF7D7 /* main.m */; };
-		89A039B2212DD72D00CEF7D7 /* SynthPatternViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89A039B0212DD72D00CEF7D7 /* SynthPatternViewController.cpp */; };
 		89A0903721309E2400CEF7D7 /* SynthGateView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89A0903521309E2400CEF7D7 /* SynthGateView.cpp */; };
 		89A0903A2130B1F800CEF7D7 /* VelocityView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89A090382130B1F800CEF7D7 /* VelocityView.cpp */; };
 		89A090402130BA5B00CEF7D7 /* LengthView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89A0903E2130BA5B00CEF7D7 /* LengthView.cpp */; };
@@ -41,6 +39,9 @@
 		89A3CF9C212DDE3900CEF7D7 /* KeyboardView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89A3CF9A212DDE3900CEF7D7 /* KeyboardView.cpp */; };
 		89A3CF9F212E1B8400CEF7D7 /* SynthViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89A3CF9D212E1B8400CEF7D7 /* SynthViewController.cpp */; };
 		89A3CFA2212E1ECD00CEF7D7 /* KeyboardViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89A3CFA0212E1ECD00CEF7D7 /* KeyboardViewController.cpp */; };
+		89E710EE213346D900CEF7D7 /* SampleGateViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89E710EC213346D900CEF7D7 /* SampleGateViewController.cpp */; };
+		89E710F1213346F800CEF7D7 /* SampleGateView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89E710EF213346F800CEF7D7 /* SampleGateView.cpp */; };
+		89E710F32133473B00CEF7D7 /* SynthGateViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89E710F22133473B00CEF7D7 /* SynthGateViewController.cpp */; };
 		89EF1F042131CF5C00CEF7D7 /* UIDefs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89EF1F022131CF5C00CEF7D7 /* UIDefs.cpp */; };
 /* End PBXBuildFile section */
 
@@ -68,8 +69,6 @@
 		8964D5D1212B7ECE00CEF7D7 /* Color.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Color.hpp; sourceTree = "<group>"; };
 		8964D5D4212B855100CEF7D7 /* PatternView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PatternView.cpp; sourceTree = "<group>"; };
 		8964D5D5212B855100CEF7D7 /* PatternView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PatternView.hpp; sourceTree = "<group>"; };
-		8964D5D7212B884300CEF7D7 /* SamplePatternViewController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SamplePatternViewController.cpp; sourceTree = "<group>"; };
-		8964D5D8212B884300CEF7D7 /* SamplePatternViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SamplePatternViewController.hpp; sourceTree = "<group>"; };
 		8964D5DA212B989C00CEF7D7 /* SampleViewController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SampleViewController.cpp; sourceTree = "<group>"; };
 		8964D5DB212B989C00CEF7D7 /* SampleViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SampleViewController.hpp; sourceTree = "<group>"; };
 		8964D5DD212B998700CEF7D7 /* CircuitView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CircuitView.cpp; sourceTree = "<group>"; };
@@ -105,8 +104,7 @@
 		896555182127A83800CEF7D7 /* Sample.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Sample.cpp; sourceTree = "<group>"; };
 		896555192127A83800CEF7D7 /* Sample.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Sample.hpp; sourceTree = "<group>"; };
 		899F2078212A150000CEF7D7 /* AtomPacket.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AtomPacket.hpp; sourceTree = "<group>"; };
-		89A039B0212DD72D00CEF7D7 /* SynthPatternViewController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SynthPatternViewController.cpp; sourceTree = "<group>"; };
-		89A039B1212DD72D00CEF7D7 /* SynthPatternViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SynthPatternViewController.hpp; sourceTree = "<group>"; };
+		89A039B1212DD72D00CEF7D7 /* PatternViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PatternViewController.hpp; sourceTree = "<group>"; };
 		89A0903321309E1100CEF7D7 /* SynthGateViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SynthGateViewController.hpp; sourceTree = "<group>"; };
 		89A0903521309E2400CEF7D7 /* SynthGateView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SynthGateView.cpp; sourceTree = "<group>"; };
 		89A0903621309E2400CEF7D7 /* SynthGateView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SynthGateView.hpp; sourceTree = "<group>"; };
@@ -126,6 +124,11 @@
 		89A3CF9E212E1B8400CEF7D7 /* SynthViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SynthViewController.hpp; sourceTree = "<group>"; };
 		89A3CFA0212E1ECD00CEF7D7 /* KeyboardViewController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KeyboardViewController.cpp; sourceTree = "<group>"; };
 		89A3CFA1212E1ECD00CEF7D7 /* KeyboardViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = KeyboardViewController.hpp; sourceTree = "<group>"; };
+		89E710EC213346D900CEF7D7 /* SampleGateViewController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SampleGateViewController.cpp; sourceTree = "<group>"; };
+		89E710ED213346D900CEF7D7 /* SampleGateViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SampleGateViewController.hpp; sourceTree = "<group>"; };
+		89E710EF213346F800CEF7D7 /* SampleGateView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SampleGateView.cpp; sourceTree = "<group>"; };
+		89E710F0213346F800CEF7D7 /* SampleGateView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SampleGateView.hpp; sourceTree = "<group>"; };
+		89E710F22133473B00CEF7D7 /* SynthGateViewController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SynthGateViewController.cpp; sourceTree = "<group>"; };
 		89EF1F022131CF5C00CEF7D7 /* UIDefs.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = UIDefs.cpp; sourceTree = "<group>"; };
 		89EF1F032131CF5C00CEF7D7 /* UIDefs.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = UIDefs.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -228,7 +231,12 @@
 				891883C12132821E00CEF7D7 /* NudgeViewController.hpp */,
 				89A0903521309E2400CEF7D7 /* SynthGateView.cpp */,
 				89A0903621309E2400CEF7D7 /* SynthGateView.hpp */,
+				89E710F22133473B00CEF7D7 /* SynthGateViewController.cpp */,
 				89A0903321309E1100CEF7D7 /* SynthGateViewController.hpp */,
+				89E710EF213346F800CEF7D7 /* SampleGateView.cpp */,
+				89E710F0213346F800CEF7D7 /* SampleGateView.hpp */,
+				89E710EC213346D900CEF7D7 /* SampleGateViewController.cpp */,
+				89E710ED213346D900CEF7D7 /* SampleGateViewController.hpp */,
 				89A090382130B1F800CEF7D7 /* VelocityView.cpp */,
 				89A090392130B1F800CEF7D7 /* VelocityView.hpp */,
 				89A0903C2130B4D100CEF7D7 /* VelocityViewController.hpp */,
@@ -238,10 +246,7 @@
 				89A3CFA1212E1ECD00CEF7D7 /* KeyboardViewController.hpp */,
 				8964D5D4212B855100CEF7D7 /* PatternView.cpp */,
 				8964D5D5212B855100CEF7D7 /* PatternView.hpp */,
-				8964D5D7212B884300CEF7D7 /* SamplePatternViewController.cpp */,
-				8964D5D8212B884300CEF7D7 /* SamplePatternViewController.hpp */,
-				89A039B0212DD72D00CEF7D7 /* SynthPatternViewController.cpp */,
-				89A039B1212DD72D00CEF7D7 /* SynthPatternViewController.hpp */,
+				89A039B1212DD72D00CEF7D7 /* PatternViewController.hpp */,
 				8964D5DA212B989C00CEF7D7 /* SampleViewController.cpp */,
 				8964D5DB212B989C00CEF7D7 /* SampleViewController.hpp */,
 				89A3CF9D212E1B8400CEF7D7 /* SynthViewController.cpp */,
@@ -335,8 +340,10 @@
 			files = (
 				8964D671212BC45300CEF7D7 /* AppDelegate.m in Sources */,
 				89A0903A2130B1F800CEF7D7 /* VelocityView.cpp in Sources */,
+				89E710F32133473B00CEF7D7 /* SynthGateViewController.cpp in Sources */,
 				89A13C2D212CBB7500CEF7D7 /* ScreenController.cpp in Sources */,
 				8964D672212BC45300CEF7D7 /* ViewController.mm in Sources */,
+				89E710F1213346F800CEF7D7 /* SampleGateView.cpp in Sources */,
 				8913D17421330FAF00CEF7D7 /* ScaleSelectionView.cpp in Sources */,
 				891883BF2132820900CEF7D7 /* NudgeView.cpp in Sources */,
 				8964D673212BC45300CEF7D7 /* main.m in Sources */,
@@ -354,10 +361,9 @@
 				8964D669212BC44900CEF7D7 /* Color.cpp in Sources */,
 				8964D66A212BC44900CEF7D7 /* PatternView.cpp in Sources */,
 				89A3CF9F212E1B8400CEF7D7 /* SynthViewController.cpp in Sources */,
-				8964D66B212BC44900CEF7D7 /* SamplePatternViewController.cpp in Sources */,
-				89A039B2212DD72D00CEF7D7 /* SynthPatternViewController.cpp in Sources */,
 				89A090402130BA5B00CEF7D7 /* LengthView.cpp in Sources */,
 				89A0903721309E2400CEF7D7 /* SynthGateView.cpp in Sources */,
+				89E710EE213346D900CEF7D7 /* SampleGateViewController.cpp in Sources */,
 				8964D66C212BC44900CEF7D7 /* SampleViewController.cpp in Sources */,
 				8964D66D212BC44900CEF7D7 /* CircuitView.cpp in Sources */,
 				8964D66E212BC44900CEF7D7 /* CircuitController.cpp in Sources */,

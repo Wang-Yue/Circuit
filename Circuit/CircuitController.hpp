@@ -84,8 +84,7 @@ public:
     if (_screen_controller) {
       delete _screen_controller;
     }
-    const std::vector<ChannelIndex> channels({0, 1});
-    _screen_controller = new SampleViewController(this, channels);
+    _screen_controller = new SampleViewController(this, 0);
   }
  
   void SwitchToScaleMode() {

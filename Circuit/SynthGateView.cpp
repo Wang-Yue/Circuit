@@ -8,6 +8,8 @@
 
 #include "SynthGateView.hpp"
 
+#include "Color.hpp"
+
 static const Color kZeroGateColor(0x00000000);
 static const ColorCode kFullGateColorCode = 0x000000ff;
 static const Color kFullGateColor(kFullGateColorCode);
@@ -50,18 +52,16 @@ void SynthGateView::SetGate(const Gate &gate) {
 void SynthGateView::Tap(Pad *pad) {
   PadIndex pad_index = pad->GetPadIndex();
   PadIndex previous_pad = _previous_gate / kGateIncrementPerPad;
-  Gate gate = 0;
   if (pad_index != previous_pad) {
-    gate = (1 + pad_index) * kGateIncrementPerPad - 1;
+    _previous_gate = (1 + pad_index) * kGateIncrementPerPad - 1;
   } else {
-    ++_previous_gate;
-    if (_previous_gate % kGateIncrementPerPad) {
-      _previous_gate -= kGateIncrementPerPad;
+    --_previous_gate;
+    if (_previous_gate % kGateIncrementPerPad == 0) {
+      _previous_gate += kGateIncrementPerPad;
     }
-    gate = _previous_gate;
   }
   if (_delegate) {
-    _delegate->Tap(gate);
+    _delegate->Tap(_previous_gate);
   }
 }
 

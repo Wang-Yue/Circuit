@@ -11,7 +11,7 @@
 
 #include "ScreenController.hpp"
 
-#include "SynthPatternViewController.hpp"
+#include "PatternViewController.hpp"
 #include "KeyboardViewController.hpp"
 
 #include "TypeDefs.hpp"
@@ -20,7 +20,6 @@
 
 class CircuitController;
 
-class SynthPatternViewController;
 class SynthGateViewController;
 class KeyboardViewController;
 class Synth;
@@ -30,24 +29,27 @@ template <typename AtomClass> class NudgeViewController;
 
 class SynthViewController :
 public ScreenController,
-public SynthPatternViewControllerDelegate,
+public PatternViewControllerDelegate<Synth>,
 public KeyboardViewControllerDelegate {
   
 public:
   SynthViewController(CircuitController *parent,
                       const ChannelIndex &channel);
   virtual ~SynthViewController();
-  virtual void Update() override;
+  // PatternViewControllerDelegate.
   virtual void SelectStep(Step<Synth> *step, const StepIndex &selected_index) override;
   virtual void ReleaseStep(const StepIndex &selected_index) override;
+  // KeyboardViewControllerDelegate.
   virtual void TapNote(const Note &note) override;
   virtual void ReleaseNote(const Note &note) override;
+  // ScreenController.
   virtual void UpdateRunningMode() override;
   virtual void UpdateEditingMode() override;
+  virtual void Update() override;
 private:
   void KillAllControllers();
   const ChannelIndex _channel_index;
-  SynthPatternViewController *_pattern_controller;
+  PatternViewController<Synth> *_pattern_controller;
   KeyboardViewController *_keyboard_controller;
   SynthGateViewController *_gate_view_controller;
   VelocityViewController<Synth> *_velocity_view_controller;
