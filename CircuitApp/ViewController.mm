@@ -105,7 +105,7 @@ void Beep() {
   self = [super initWithFrame:frameRect];
   if (self) {
     NSUInteger uid = 0;
-    for (int i = 0; i < 4; ++i) {
+    for (int i = 0; i < 5; ++i) {
       for (int j = 0; j < 8; ++j) {
         CGFloat x = j * 50;
         CGFloat y = i * 50;

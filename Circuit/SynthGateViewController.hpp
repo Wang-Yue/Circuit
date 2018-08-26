@@ -51,7 +51,7 @@ public:
     }
   }
   
-  void TickStep() {
+  void Update() {
     Gate gate = 0;
     if (_current_editing_step) {
       gate = _current_editing_step->GetGate();

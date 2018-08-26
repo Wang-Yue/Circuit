@@ -27,9 +27,9 @@ public:
   ScreenController(CircuitController *parent);
   virtual ~ScreenController();
   virtual void Update() = 0;
-  CircuitView *GetView() const;
+  CircuitView *GetView();
   virtual void UpdateEditingMode() = 0;
-
+  virtual void UpdateRunningMode() = 0;
 protected:
   Session *GetCurrentSession();
   SessionRunner *GetSessionRunner();

@@ -13,11 +13,9 @@
 
 
 ScreenController::ScreenController(CircuitController *parent) : _parent(parent) {
-  _view = new CircuitView();
 }
 
 ScreenController::~ScreenController() {
-  delete _view;
 }
 
 Pattern<Sample> * ScreenController::GetCurrentSamplePattern(const ChannelIndex &index) {
@@ -43,8 +41,8 @@ ChannelRunner<Synth> *ScreenController::GetSynthChannelRunner(const ChannelIndex
   return GetSessionRunner()->GetSynthChannelRunner(index);
 }
 
-CircuitView *ScreenController::GetView() const {
-  return _view;
+CircuitView *ScreenController::GetView() {
+  return _parent->GetView();
 }
 
 Session *ScreenController::GetCurrentSession() {

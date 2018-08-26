@@ -25,7 +25,7 @@ _pads(pads), _delegate(delegate) {
 void LengthView::SetLength(const StepIndex &length) {
   for (PadIndex i = 0; i < _pads.size(); ++i ){
     Pad *pad = _pads[i];
-    if (i <= length) {
+    if (i < length) {
       pad->SetColor(kFullLengthColor);
     } else {
       pad->SetColor(kZeroLengthColor);

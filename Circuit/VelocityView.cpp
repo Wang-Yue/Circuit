@@ -55,7 +55,6 @@ void VelocityView::Tap(Pad *pad) {
     }
     velocity = _previous_velocity;
   }
-  SetVelocity(velocity);
   if (_delegate) {
     _delegate->Tap(velocity);
   }

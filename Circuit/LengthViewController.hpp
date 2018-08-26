@@ -47,7 +47,7 @@ public:
     }
   }
   
-  void TickStep() {
+  void Update() {
     StepIndex length = 0;
     if (_pattern) {
       length = _pattern->GetLength();

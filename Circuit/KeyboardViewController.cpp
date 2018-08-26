@@ -28,33 +28,34 @@ void KeyboardViewController::SetEditingStep(Step<Synth> *editing_step) {
 }
 
 void KeyboardViewController::Tap(const Note &note) {
-  if (_editing_step) {
-    if (!_editing_step->RemoveNote(note)) {
-      _editing_step->AddNote(note);
-    }
-  } else {
-    if (_delegate) {
-      _delegate->TapNote(note);
-    }
+  if (_delegate) {
+    _delegate->TapNote(note);
   }
 }
+
 void KeyboardViewController::Release(const Note &note) {
-  if (!_editing_step) {
-    if (_delegate) {
-      _delegate->ReleaseNote(note);
-    }
+  if (_delegate) {
+    _delegate->ReleaseNote(note);
   }
 }
 
 void KeyboardViewController::Update() {
   _view->AllNotesOff();
-  ShowStepNotes();
-}
-
-void KeyboardViewController::ShowPlayingNotes(const std::list<Note> &playing_notes) {
-  for (const Note &note : playing_notes) {
+  // Show edit step notes.
+  if (_editing_step) {
+    std::vector<Note> notes = _editing_step->GetNotes();
+    for (Note &note : notes) {
+      _view->Highlight(note);
+    }
+  }
+  // Show playing notes.
+  for (const Note &note : _playing_notes) {
     _view->Highlight(note);
   }
+}
+
+void KeyboardViewController::SetPlayingNotes(const std::list<Note> &playing_notes) {
+  _playing_notes = playing_notes;
 }
 
 void KeyboardViewController::NoteOn(const Note &note) {
@@ -64,12 +65,5 @@ void KeyboardViewController::NoteOff(const Note &note) {
   Release(note);
 }
 
-void KeyboardViewController::ShowStepNotes() {
-  if (_editing_step) {
-    std::vector<Note> notes = _editing_step->GetNotes();
-    for (Note &note : notes) {
-      _view->Highlight(note);
-    }
-  }
-}
+
 

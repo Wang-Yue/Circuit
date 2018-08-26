@@ -20,8 +20,8 @@
 
 class SynthPatternViewControllerDelegate {
 public:
-  virtual void SelectStep(Step<Synth> *step) = 0;
-  virtual void ReleaseStep() = 0;
+  virtual void SelectStep(Step<Synth> *step, const StepIndex &selected_index) = 0;
+  virtual void ReleaseStep(const StepIndex &selected_index) = 0;
 };
 
 
@@ -50,35 +50,29 @@ public:
     delete _view;
   }
   virtual void Tap(const StepIndex &step_index) override {
-    _selected_index.insert(step_index);
-    
-    if (!_delegate) {
-      return;
+    if (_delegate) {
+      Step<Synth> *step = _pattern->GetStep(step_index);
+      _delegate->SelectStep(step, step_index);
     }
-    if (_selected_step) {
-      _delegate->ReleaseStep();
-    }
-    _selected_step = _pattern->GetStep(step_index);
-    _delegate->SelectStep(_selected_step);
   }
   
   virtual void Release(const StepIndex &step_index) override {
-    _selected_index.erase(step_index);
-
-    if (!_delegate) {
-      return;
+    if (_delegate) {
+      _delegate->ReleaseStep(step_index);
     }
-    assert(_selected_step != nullptr);
-    // One may selected a few steps. We only release the last selected one, as others are already
-    // released in the Tap function.
-    Step<Synth> *step = _pattern->GetStep(step_index);
-    if (step == _selected_step) {
-      _delegate->ReleaseStep();
-    }
-    _selected_step = nullptr;
   }
   
-  void TickStep(const StepIndex &step_index) {
+  void SetSelectedStep(Step<Synth> *step, const StepIndex &index) {
+    _selected_step = step;
+    _selected_index = index;
+  }
+  
+  void SetCurserStep(Step<Synth> *step, const StepIndex &index) {
+    _curser_step = step;
+    _curser_index = index;
+  }
+  
+  void Update() {
     StepIndex pattern_length = _pattern->GetLength();
     for (StepIndex i = 0; i < pattern_length; ++i) {
       Step<Synth> *step = _pattern->GetStep(i);
@@ -99,14 +93,20 @@ public:
         _view->SetDisabled(i);
       }
     }
-    _view->SetCurser(step_index);
-    for (const StepIndex &index : _selected_index) {
-      _view->SetSelected(index);
+    // Here we prioritize showing the selected step if exist, in case the curser index and selected
+    // index are the same.
+    if (_curser_step) {
+      _view->SetCurser(_curser_index);
+    }
+    if (_selected_step) {
+      _view->SetSelected(_selected_index);
     }
   }
 private:
-  std::set<StepIndex> _selected_index;
+  StepIndex _selected_index;
   Step<Synth> *_selected_step;
+  StepIndex _curser_index;
+  Step<Synth> *_curser_step;
   SynthPatternViewControllerDelegate *_delegate;
   PatternView *_view;
   Pattern<Synth> *_pattern;

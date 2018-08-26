@@ -62,8 +62,22 @@ public:
       step->ClearAutomation(trait);
     }
   }
+  
+  void NudgeLeft() {
+    Step<AtomClass> *first = _steps[0];
+    for (StepIndex i = 0; i < _length - 1; ++i) {
+      _steps[i] = _steps[i + 1];
+    }
+    _steps[_length - 1] = first;
+  }
 
-
+  void NudgeRight() {
+    Step<AtomClass> *last = _steps[0];
+    for (StepIndex i = 1; i < _length; ++i) {
+      _steps[i] = _steps[i - 1];
+    }
+    _steps[0] = last;
+  }
 private:
   Pattern(const StepIndex &pattern_capacity, Channel<AtomClass> * const channel) :
   _pattern_capacity(pattern_capacity), _channel(channel) {

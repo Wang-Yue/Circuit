@@ -37,11 +37,11 @@ public:
                       const ChannelIndex &channel);
   virtual ~SynthViewController();
   virtual void Update() override;
-  virtual void SelectStep(Step<Synth> *step) override;
-  virtual void ReleaseStep() override;
+  virtual void SelectStep(Step<Synth> *step, const StepIndex &selected_index) override;
+  virtual void ReleaseStep(const StepIndex &selected_index) override;
   virtual void TapNote(const Note &note) override;
   virtual void ReleaseNote(const Note &note) override;
-  
+  virtual void UpdateRunningMode() override;
   virtual void UpdateEditingMode() override;
 private:
   void KillAllControllers();
@@ -52,6 +52,8 @@ private:
   VelocityViewController<Synth> *_velocity_view_controller;
   LengthViewController<Synth> *_length_view_controller;
   std::map<Synth *, Note> _active_atoms;
+  StepIndex _editing_step_index;
+  Step<Synth> *_editing_step;
 };
 
 #endif /* SynthViewController_hpp */

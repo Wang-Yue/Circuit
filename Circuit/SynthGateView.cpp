@@ -54,7 +54,6 @@ void SynthGateView::Tap(Pad *pad) {
     }
     gate = _previous_gate;
   }
-  SetGate(gate);
   if (_delegate) {
     _delegate->Tap(gate);
   }

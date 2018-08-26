@@ -25,6 +25,7 @@ public:
   SampleViewController(CircuitController *parent, const std::vector<ChannelIndex> &channels);
   virtual ~SampleViewController();
   virtual void Update() override;
+  virtual void UpdateRunningMode() override;
   virtual void UpdateEditingMode() override;
 private:
   void SetupController(ChannelIndex index, SamplePatternViewController *controller);

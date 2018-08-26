@@ -44,7 +44,7 @@ public:
   Pad *GetControlPad(const PadIndex &index) {
     assert(index >= kRegularPadCount);
     assert(index < PadUnknown);
-    return _pads[PadNote];
+    return _pads[index];
   }
 
 private:

@@ -52,3 +52,7 @@ void SampleViewController::Update() {
 void SampleViewController::UpdateEditingMode() {
   // TODO.
 }
+
+void SampleViewController::UpdateRunningMode() {
+  // TODO.
+}

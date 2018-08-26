@@ -52,7 +52,7 @@ public:
     }
   }
   
-  void TickStep() {
+  void Update() {
     Velocity velocity = 0;
     if (_current_editing_step) {
       velocity = _current_editing_step->GetVelocity();

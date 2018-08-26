@@ -28,17 +28,28 @@
 #include "UIDefs.hpp"
 
 
-class CircuitController {
+
+class CircuitController : public PadDelegate {
 public:
   CircuitController() {
+    _view = new CircuitView();
     _circuit_mode = CircuitStopMode;
     _workspace = new Workspace();
     _editing_mode = CircuitEditNoteMode;
     _atom_mode = CircuitAtomSynth;
     _session_runner = new SessionRunner(GetCurrentSession());
     _screen_controller = new SynthViewController(this, 0);
+    
+    for (PadIndex index = kRegularPadCount; index < PadUnknown; ++index) {
+      Pad *pad = GetView()->GetControlPad(index);
+      pad->SetDelegate(this);
+    }
   }
   
+  CircuitView *GetView() const {
+    return _view;
+  }
+
   
   void RestartRunning() {
     if (_session_runner) {
@@ -83,6 +94,9 @@ public:
   
   void Stop() {
     _circuit_mode = CircuitStopMode;
+    if (_screen_controller) {
+      _screen_controller->UpdateRunningMode();
+    }
   }
   
   bool IsStopped() const {
@@ -92,6 +106,9 @@ public:
   void Play() {
     _circuit_mode = CircuitPlayingMode;
     RestartRunning();
+    if (_screen_controller) {
+      _screen_controller->UpdateRunningMode();
+    }
   }
   
   bool IsPlaying() const {
@@ -100,6 +117,9 @@ public:
   
   void Record() {
     _circuit_mode = CircuitRecordMode;
+    if (_screen_controller) {
+      _screen_controller->UpdateRunningMode();
+    }
   }
   
   bool IsRecording() const {
@@ -108,6 +128,7 @@ public:
 
   
   ~CircuitController() {
+    delete _view;
     delete _screen_controller;
     delete _session_runner;
     delete _workspace;
@@ -149,7 +170,50 @@ public:
     _session_runner = runner;
   }
   
+  virtual void Tap(Pad *pad) override {
+    PadIndex index = pad->GetPadIndex();
+    if (index == PadNote) {
+      _editing_mode = CircuitEditNoteMode;
+    }
+    if (index == PadGate) {
+      _editing_mode = CircuitEditGateMode;
+    }
+    if (index == PadVelocity) {
+      _editing_mode = CircuitEditVelocityMode;
+    }
+    if (index == PadNudge) {
+      _editing_mode = CircuitEditNudgeMode;
+    }
+    if (index == PadLength) {
+      _editing_mode = CircuitEditLengthMode;
+    }
+    if (index == PadRecord) {
+      if (_circuit_mode == CircuitPlayingMode) {
+        Record();
+      }
+    }
+    if (index == PadPlay) {
+      if (_circuit_mode == CircuitStopMode) {
+        Play();
+      } else {
+        Stop();
+      }
+    }
+    if (!_screen_controller) {
+      return;
+    }
+    if (index >= PadNote && index <= PadLength) {
+      _screen_controller->UpdateEditingMode();
+    }
+
+  }
+  virtual void Release(Pad *) override {
+    // no-op.
+  };
+
+  
 private:
+  CircuitView *_view;
   Workspace *_workspace;
   SessionRunner *_session_runner;
   ScreenController *_screen_controller;

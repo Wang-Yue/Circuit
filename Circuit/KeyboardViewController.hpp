@@ -33,8 +33,9 @@ public:
   virtual ~KeyboardViewController();
   
   void SetEditingStep(Step<Synth> *editing_step);
+  void SetPlayingNotes(const std::list<Note> &playing_notes);
+
   void Update();
-  void ShowPlayingNotes(const std::list<Note> &playing_notes);
   
   // KeyboardViewDelegate
   virtual void Tap(const Note &note) override;
@@ -44,10 +45,9 @@ public:
   virtual void NoteOn(const Note &note) override;
   virtual void NoteOff(const Note &note) override;
 private:
-  void ShowStepNotes();
-
   KeyboardView *_view;
   Step<Synth> *_editing_step;
+  std::list<Note> _playing_notes;
   KeyboardViewControllerDelegate *_delegate;
 };
 
