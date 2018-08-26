@@ -20,6 +20,7 @@
 #include "SynthGateViewController.hpp"
 #include "VelocityViewController.hpp"
 #include "LengthViewController.hpp"
+#include "NudgeViewController.hpp"
 
 SynthViewController::SynthViewController(CircuitController *parent,
                                          const ChannelIndex &channel) :
@@ -30,6 +31,7 @@ _keyboard_controller(nullptr),
 _gate_view_controller(nullptr),
 _velocity_view_controller(nullptr),
 _length_view_controller(nullptr),
+_nudge_view_controller(nullptr),
 _editing_step(nullptr) {
   UpdateEditingMode();
 }
@@ -58,6 +60,10 @@ void SynthViewController::KillAllControllers() {
   if (_length_view_controller) {
     delete _length_view_controller;
     _length_view_controller = nullptr;
+  }
+  if (_nudge_view_controller) {
+    delete _nudge_view_controller;
+    _nudge_view_controller = nullptr;
   }
 }
 
@@ -90,7 +96,7 @@ void SynthViewController::UpdateEditingMode() {
   } else if (mode == CircuitEditVelocityMode) {
     _velocity_view_controller = new VelocityViewController<Synth>(remaining_pads);
   } else if (mode == CircuitEditNudgeMode) {
-    // Unavailable for now
+    _nudge_view_controller = new NudgeViewController<Synth>(remaining_pads);
   } else if (mode == CircuitEditLengthMode) {
     _length_view_controller = new LengthViewController<Synth>(remaining_pads);
   }
@@ -113,12 +119,6 @@ void SynthViewController::Update() {
     _pattern_controller->Update();
   }
   
-  if (_length_view_controller) {
-    // Behave the same in playing, record, stop mode.
-    _length_view_controller->SetPattern(pattern, nullptr);
-    _length_view_controller->Update();
-  }
-  
   if (_gate_view_controller) {
     // Behave the same in playing, record, stop mode.
     _gate_view_controller->SetCurrentStep(current_step);
@@ -131,6 +131,18 @@ void SynthViewController::Update() {
     _velocity_view_controller->SetCurrentStep(current_step);
     _velocity_view_controller->SetCurrentEditingStep(_editing_step);
     _velocity_view_controller->Update();
+  }
+
+  if (_length_view_controller) {
+    // Behave the same in playing, record, stop mode.
+    _length_view_controller->SetPattern(pattern, nullptr);
+    _length_view_controller->Update();
+  }
+  
+  if (_nudge_view_controller) {
+    // Behave the same in playing, record, stop mode.
+    _nudge_view_controller->SetPattern(pattern);
+    _nudge_view_controller->Update();
   }
   
   ChannelRunner<Synth> *channel_runner = GetSynthChannelRunner(_channel_index);

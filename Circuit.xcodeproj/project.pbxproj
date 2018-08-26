@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		891883BF2132820900CEF7D7 /* NudgeView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 891883BD2132820900CEF7D7 /* NudgeView.cpp */; };
 		8964D63E212BA38400CEF7D7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8964D63D212BA38400CEF7D7 /* Assets.xcassets */; };
 		8964D641212BA38400CEF7D7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8964D63F212BA38400CEF7D7 /* Main.storyboard */; };
 		8964D658212BA57600CEF7D7 /* librtmidi.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8964D5CB212B775000CEF7D7 /* librtmidi.4.dylib */; };
@@ -42,6 +43,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		891883BD2132820900CEF7D7 /* NudgeView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NudgeView.cpp; sourceTree = "<group>"; };
+		891883BE2132820900CEF7D7 /* NudgeView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NudgeView.hpp; sourceTree = "<group>"; };
+		891883C12132821E00CEF7D7 /* NudgeViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NudgeViewController.hpp; sourceTree = "<group>"; };
 		8919C28E2128EAEE00CEF7D7 /* SessionRunner.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SessionRunner.cpp; sourceTree = "<group>"; };
 		8919C28F2128EAEE00CEF7D7 /* SessionRunner.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SessionRunner.hpp; sourceTree = "<group>"; };
 		8919C2922128EB7200CEF7D7 /* ChannelRunner.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ChannelRunner.hpp; sourceTree = "<group>"; };
@@ -213,6 +217,9 @@
 				89A0903E2130BA5B00CEF7D7 /* LengthView.cpp */,
 				89A0903F2130BA5B00CEF7D7 /* LengthView.hpp */,
 				89A090422130BA6A00CEF7D7 /* LengthViewController.hpp */,
+				891883BD2132820900CEF7D7 /* NudgeView.cpp */,
+				891883BE2132820900CEF7D7 /* NudgeView.hpp */,
+				891883C12132821E00CEF7D7 /* NudgeViewController.hpp */,
 				89A0903521309E2400CEF7D7 /* SynthGateView.cpp */,
 				89A0903621309E2400CEF7D7 /* SynthGateView.hpp */,
 				89A0903321309E1100CEF7D7 /* SynthGateViewController.hpp */,
@@ -320,6 +327,7 @@
 				89A0903A2130B1F800CEF7D7 /* VelocityView.cpp in Sources */,
 				89A13C2D212CBB7500CEF7D7 /* ScreenController.cpp in Sources */,
 				8964D672212BC45300CEF7D7 /* ViewController.mm in Sources */,
+				891883BF2132820900CEF7D7 /* NudgeView.cpp in Sources */,
 				8964D673212BC45300CEF7D7 /* main.m in Sources */,
 				89A3CFA2212E1ECD00CEF7D7 /* KeyboardViewController.cpp in Sources */,
 				8964D660212BC44900CEF7D7 /* Workspace.cpp in Sources */,

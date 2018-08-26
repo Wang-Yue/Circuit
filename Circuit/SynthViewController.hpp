@@ -26,6 +26,7 @@ class KeyboardViewController;
 class Synth;
 template <typename AtomClass> class VelocityViewController;
 template <typename AtomClass> class LengthViewController;
+template <typename AtomClass> class NudgeViewController;
 
 class SynthViewController :
 public ScreenController,
@@ -51,6 +52,7 @@ private:
   SynthGateViewController *_gate_view_controller;
   VelocityViewController<Synth> *_velocity_view_controller;
   LengthViewController<Synth> *_length_view_controller;
+  NudgeViewController<Synth> *_nudge_view_controller;
   std::map<Synth *, Note> _active_atoms;
   StepIndex _editing_step_index;
   Step<Synth> *_editing_step;

@@ -9,7 +9,6 @@
 #ifndef LengthViewController_hpp
 #define LengthViewController_hpp
 
-#include "KeyboardView.hpp"
 #include <map>
 #include <list>
 #include "Pattern.hpp"

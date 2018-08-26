@@ -72,8 +72,8 @@ public:
   }
 
   void NudgeRight() {
-    Step<AtomClass> *last = _steps[0];
-    for (StepIndex i = 1; i < _length; ++i) {
+    Step<AtomClass> *last = _steps[_length - 1];
+    for (StepIndex i = _length - 1; i > 0; --i) {
       _steps[i] = _steps[i - 1];
     }
     _steps[0] = last;
