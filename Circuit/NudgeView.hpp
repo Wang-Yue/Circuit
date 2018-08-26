@@ -24,6 +24,7 @@ public:
 class NudgeView : public PadDelegate {
 public:
   NudgeView(const std::vector<Pad *> &pads, NudgeViewDelegate *delegate);
+  ~NudgeView();
   virtual void Tap(Pad *pad) override;
   virtual void Release(Pad *pad) override;
 private:

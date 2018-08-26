@@ -16,10 +16,16 @@ static const uint8_t kGateIncrementPerPad = 8;
 SynthGateView::SynthGateView(const std::vector<Pad *> &pads, SynthGateViewDelegate *delegate):
 _pads(pads), _delegate(delegate) {
   assert(pads.size() == kDiscreteGateValues / kGateIncrementPerPad);
-  for (PadIndex i = 0; i < pads.size(); ++i) {
+  for (PadIndex i = 0; i < _pads.size(); ++i) {
     Pad *pad = _pads[i];
     _pad_index_mapping[pad->GetPadIndex()] = i;
     pad->SetDelegate(this);
+  }
+}
+
+SynthGateView::~SynthGateView() {
+  for (Pad *pad : _pads) {
+    pad->SetDelegate(nullptr);
   }
 }
 

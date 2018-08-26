@@ -24,6 +24,7 @@ public:
 class VelocityView : public PadDelegate {
 public:
   VelocityView(const std::vector<Pad *> &pads, VelocityViewDelegate *delegate);
+  ~VelocityView();
   void SetVelocity(const Velocity &Velocity);
   
   virtual void Tap(Pad *pad) override;

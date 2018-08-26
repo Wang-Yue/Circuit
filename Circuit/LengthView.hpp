@@ -24,6 +24,7 @@ public:
 class LengthView : public PadDelegate {
 public:
   LengthView(const std::vector<Pad *> &pads, LengthViewDelegate *delegate);
+  ~LengthView();
   void SetLength(const StepIndex &length);
   virtual void Tap(Pad *pad) override;
   virtual void Release(Pad *pad) override;

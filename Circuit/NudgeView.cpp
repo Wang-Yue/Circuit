@@ -24,7 +24,13 @@ _delegate(delegate) {
   _nudge_right_pad->SetColor(kNudgeButtonColor);
   for (PadIndex i = 2; i < pads.size(); ++i) {
     pads[i]->SetColor(kUnusedColor);
+    pads[i]->SetDelegate(nullptr);
   }
+}
+
+NudgeView::~NudgeView() {
+  _nudge_left_pad->SetDelegate(nullptr);
+  _nudge_right_pad->SetDelegate(nullptr);
 }
 
 void NudgeView::Tap(Pad *pad) {

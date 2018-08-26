@@ -52,6 +52,11 @@ public:
       _pads[index]->SetDelegate(this);
     }
   }
+  ~OneOctaveKeyboardView() {
+    for (Pad *pad : _pads) {
+      pad->SetDelegate(nullptr);
+    }
+  }
   const std::vector<Pad *> shufflePads(const std::vector<Pad *> &pads, const Scale &scale) {
     if (scale == ScaleChromatic) {
       assert(pads.size() == kPadsInRow * 2);

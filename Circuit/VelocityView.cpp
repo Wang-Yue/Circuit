@@ -17,10 +17,16 @@ static const uint8_t kVelocityIncrementPerPad = 8;
 VelocityView::VelocityView(const std::vector<Pad *> &pads, VelocityViewDelegate *delegate):
 _pads(pads), _delegate(delegate) {
   assert(pads.size() == kDiscreteVelocityValues / kVelocityIncrementPerPad);
-  for (PadIndex i = 0; i < pads.size(); ++i) {
+  for (PadIndex i = 0; i < _pads.size(); ++i) {
     Pad *pad = _pads[i];
     _pad_index_mapping[pad->GetPadIndex()] = i;
     pad->SetDelegate(this);
+  }
+}
+
+VelocityView::~VelocityView() {
+  for (Pad *pad : _pads) {
+    pad->SetDelegate(nullptr);
   }
 }
 

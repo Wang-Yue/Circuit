@@ -25,6 +25,12 @@ _pads(pads), _delegate(delegate){
   }
 }
 
+ScaleSelectionView::~ScaleSelectionView() {
+  for (Pad *pad : _pads) {
+    pad->SetDelegate(nullptr);
+  }
+}
+
 void ScaleSelectionView::SetScale(const enum Scale &scale) {
   for (Pad *pad : _pads) {
     enum Scale pad_scale = _scale_mapping[pad->GetPadIndex()];

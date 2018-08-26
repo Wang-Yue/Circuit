@@ -47,6 +47,13 @@ public:
     }
   }
   
+  ~CircuitController() {
+    delete _view;
+    delete _screen_controller;
+    delete _session_runner;
+    delete _workspace;
+  }
+  
   CircuitView *GetView() const {
     return _view;
   }
@@ -133,15 +140,6 @@ public:
   bool IsRecording() const {
     return _circuit_mode == CircuitRecordMode;
   }
-
-  
-  ~CircuitController() {
-    delete _view;
-    delete _screen_controller;
-    delete _session_runner;
-    delete _workspace;
-  }
-
 
   void TickStep() {
     if (_screen_controller) {

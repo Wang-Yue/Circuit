@@ -15,10 +15,16 @@ static const Color kFullLengthColor(0x0000ff00);
 LengthView::LengthView(const std::vector<Pad *> &pads, LengthViewDelegate *delegate):
 _pads(pads), _delegate(delegate) {
   assert(pads.size() == kStepCapacity);
-  for (PadIndex i = 0; i < pads.size(); ++i) {
+  for (PadIndex i = 0; i < _pads.size(); ++i) {
     Pad *pad = _pads[i];
     _pad_index_mapping[pad->GetPadIndex()] = i;
     pad->SetDelegate(this);
+  }
+}
+
+LengthView::~LengthView() {
+  for (Pad *pad : _pads) {
+    pad->SetDelegate(nullptr);
   }
 }
 

@@ -26,6 +26,7 @@ public:
 class PatternView : public PadDelegate {
 public:
   PatternView(const std::map<StepIndex, Pad *> &step_pad_mapping, PatternViewDelegate *delegate);
+  ~PatternView();
   PadIndex PadCount() const;
   Pad *GetPad(const StepIndex &step_index);
   void SetDisabled(const StepIndex &step_index);

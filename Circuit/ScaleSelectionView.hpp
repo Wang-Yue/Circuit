@@ -22,6 +22,7 @@ public:
 class ScaleSelectionView : public PadDelegate {
 public:
   ScaleSelectionView(const std::vector<Pad *> &pads, ScaleSelectionViewDelegate *delegate);
+  ~ScaleSelectionView();
   void SetScale(const enum Scale &scale);
   virtual void Tap(Pad *pad) override;
   virtual void Release(Pad *pad) override;

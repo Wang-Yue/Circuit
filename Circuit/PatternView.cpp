@@ -26,6 +26,13 @@ _step_pad_mapping(step_pad_mapping), _delegate(delegate) {
     pad->SetDelegate(this);
   }
 }
+
+PatternView::~PatternView() {
+  for (std::pair<const StepIndex, Pad *> &p : _step_pad_mapping) {
+    p.second->SetDelegate(nullptr);
+  }
+}
+
 PadIndex PatternView::PadCount() const {
   return _step_pad_mapping.size();
 }

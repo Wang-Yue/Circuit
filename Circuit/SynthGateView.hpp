@@ -23,6 +23,7 @@ public:
 class SynthGateView : public PadDelegate {
 public:
   SynthGateView(const std::vector<Pad *> &pads, SynthGateViewDelegate *delegate);
+  ~SynthGateView();
   void SetGate(const Gate &gate);
   virtual void Tap(Pad *pad) override;
   virtual void Release(Pad *pad) override;
