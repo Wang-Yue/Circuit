@@ -13,7 +13,6 @@
 
 static const PatternIndex kPatternChainCapacity = 32;
 
-
 class Atom;
 template <typename AtomClass> class Step;
 template <typename AtomClass> class Pattern;

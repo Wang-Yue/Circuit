@@ -37,7 +37,6 @@ public:
   }
 private:
   ColorCode _code;
-
 };
 
 #endif /* Color_hpp */

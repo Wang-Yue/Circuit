@@ -16,7 +16,6 @@ _current_step(nullptr), _current_editing_step(nullptr) {
   _view = new SynthGateView(pads, this);
 }
 
-
 SynthGateViewController::~SynthGateViewController() {
   delete _view;
 }

@@ -126,4 +126,5 @@ private:
   }
   SynthIndex _synth_index;
 };
+
 #endif /* PatternBank_hpp */

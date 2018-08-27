@@ -23,35 +23,13 @@ public:
 
 class Pad {
 public:
-  Pad(const PadIndex &pad_index) : _pad_index(pad_index), _delegate(nullptr) {
-  }
-  PadIndex GetPadIndex() const {
-    return _pad_index;
-  }
-  Color GetColor()  const {
-    return _color;
-  }
-  void SetColor(const Color &color) {
-    // TODO: optimize by adding IsEqual to color
-//    if (color == _color) {
-//      return;
-//    }
-    _color = color;
-  }
-  
-  void SetDelegate(PadDelegate *delegate) {
-    _delegate = delegate;
-  }
-  void Tap() {
-    if (_delegate) {
-      _delegate->Tap(this);
-    }
-  }
-  void Release() {
-    if (_delegate) {
-      _delegate->Release(this);
-    }
-  }
+  Pad(const PadIndex &pad_index);
+  PadIndex GetPadIndex() const;
+  Color GetColor()  const;
+  void SetColor(const Color &color);
+  void SetDelegate(PadDelegate *delegate);
+  void Tap();
+  void Release();
 private:
   const PadIndex _pad_index;
   Color _color;

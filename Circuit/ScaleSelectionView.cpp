@@ -12,7 +12,6 @@
 static const Color kEnabledColor(0x00ffff00);
 static const Color kDisabledColor(0x000f0f00);
 
-
 ScaleSelectionView::ScaleSelectionView(const std::vector<Pad *> &pads, ScaleSelectionViewDelegate *delegate) :
 _pads(pads), _delegate(delegate){
   assert(pads.size() == ScaleUnknown);
