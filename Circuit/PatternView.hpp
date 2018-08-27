@@ -9,13 +9,10 @@
 #ifndef PatternView_hpp
 #define PatternView_hpp
 
-#include "Color.hpp"
-
-#include <vector>
 #include <map>
+
 #include "TypeDefs.hpp"
 #include "Pad.hpp"
-#include "Color.hpp"
 
 class PatternViewDelegate {
 public:

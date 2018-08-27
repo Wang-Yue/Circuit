@@ -12,51 +12,21 @@
 
 // Quick and hacky way to make the test environment working.
 
-void Beep() {
-  dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-    usleep(1000*100);
-    NSBeep();
-  });
 
-}
-
-@class Tapview;
-
-@interface MyManager : NSObject
-@property (nonatomic, retain) NSMutableArray *keys;
-@property (nonatomic, retain) NSMutableArray *keyEvents;
-@property (nonatomic, retain) NSMutableArray *views;
-+ (instancetype)sharedManager;
-- (void)key:(NSUInteger)key event:(BOOL)up;
+@interface CircuitView : NSView
+- (void)setColorCode:(uint32_t)colorCode forPad:(size_t)pad;
 @end
 
+static CircuitView *_circuitView = nullptr;
 
-@implementation MyManager
-
-+ (instancetype)sharedManager {
-  static MyManager *sharedMyManager = nil;
-  @synchronized(self) {
-    if (sharedMyManager == nil)
-      sharedMyManager = [[self alloc] init];
+void WritePadColor(const int &pad, const uint32_t &color) {
+  if (!_circuitView) {
+    return;
   }
-  return sharedMyManager;
+    dispatch_sync(dispatch_get_main_queue(), ^(void){
+      [_circuitView setColorCode:color forPad:pad];
+    });
 }
-
-- (instancetype)init {
-  if (self = [super init]) {
-    _keys = [NSMutableArray new];
-    _keyEvents = [NSMutableArray new];
-    _views = [NSMutableArray new];
-  }
-  return self;
-}
-
-- (void)key:(NSUInteger)key event:(BOOL)event {
-  [_keys addObject:@(key)];
-  [_keyEvents addObject:@(event)];
-}
-@end
-
 
 @interface TapView : NSView
 @property (nonatomic) char uid;
@@ -86,24 +56,23 @@ void Beep() {
 }
 
 - (void)mouseDown:(NSEvent *)event {
-  [[MyManager sharedManager] key:_uid event:YES];
+  TapPad(_uid);
 }
+
 - (void)mouseUp:(NSEvent *)event {
-  [[MyManager sharedManager] key:_uid event:NO];
+  ReleasePad(_uid);
 }
 
 @end
 
-
-
-@interface CircuitView : NSView
-@end
-
-@implementation CircuitView
+@implementation CircuitView {
+  NSMutableArray *_viewArray;
+}
 
 - (instancetype)initWithFrame:(NSRect)frameRect {
   self = [super initWithFrame:frameRect];
   if (self) {
+    _viewArray = [NSMutableArray array];
     NSUInteger uid = 0;
     for (int i = 0; i < 5; ++i) {
       for (int j = 0; j < 8; ++j) {
@@ -114,14 +83,22 @@ void Beep() {
         NSColor *color = [NSColor blackColor] ;
         [view.layer setBackgroundColor:[color CGColor]];
         [view becomeFirstResponder];
-        [[MyManager sharedManager].views addObject:view];
         [self addSubview:view];
+        [_viewArray addObject:view];
         ++uid;
       }
     }
   }
   InitializeCircuit();
   return self;
+}
+
+- (void)setColorCode:(uint32_t)colorCode forPad:(size_t)pad{
+  if (pad >= _viewArray.count) {
+    return;
+  }
+  TapView *view = _viewArray[pad];
+  [view setColorCode:colorCode];
 }
 
 - (BOOL)isFlipped {
@@ -133,49 +110,13 @@ void Beep() {
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  CircuitView *view = [[CircuitView alloc] initWithFrame:self.view.frame];
-  [self.view addSubview:view];
-  [NSTimer scheduledTimerWithTimeInterval:0.1f
-                                   target:self
-                                 selector:@selector(loopCircuit)
-                                 userInfo:nil
-                                  repeats:YES];
-
+  _circuitView = [[CircuitView alloc] initWithFrame:self.view.frame];
+  [self.view addSubview:_circuitView];
   // Do any additional setup after loading the view.
-}
-
-- (void)loopCircuit {
-  NSMutableArray *keys = [MyManager sharedManager].keys;
-  NSMutableArray *events = [MyManager sharedManager].keyEvents;
-  NSMutableArray *views = [MyManager sharedManager].views;
-
-  for (int i = 0; i < keys.count; ++i) {
-    NSNumber *key = keys[i];
-    NSNumber *event = events[i];
-    char k = [key charValue];
-    BOOL e = [event boolValue];
-    if (e) {
-      PressKey(k);
-    } else {
-      ReleaseKey(k);
-    }
-  }
-  [keys removeAllObjects];
-  [events removeAllObjects];
-  for (int i = 0; i < views.count; ++i) {
-    TapView *view = views[i];
-    uint32_t c = GetColor(i);
-    [view setColorCode:c];
-  }
-  Tick();
-  ++_tick;
-  _tick%=6;
 }
 
 - (void)setRepresentedObject:(id)representedObject {
   [super setRepresentedObject:representedObject];
-
-  // Update the view, if already loaded.
 }
 
 

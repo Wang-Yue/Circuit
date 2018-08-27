@@ -17,6 +17,9 @@
 #include "TypeDefs.hpp"
 #include <vector>
 
+#include "MIDIDelegate.hpp"
+
+
 class CircuitController;
 class SynthChannelOutputInterface;
 class SynthGateViewController;
@@ -29,7 +32,8 @@ template <typename AtomClass> class NudgeViewController;
 class SynthViewController :
 public ScreenController,
 public PatternViewControllerDelegate<Synth>,
-public KeyboardViewControllerDelegate {
+public KeyboardViewControllerDelegate,
+public MIDIDelegate {
   
 public:
   SynthViewController(CircuitController *parent,
@@ -45,9 +49,15 @@ public:
   virtual void UpdateRunningMode() override;
   virtual void UpdateEditingMode() override;
   virtual void Update() override;
+  // MidiDelegate.
+  virtual void NoteOn(const Note &note, const Velocity &velocity) override;
+  virtual void NoteOff(const Note &note) override;
 private:
   void KillAllControllers();
   void ReleaseImpromptuNotes();
+  void SignalNoteOn(const Note &note, const Velocity &velocity);
+  void SignlalNoteOff(const Note &note);
+
   const ChannelIndex _channel_index;
   PatternViewController<Synth> *_pattern_controller;
   KeyboardViewController *_keyboard_controller;

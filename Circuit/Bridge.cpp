@@ -9,26 +9,145 @@
 #include "Bridge.hpp"
 #include "CircuitController.hpp"
 #include "MidiController.hpp"
+#include "MIDIDelegate.hpp"
+#include "ThreadSafeQueue.hpp"
+#include <array>
+#include <thread>
 
-static CircuitController *controller = nullptr;
+class BridgeController : public MidiControllerDelegate {
+public:
+  BridgeController() {
+    MidiController::GetInstance().SetDelegate(this);
+    _circuit = new CircuitController();
+    _circuit->RestartRunning();
+    _bpm = _circuit->GetBPM();
+    _running = true;
+    _thread = std::thread(&BridgeController::Loop, this);
+    for (PadIndex i = 0; i < PadUnknown; ++i) {
+        WritePadColor(i, 0);
+        _pad_color[i] = 0;
+    }
+  }
+  ~BridgeController() {
+    _running = false;
+    _thread.join() ;
+    delete _circuit;
+  }
+  void Loop() {
+    while (_running) {
+      // beat per second
+      const auto beat_duration = std::chrono::milliseconds(60 * 1000 / _bpm) ;
+      // 1 beat is 1 quarter note, which is 24 midi ticks.
+      const auto tick_duration = beat_duration / 24;
+      std::this_thread::sleep_for(tick_duration);
+      Tick();
+    }
+  }
+  
+  void Tick () {
+    while (!_pad_command_queue.empty()) {
+      PadCommand command = _pad_command_queue.front();
+      _pad_command_queue.pop_front();
+      if (command.tapped) {
+        _circuit->GetPad(command.pad_index)->Tap();
+      } else {
+        _circuit->GetPad(command.pad_index)->Release();
+      }
+    }
+    while (!_midi_command_queue.empty()) {
+      MIDICommand command = _midi_command_queue.front();
+      _midi_command_queue.pop_front();
+      if (command.note_on) {
+        _circuit->NoteOn(command.note, command.velocity);
+      } else {
+        _circuit->NoteOff(command.note);
+      }
+    }
+    _circuit->TickMicrostep();
+    MidiController::GetInstance().Tick();
+    for (PadIndex i = 0; i < PadUnknown; ++i) {
+      ColorCode new_code = _circuit->GetPad(i)->GetColor().GetColorCode();
+      if (new_code != _pad_color[i]) {
+        WritePadColor(i, new_code);
+        _pad_color[i] = new_code;
+      }
+    }
+    _bpm = _circuit->GetBPM();
+  }
+
+  
+  void TapPad(const PadIndex &pad_index) {
+    PadCommand command = {
+      .pad_index = pad_index,
+      .tapped = true,
+    };
+    _pad_command_queue.push_back(command);
+  }
+  
+  void ReleasePad(const PadIndex &pad_index) {
+    PadCommand command = {
+      .pad_index = pad_index,
+      .tapped = false,
+    };
+    _pad_command_queue.push_back(command);
+  }
+  
+  virtual void NoteOn(const unsigned char &midi_note, const unsigned char &velocity) override {
+    Note note = MIDIToNote(midi_note, ScaleChromatic, 0);
+    printf("Octave %d, Degree %d\n", note.octave, note.degree);
+
+    MIDICommand command = {
+      .note = note,
+      .velocity = velocity,
+      .note_on = true,
+    };
+    _midi_command_queue.push_back(command);
+  }
+  
+  virtual void NoteOff(const unsigned char &midi_note) override {
+    Note note = MIDIToNote(midi_note, ScaleChromatic, 0);
+    printf("Octave %d, Degree %d\n", note.octave, note.degree);
+    
+    MIDICommand command = {
+      .note = note,
+      .velocity = 0,
+      .note_on = false,
+    };
+    _midi_command_queue.push_back(command);
+  }
+  
+private:
+  CircuitController *_circuit;
+  struct PadCommand {
+    PadIndex pad_index;
+    bool tapped;
+  };
+  ThreadSafeQueue<PadCommand> _pad_command_queue;
+  
+  struct MIDICommand {
+    Note note;
+    Velocity velocity;
+    bool note_on;
+  };
+  ThreadSafeQueue<MIDICommand> _midi_command_queue;
+  std::array<ColorCode, PadUnknown> _pad_color;
+  BPM _bpm;
+  std::thread _thread;
+  std::atomic<bool> _running;
+};
+
+
+static BridgeController *controller = nullptr;
 
 void InitializeCircuit() {
-  MidiController::GetInstance();
-  controller = new CircuitController();
-  controller->RestartRunning();
-}
-void PressKey(int key) {
-  controller->GetPad(key)->Tap();
-}
-void ReleaseKey(int key) {
-  controller->GetPad(key)->Release();
+  controller = new BridgeController;
 }
 
-uint32_t GetColor(int key) {
-  return controller->GetPad(key)->GetColor().GetColorCode();
+void TapPad(uint8_t key) {
+  controller->TapPad(key);
 }
 
-void Tick() {
-  controller->TickStep();
-  MidiController::GetInstance().Tick();
+void ReleasePad(uint8_t key) {
+  controller->ReleasePad(key);
 }
+

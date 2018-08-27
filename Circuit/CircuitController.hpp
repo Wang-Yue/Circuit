@@ -28,9 +28,9 @@
 
 #include "UIDefs.hpp"
 
+#include "MIDIDelegate.hpp"
 
-
-class CircuitController : public PadDelegate {
+class CircuitController : public PadDelegate, public MIDIDelegate {
 public:
   CircuitController() {
     _view = new CircuitView();
@@ -40,7 +40,7 @@ public:
     _atom_mode = CircuitAtomSynth;
     _session_runner = new SessionRunner(GetCurrentSession());
     _screen_controller = new SynthViewController(this, 0);
-    
+    _bpm = kDefaultBPM;
     for (PadIndex index = kRegularPadCount; index < PadUnknown; ++index) {
       Pad *pad = GetView()->GetControlPad(index);
       pad->SetDelegate(this);
@@ -139,16 +139,14 @@ public:
     return _circuit_mode == CircuitRecordMode;
   }
 
-  void TickStep() {
+  void TickMicrostep() {
     if (_screen_controller) {
       _screen_controller->Update();
     }
     if (_circuit_mode == CircuitStopMode) {
       return;
     }
-    for (int i = 0; i < kMicrosteps; ++i) {
-      _session_runner->TickMicrostep();
-    }
+    _session_runner->TickMicrostep();
   }
   
   Pad *GetPad(const PadIndex &index) const {
@@ -216,8 +214,26 @@ public:
   }
   virtual void Release(Pad *) override {
     // no-op.
-  };
-
+  }
+  
+  void SetMidiDelegate(MIDIDelegate *midi_delegate) {
+    _midi_delegate = midi_delegate;
+  }
+  
+  // MIDIDelegate.
+  virtual void NoteOn(const Note &note, const Velocity &velocity) override {
+    if (_midi_delegate) {
+      _midi_delegate->NoteOn(note, velocity);
+    }
+  }
+  virtual void NoteOff(const Note &note) override {
+    if (_midi_delegate) {
+      _midi_delegate->NoteOff(note);
+    }
+  }
+  BPM GetBPM() const {
+    return _bpm;
+  }
   
 private:
   CircuitView *_view;
@@ -227,5 +243,7 @@ private:
   CircuitRunningMode _circuit_mode;
   CircuitEditingMode _editing_mode;
   CircuitViewMode _atom_mode;
+  MIDIDelegate *_midi_delegate;
+  BPM _bpm;
 };
 #endif /* CircuitController_hpp */

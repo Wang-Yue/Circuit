@@ -58,6 +58,8 @@
 		8919C2A221293C4300CEF7D7 /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
 		8919C2A421293C5800CEF7D7 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		8919C2A621293C6900CEF7D7 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		895E1CC52134675100CEF7D7 /* ThreadSafeQueue.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ThreadSafeQueue.hpp; sourceTree = "<group>"; };
+		895E1CC821346CA100CEF7D7 /* MIDIDelegate.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MIDIDelegate.hpp; sourceTree = "<group>"; };
 		895E63DC21288F7800CEF7D7 /* PatternChainRunner.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PatternChainRunner.hpp; sourceTree = "<group>"; };
 		8964D5CB212B775000CEF7D7 /* librtmidi.4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = librtmidi.4.dylib; path = ../homebrew/Cellar/rtmidi/3.0.0/lib/librtmidi.4.dylib; sourceTree = "<group>"; };
 		8964D5CD212B7EA100CEF7D7 /* Pad.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Pad.cpp; sourceTree = "<group>"; };
@@ -258,11 +260,13 @@
 				89A13C2C212CBB7500CEF7D7 /* ScreenController.hpp */,
 				8964D5E0212B9B6100CEF7D7 /* CircuitController.cpp */,
 				8964D5E1212B9B6100CEF7D7 /* CircuitController.hpp */,
+				895E1CC821346CA100CEF7D7 /* MIDIDelegate.hpp */,
 				8964D65D212BBCA200CEF7D7 /* Bridge.cpp */,
 				8964D65E212BBCA200CEF7D7 /* Bridge.hpp */,
 				89E710F72133B49600CEF7D7 /* ChannelOutputFactory.cpp */,
 				89E710F82133B49600CEF7D7 /* ChannelOutputFactory.hpp */,
 				8919C29B2129359400CEF7D7 /* MidiController.hpp */,
+				895E1CC52134675100CEF7D7 /* ThreadSafeQueue.hpp */,
 			);
 			path = Circuit;
 			sourceTree = "<group>";

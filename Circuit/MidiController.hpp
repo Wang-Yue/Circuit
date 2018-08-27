@@ -13,13 +13,11 @@
 
 #include <RtMidi.h>
 
-#include "Synth.hpp"
-#include "Scale.hpp"
 
 class MidiControllerDelegate {
 public:
-  virtual void NoteOn(const Note &note) = 0;
-  virtual void NoteOff(const Note &note) = 0;
+  virtual void NoteOn(const unsigned char &midi_note, const unsigned char &velocity) = 0;
+  virtual void NoteOff(const unsigned char &midi_note) = 0;
 };
 
 class MidiController {
@@ -28,20 +26,20 @@ public:
     static MidiController instance;
     return instance;
   }
-  void SendPlayNoteMessage(const MIDINote &note, const Velocity &velocity){
+  void SendPlayNoteMessage(const char &note, const char &velocity){
     std::vector<unsigned char> message;
-    message.push_back( 144 );
+    message.push_back(144);
     message.push_back(note);
     message.push_back(velocity);
-    std::cout << "Play note" << (int)message[1] << std::endl;
+    printf("Play note %d\n", note);
     _midi_out->sendMessage( &message );
   };
-  void SendStopNoteMessage(const MIDINote &note){
+  void SendStopNoteMessage(const char &note){
     std::vector<unsigned char> message;
     message.push_back( 128 );
     message.push_back(note);
     message.push_back(0);
-    std::cout << "Stop note" << (int)message[1] << std::endl;
+    printf("Stop note %d\n", note);
     _midi_out->sendMessage( &message );
   };
   
@@ -56,17 +54,14 @@ public:
     _midi_in->getMessage( &message );
     size_t nBytes = message.size();
     if (nBytes && message[0] == 144) {
-      Note note = MIDIToNote(message[1], ScaleChromatic, 0);
-      std::cout << static_cast<int>(note.octave) << " " << static_cast<int>(note.degree) << std::endl;
       if (_delegate) {
-        _delegate->NoteOn(note);
+        _delegate->NoteOn(message[1], message[2]);
         return true;
       }
     }
     if (nBytes && message[0] == 128) {
-      Note note = MIDIToNote(message[1], ScaleChromatic, 0);
       if (_delegate) {
-        _delegate->NoteOff(note);
+        _delegate->NoteOff(message[1]);
         return true;
       }
     }

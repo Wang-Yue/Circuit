@@ -9,14 +9,13 @@
 #ifndef KeyboardViewController_hpp
 #define KeyboardViewController_hpp
 
-#include "KeyboardView.hpp"
-#include <map>
 #include <list>
-#include "Pattern.hpp"
-#include "Sample.hpp"
-#include "Step.hpp"
 
-#include "MidiController.hpp"
+#include "KeyboardView.hpp"
+
+class Synth;
+template <typename AtomClass> class Step;
+template <typename AtomClass> class Pattern;
 
 class KeyboardViewControllerDelegate {
 public:
@@ -24,7 +23,7 @@ public:
   virtual void ReleaseNote(const Note &note) = 0;
 };
 
-class KeyboardViewController : public KeyboardViewDelegate, public MidiControllerDelegate {
+class KeyboardViewController : public KeyboardViewDelegate {
 public:
   KeyboardViewController(const Note &base_note,
                          const Degree &tonic_degree,
@@ -41,9 +40,6 @@ public:
   virtual void Tap(const Note &note) override;
   virtual void Release(const Note &note) override;
 
-  // MidiControllerDelegate
-  virtual void NoteOn(const Note &note) override;
-  virtual void NoteOff(const Note &note) override;
 private:
   KeyboardView *_view;
   Step<Synth> *_editing_step;

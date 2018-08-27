@@ -23,6 +23,7 @@
 #include "NudgeViewController.hpp"
 #include "ChannelOutputFactory.hpp"
 #include "ChannelOutputInterface.hpp"
+#include "CircuitController.hpp"
 
 SynthViewController::SynthViewController(CircuitController *parent,
                                          const ChannelIndex &channel) :
@@ -37,10 +38,12 @@ _nudge_view_controller(nullptr),
 _editing_step(nullptr) {
   _output = ChannelOutputFactory::GetInstance().GetSynthChannelOutput(channel);
   UpdateEditingMode();
+  parent->SetMidiDelegate(this);
 }
 
 SynthViewController::~SynthViewController() {
   KillAllControllers();
+  _parent->SetMidiDelegate(nullptr);
 }
 
 void SynthViewController::KillAllControllers() {
@@ -182,7 +185,7 @@ void SynthViewController::Update() {
     Synth *synth = e.synth;
     if (synth) {
       Gate gate = synth->GetGate();
-      gate += kMicrosteps;
+      gate += 1;
       if (gate >= kStepCapacity * kMicrosteps) {
         gate = kStepCapacity * kMicrosteps;
       }
@@ -218,6 +221,21 @@ void SynthViewController::ReleaseStep(const StepIndex &selected_index) {
 }
 
 void SynthViewController::TapNote(const Note &note) {
+  SignalNoteOn(note, kDefaultVelocity);
+}
+
+void SynthViewController::ReleaseNote(const Note &note) {
+  SignlalNoteOff(note);
+}
+
+void SynthViewController::NoteOn(const Note &note, const Velocity &velocity) {
+  SignalNoteOn(note, velocity);
+}
+void SynthViewController::NoteOff(const Note &note) {
+  SignlalNoteOff(note);
+}
+
+void SynthViewController::SignalNoteOn(const Note &note, const Velocity &velocity) {
   if (_editing_step) {
     if (!_editing_step->RemoveNote(note)) {
       _editing_step->AddNote(note);
@@ -229,7 +247,7 @@ void SynthViewController::TapNote(const Note &note) {
     struct NoteEvent event = {
       .synth = nullptr,
       .midi_note = midi_note,
-      .velocity = kDefaultVelocity,
+      .velocity = velocity,
       .note = note,
     };
     if (IsRecording()) {
@@ -244,7 +262,7 @@ void SynthViewController::TapNote(const Note &note) {
   }
 }
 
-void SynthViewController::ReleaseNote(const Note &note) {
+void SynthViewController::SignlalNoteOff(const Note &note) {
   if (_editing_step) {
     // no-op.
   } else {
@@ -260,4 +278,3 @@ void SynthViewController::ReleaseNote(const Note &note) {
     }
   }
 }
-

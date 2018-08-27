@@ -12,8 +12,6 @@
 #include "ScreenController.hpp"
 
 #include "TypeDefs.hpp"
-#include <vector>
-#include <map>
 #include "PatternViewController.hpp"
 
 class CircuitController;

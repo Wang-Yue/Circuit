@@ -16,11 +16,10 @@
 
 
 void InitializeCircuit();
-void PressKey(int key);
-void ReleaseKey(int key);
-uint32_t GetColor(int item);
-void Tick();
+void TapPad(uint8_t pad);
+void ReleasePad(uint8_t pad);
 
-void Beep();
+// slave to implement.
+void WritePadColor(const int &pad, const uint32_t &color);
 
 #endif /* Bridge_hpp */

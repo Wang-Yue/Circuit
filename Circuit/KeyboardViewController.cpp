@@ -8,12 +8,13 @@
 
 #include "KeyboardViewController.hpp"
 
+#include "Step.hpp"
+
 KeyboardViewController::KeyboardViewController(const Note &base_note,
                                                const Degree &tonic_degree,
                                                const std::vector<Pad *> &pads,
                                                KeyboardViewControllerDelegate *delegate) : _editing_step(nullptr), _delegate(delegate) {
   _view = new KeyboardView(base_note, tonic_degree, pads, this);
-  MidiController::GetInstance().SetDelegate(this);
 }
 
 KeyboardViewController::~KeyboardViewController() {
@@ -57,13 +58,3 @@ void KeyboardViewController::Update() {
 void KeyboardViewController::SetPlayingNotes(const std::list<Note> &playing_notes) {
   _playing_notes = playing_notes;
 }
-
-void KeyboardViewController::NoteOn(const Note &note) {
-  Tap(note);
-}
-void KeyboardViewController::NoteOff(const Note &note) {
-  Release(note);
-}
-
-
-
