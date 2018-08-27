@@ -13,7 +13,7 @@ KeyboardViewController::KeyboardViewController(const Note &base_note,
                                                const std::vector<Pad *> &pads,
                                                KeyboardViewControllerDelegate *delegate) : _editing_step(nullptr), _delegate(delegate) {
   _view = new KeyboardView(base_note, tonic_degree, pads, this);
-  MidiController::getInstance().SetDelegate(this);
+  MidiController::GetInstance().SetDelegate(this);
 }
 
 KeyboardViewController::~KeyboardViewController() {

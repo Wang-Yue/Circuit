@@ -21,7 +21,8 @@
 #include "PatternChainRunner.hpp"
 #include "Channel.hpp"
 
-#include "MidiController.hpp"
+#include "ChannelOutputFactory.hpp"
+#include "ChannelOutputInterface.hpp"
 #include "Bridge.hpp"
 #include "Session.hpp"
 
@@ -54,10 +55,6 @@ public:
     _microstep_tick_counter = 0;
   }
 
-  virtual void Restart() {
-    _microstep_tick_counter = 0;
-  }
-
 protected:
   Channel<AtomClass> *_channel;
   PatternChainRunner<AtomClass> *_pattern_chain_runner;
@@ -75,10 +72,10 @@ class ChannelRunner<Sample> : public BaseChannelRunner<Sample> {
 public:
   ChannelRunner(Channel<Sample> *channel)  :
   BaseChannelRunner<Sample>(channel) {
+    _output = ChannelOutputFactory::GetInstance().GetSampleChannelOutput(channel->GetSampleIndex());
   }
 
   virtual ~ChannelRunner()  {
-    Restart();
   }
   
   virtual void TickMicrostep() override {
@@ -94,66 +91,57 @@ public:
     }
     PerformSchedule();
   }
-
-  virtual void Restart() override {
-    BaseChannelRunner::Restart();
-    GetPatternChainRunner()->Restart();
-    _scheduled_event.clear();
-  }
   
 private:
-  void SendStartCommand(const Sample *atom)  {
-//    std::cout << GetTickCounter() << " play sample: " << atom << std::endl;
-    Beep();
-  }
-
-  void SendStopCommand(const Sample *atom)  {
-    // no-op.
-  }
-
   void ScheduleAtom(const Sample *atom, const Microstep &microstep_ticks)  {
     for (Microstep i = 0; i < kMicrosteps; i ++) {
+      SchedulerEvent event = {
+        .tick = i,
+        .sample_index = atom->IsSampleFlip() ? atom->GetSampleIndex() : _channel->GetSampleIndex(),
+        .velocity = atom->GetVelocity(),
+      };
       if (microstep_ticks & (1 << i)) {
-        SchedulerEvent *event = new SchedulerEvent({
-          .tick = i,
-          .atom = atom,
-        });
         _scheduled_event.push_back(event);
       }
     }
   }
   void PerformSchedule() {
-    for (std::list<SchedulerEvent *>::iterator iter = _scheduled_event.begin();
+    for (std::list<SchedulerEvent>::iterator iter = _scheduled_event.begin();
          iter != _scheduled_event.end();
          /*nothing*/) {
-      SchedulerEvent *event = *iter;
-      if (event->tick == 0) {
-        SendStartCommand(event->atom);
-        SendStopCommand(event->atom);
-        delete event;
+      SchedulerEvent &event = *iter;
+      if (event.tick == 0) {
+        _output->Play(event.velocity, event.sample_index);
         iter = _scheduled_event.erase(iter);
       } else {
-        --event->tick;
+        --event.tick;
         ++iter;
       }
     }
   }
   struct SchedulerEvent {
     Microstep tick;
-    const Sample *atom;
+    const Velocity velocity;
+    const SampleIndex sample_index;
   };
-  std::list<SchedulerEvent *> _scheduled_event;
+  std::list<SchedulerEvent> _scheduled_event;
+  SampleChannelOutputInterface *_output;
 };
 
 
 template <>
 class ChannelRunner<Synth> : public BaseChannelRunner<Synth> {
 public:
-  ChannelRunner(Channel<Synth> *channel) : BaseChannelRunner<Synth>(channel){
+  ChannelRunner(Channel<Synth> *channel) :
+  BaseChannelRunner<Synth>(channel) {
+    _output = ChannelOutputFactory::GetInstance().GetSynthChannelOutput(channel->GetSynthIndex());
   }
 
   virtual ~ChannelRunner()  {
-    Restart();
+    for (SchedulerEvent &event : _stop_scheduled_event) {
+      _output->NoteOff(event.midi_note);
+    }
+    _stop_scheduled_event.clear();
   }
   
   virtual void TickMicrostep() override  {
@@ -164,102 +152,85 @@ public:
       std::vector<Synth *> atoms = step->GetAtoms();
       assert(atoms.size() <= kSynthPolyphonyCapacity);
       for (Synth *atom : atoms) {
-        SchedulePlayAtom(atom, step->GetMicrostepDelay());
+        SchedulePlay(atom, step->GetMicrostepDelay());
       }
     }
     PerformSchedule();
   }
   
-  virtual void Restart() override  {
-    BaseChannelRunner::Restart();
-    GetPatternChainRunner()->Restart();
-    for (SchedulerEvent *event : _play_scheduled_event) {
-      delete event;
-    }
-    _play_scheduled_event.clear();
-    for (SchedulerEvent *event : _stop_scheduled_event) {
-      SendStopCommand(event->atom);
-      delete event;
-    }
-    _stop_scheduled_event.clear();
-  }
+
   
   std::list<Note> GetPlayingNotes() const {
     std::list<Note> notes;
-    for (SchedulerEvent *event : _stop_scheduled_event) {
-      notes.push_back(event->atom->GetNote());
+    for (SchedulerEvent event : _stop_scheduled_event) {
+      notes.push_back(event.note);
     }
     return notes;
   }
   
 private:
-  void SendStartCommand(const Synth *atom) {
-    Note note = atom->GetNote();
+  void SchedulePlay(const Synth *atom, const Microstep &microstep_delay) {
+    assert(microstep_delay < kMicrosteps);
     // TODO : Is this correct? what if the current session is changed?
     Session *session = _channel->GetSession();
-    Note converted_note = ConvertNoteScale(note, session->GetBaseNote().scale);
-    MIDINote midi = NoteToMIDI(converted_note, session->GetTonicDegree());
-    MidiController::getInstance().SendPlayNoteMessage(midi, atom->GetVelocity());
-  }
-
-  void SendStopCommand(const Synth *atom) {
-    Note note = atom->GetNote();
-    Session *session = _channel->GetSession();
-    Note converted_note = ConvertNoteScale(note, session->GetBaseNote().scale);
-    MIDINote midi = NoteToMIDI(converted_note, session->GetTonicDegree());
-    MidiController::getInstance().SendStopNoteMessage(midi);
-  }
-  void SchedulePlayAtom(const Synth *atom, const Microstep &microstep_delay) {
-    assert(microstep_delay < kMicrosteps);
-    SchedulerEvent *event = new SchedulerEvent({
+    Note converted_note = ConvertNoteScale(atom->GetNote(), session->GetBaseNote().scale);
+    MIDINote midi_note = NoteToMIDI(converted_note, session->GetTonicDegree());
+    SchedulerEvent event = {
       .tick = microstep_delay,
-      .atom = atom,
-    });
+      .midi_note = midi_note,
+      .velocity = atom->GetVelocity(),
+      .note = atom->GetNote(),
+      .gate = atom->GetGate(),
+    };
     _play_scheduled_event.push_back(event);
   }
-  void ScheduleStopAtom(const Synth *atom)  {
-    SchedulerEvent *event = new SchedulerEvent({
-      .tick = atom->GetGate(),
-      .atom = atom,
-    });
-    _stop_scheduled_event.push_back(event);
-  }
+
   void PerformSchedule()  {
-    for (std::list<SchedulerEvent *>::iterator iter = _play_scheduled_event.begin();
+    for (std::list<SchedulerEvent>::iterator iter = _play_scheduled_event.begin();
          iter != _play_scheduled_event.end();
          /*nothing*/) {
-      SchedulerEvent *event = *iter;
-      if (event->tick == 0) {
-        SendStartCommand(event->atom);
-        ScheduleStopAtom(event->atom);
-        delete event;
+      SchedulerEvent &event = *iter;
+      if (event.tick == 0) {
+        _output->NoteOn(event.midi_note, event.velocity);
+        SchedulerEvent stop_event = {
+          .tick = event.gate,
+          .midi_note = event.midi_note,
+          .velocity = event.velocity,
+          .note = event.note,
+          .gate = event.gate,
+        };
+        _stop_scheduled_event.push_back(stop_event);
         iter = _play_scheduled_event.erase(iter);
+        
       } else {
-        --event->tick;
+        --event.tick;
         ++iter;
       }
     }
-    for (std::list<SchedulerEvent *>::iterator iter = _stop_scheduled_event.begin();
+    for (std::list<SchedulerEvent>::iterator iter = _stop_scheduled_event.begin();
          iter != _stop_scheduled_event.end();
          /*nothing*/) {
-      SchedulerEvent *event = *iter;
-      if (event->tick == 0) {
-        SendStopCommand(event->atom);
-        delete event;
+      SchedulerEvent &event = *iter;
+      if (event.tick == 0) {
+        _output->NoteOff(event.midi_note);
         iter = _stop_scheduled_event.erase(iter);
       } else {
-        --event->tick;
+        --event.tick;
         ++iter;
       }
     }
   }
   struct SchedulerEvent {
     Microstep tick;
-    const Synth *atom;
+    const MIDINote midi_note;
+    const Velocity velocity;
+    const Note note;
+    const Gate gate;
   };
   
-  std::list<SchedulerEvent *> _play_scheduled_event;
-  std::list<SchedulerEvent *> _stop_scheduled_event;
+  std::list<SchedulerEvent> _play_scheduled_event;
+  std::list<SchedulerEvent> _stop_scheduled_event;
+  SynthChannelOutputInterface *_output;
 };
 
 #endif /* ChannelRunner_hpp */

@@ -24,10 +24,8 @@ public:
 
 class MidiController {
 public:
-  static MidiController& getInstance()
-  {
-    static MidiController instance; // Guaranteed to be destroyed.
-    // Instantiated on first use.
+  static MidiController& GetInstance() {
+    static MidiController instance;
     return instance;
   }
   void SendPlayNoteMessage(const MIDINote &note, const Velocity &velocity){

@@ -29,8 +29,8 @@ public:
     delete _atom_packet;
   }
 
-  void AddAtom(AtomClass *atom)  {
-    _atom_packet->AddAtom(atom);
+  bool AddAtom(AtomClass *atom)  {
+    return _atom_packet->AddAtom(atom);
   }
   
   void RemoveAllAtoms(){
@@ -104,18 +104,22 @@ template <>
 class Step<Sample> : public StepBase<Sample> {
 public:
   Step(Pattern<Sample> * const parent) : StepBase<Sample>(parent, kSamplePolyphonyCapacity) {
-    SetMicrostepTicks(1 << 0);
   }
-  
+
   void SetMicrostepTicks(const Microstep &microstep_ticks)  {
-    _microstep_ticks = microstep_ticks;
+    for (Sample *sample : GetAtoms()) {
+      sample->SetMicrostepTicks(microstep_ticks);
+    }
   }
 
   Microstep GetMicrostepTicks() const  {
-    return _microstep_ticks;
+    Microstep ticks = 0;
+    for (Sample *sample : GetAtoms()) {
+      ticks |= sample->GetMicrostepTicks();
+    }
+    return ticks;
   }
 private:
-  Microstep _microstep_ticks;
 };
 
 template <>
@@ -123,7 +127,6 @@ class Step<Synth> : public StepBase<Synth>{
 public:
   Step(Pattern<Synth> * const parent) : StepBase<Synth>(parent, kSynthPolyphonyCapacity)  {
     SetMicrostepDelay(0);
-    SetIsSampleFlip(false);
   }
   void SetMicrostepDelay(const Microstep &microstep_delay)  {
     _microstep_delay = microstep_delay;
@@ -131,14 +134,6 @@ public:
   
   Microstep GetMicrostepDelay() const  {
     return _microstep_delay;
-  }
-  
-  void SetIsSampleFlip(const bool &is_sample_flip) {
-    _is_sample_flip = is_sample_flip;
-  }
-  
-  bool GetIsSampleFlip() const {
-    return _is_sample_flip;
   }
   
   void SetIsTie(const bool &tie) {
@@ -168,7 +163,6 @@ public:
     }
   }
 
-  
   Synth *AddNote(const Note &note)  {
     std::vector<Synth *> atoms = GetAtoms();
     Gate gate = kDefaultGate;
@@ -180,8 +174,12 @@ public:
       velocity = atom->GetVelocity();
     }
     Synth *synth = new Synth(note, gate, velocity);
-    AddAtom(synth);
-    return synth;
+    if (AddAtom(synth)) {
+      return synth;
+    } else {
+      delete synth;
+      return nullptr;
+    }
   }
 
   bool HasNote(const Note &note)  {
@@ -219,7 +217,6 @@ public:
   }
 private:
   Microstep _microstep_delay;
-  bool _is_sample_flip;
   bool _is_tie;
 };
 

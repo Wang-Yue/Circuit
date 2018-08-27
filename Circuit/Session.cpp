@@ -13,8 +13,6 @@
 #include "Atom.hpp"
 #include "Sample.hpp"
 
-static const size_t kSynthChannelsCapacity = 2;
-static const size_t kSampleChannelsCapacity = 4;
 
 Session::Session() : Session(kSynthChannelsCapacity, kSampleChannelsCapacity){
 }

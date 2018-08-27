@@ -38,9 +38,11 @@ void SampleGateViewController::SetCurrentEditingStep(Step<Sample> *current_editi
 }
 
 
-void SampleGateViewController::Tap(const Microstep &microstep_ticks) {
+void SampleGateViewController::ToggleMicrostepTicks(const Microstep &toggle) {
   if (_current_editing_step) {
-    _current_editing_step->SetMicrostepTicks(microstep_ticks);
+    Microstep ticks = _current_editing_step->GetMicrostepTicks();
+    ticks ^= toggle;
+    _current_editing_step->SetMicrostepTicks(ticks);
   }
 }
 

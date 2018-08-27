@@ -22,7 +22,7 @@ public:
   void SetCurrentEditingStep(Step<Sample> *current_editing_step);
   void Update();
   // SampleGateViewDelegate.
-  virtual void Tap(const Microstep &microstep_ticks) override;
+  virtual void ToggleMicrostepTicks(const Microstep &toggle) override;
 private:
   SampleGateView *_view;
   Step<Sample> *_current_step;

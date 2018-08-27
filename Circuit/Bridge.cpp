@@ -13,7 +13,7 @@
 static CircuitController *controller = nullptr;
 
 void InitializeCircuit() {
-  MidiController::getInstance();
+  MidiController::GetInstance();
   controller = new CircuitController();
   controller->RestartRunning();
 }
@@ -30,5 +30,5 @@ uint32_t GetColor(int key) {
 
 void Tick() {
   controller->TickStep();
-  MidiController::getInstance().Tick();
+  MidiController::GetInstance().Tick();
 }

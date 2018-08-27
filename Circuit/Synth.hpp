@@ -30,9 +30,7 @@ public:
   void SetNote(const Note &note) {
     _note = note;
   }
-
 private:
-
   Gate _gate;
   Note _note;
 };

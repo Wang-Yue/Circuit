@@ -64,7 +64,6 @@ public:
       delete _session_runner;
     }
     _session_runner = new SessionRunner(GetCurrentSession());
-    _session_runner->Restart();
   }
 
   void SwitchToSynth() {

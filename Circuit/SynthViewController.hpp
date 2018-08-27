@@ -16,10 +16,9 @@
 
 #include "TypeDefs.hpp"
 #include <vector>
-#include <set>
 
 class CircuitController;
-
+class SynthChannelOutputInterface;
 class SynthGateViewController;
 class KeyboardViewController;
 class Synth;
@@ -48,6 +47,7 @@ public:
   virtual void Update() override;
 private:
   void KillAllControllers();
+  void ReleaseImpromptuNotes();
   const ChannelIndex _channel_index;
   PatternViewController<Synth> *_pattern_controller;
   KeyboardViewController *_keyboard_controller;
@@ -55,9 +55,17 @@ private:
   VelocityViewController<Synth> *_velocity_view_controller;
   LengthViewController<Synth> *_length_view_controller;
   NudgeViewController<Synth> *_nudge_view_controller;
-  std::map<Synth *, Note> _active_atoms;
+  struct NoteEvent {
+    Synth *synth;
+    MIDINote midi_note;
+    Velocity velocity;
+    Note note;
+  };
+  // note that will not be recorded will have an empty synth pointer.
+  std::vector<NoteEvent> _impromptu_notes;
   StepIndex _editing_step_index;
   Step<Synth> *_editing_step;
+  SynthChannelOutputInterface *_output;
 };
 
 #endif /* SynthViewController_hpp */

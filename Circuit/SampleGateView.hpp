@@ -17,7 +17,7 @@
 
 class SampleGateViewDelegate {
 public:
-  virtual void Tap(const Microstep &microstep_ticks) = 0;
+  virtual void ToggleMicrostepTicks(const Microstep &toggle) = 0;
 };
 
 class SampleGateView : public PadDelegate {

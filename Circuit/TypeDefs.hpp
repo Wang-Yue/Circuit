@@ -34,6 +34,9 @@ typedef uint8_t StepIndex;
 typedef uint8_t PatternIndex;
 typedef uint8_t ChannelIndex;
 
+static const ChannelIndex kSynthChannelsCapacity = 2;
+static const ChannelIndex kSampleChannelsCapacity = 4;
+
 static const size_t kSynthPolyphonyCapacity = 6;
 static const size_t kSamplePolyphonyCapacity = 1;
 

@@ -21,6 +21,8 @@
 #include "VelocityViewController.hpp"
 #include "LengthViewController.hpp"
 #include "NudgeViewController.hpp"
+#include "ChannelOutputFactory.hpp"
+#include "ChannelOutputInterface.hpp"
 
 SynthViewController::SynthViewController(CircuitController *parent,
                                          const ChannelIndex &channel) :
@@ -33,6 +35,7 @@ _velocity_view_controller(nullptr),
 _length_view_controller(nullptr),
 _nudge_view_controller(nullptr),
 _editing_step(nullptr) {
+  _output = ChannelOutputFactory::GetInstance().GetSynthChannelOutput(channel);
   UpdateEditingMode();
 }
 
@@ -67,7 +70,15 @@ void SynthViewController::KillAllControllers() {
   }
 }
 
+void SynthViewController::ReleaseImpromptuNotes() {
+  for (NoteEvent &event : _impromptu_notes) {
+    _output->NoteOff(event.midi_note);
+  }
+  _impromptu_notes.clear();
+}
+
 void SynthViewController::UpdateEditingMode() {
+  ReleaseImpromptuNotes();
   KillAllControllers();
 
   CircuitEditingMode mode = GetEditingMode();
@@ -134,12 +145,16 @@ void SynthViewController::Update() {
   }
 
   if (_length_view_controller) {
+    // In Pattern related mode (nudge and length), we don't allow editing step.
+    _editing_step = nullptr;
     // Behave the same in playing, record, stop mode.
     _length_view_controller->SetPattern(pattern, nullptr);
     _length_view_controller->Update();
   }
   
   if (_nudge_view_controller) {
+    // In Pattern related mode (nudge and length), we don't allow editing step.
+    _editing_step = nullptr;
     // Behave the same in playing, record, stop mode.
     _nudge_view_controller->SetPattern(pattern);
     _nudge_view_controller->Update();
@@ -152,27 +167,27 @@ void SynthViewController::Update() {
     _keyboard_controller->SetEditingStep(_editing_step);
     std::list<Note> notes;
     
-    // In stop mode, we don't show the playing notes from channel. We only show user's tapping notes.
-    if (!IsStopped()) {
+    // No need to get channel runner note in stop mode.
+    if (IsRecording() || IsPlaying()) {
       notes = channel_runner->GetPlayingNotes();
     }
-    for (std::pair<Synth * const, Note> &p : _active_atoms) {
-      Note note = p.second;
-      notes.push_back(note);
+    for (const NoteEvent &e : _impromptu_notes) {
+      notes.push_back(e.note);
     }
-
     _keyboard_controller->SetPlayingNotes(notes);
     _keyboard_controller->Update();
   }
-  // TODO: revisit this approach.
-  for (std::pair<Synth * const, Note> &p : _active_atoms) {
-    Synth *s = p.first;
-    Gate gate = s->GetGate();
-    gate += kMicrosteps;
-    if (gate >= kStepCapacity * kMicrosteps) {
-      gate = kStepCapacity * kMicrosteps;
+
+  for (const NoteEvent &e : _impromptu_notes) {
+    Synth *synth = e.synth;
+    if (synth) {
+      Gate gate = synth->GetGate();
+      gate += kMicrosteps;
+      if (gate >= kStepCapacity * kMicrosteps) {
+        gate = kStepCapacity * kMicrosteps;
+      }
+      synth->SetGate(gate);
     }
-    s->SetGate(gate);
   }
   
 }
@@ -208,10 +223,24 @@ void SynthViewController::TapNote(const Note &note) {
       _editing_step->AddNote(note);
     }
   } else {
-    PatternChainRunner<Synth> * pattern_chain_runner = GetSynthPatternChainRunner(_channel_index);
-    Step<Synth> *step = pattern_chain_runner->GetStep();
-    Synth *s = step->AddNote(note);
-    _active_atoms[s] = note;
+    Session *session = GetCurrentSession();
+    Note converted_note = ConvertNoteScale(note, session->GetBaseNote().scale);
+    MIDINote midi_note = NoteToMIDI(converted_note, session->GetTonicDegree());
+    struct NoteEvent event = {
+      .synth = nullptr,
+      .midi_note = midi_note,
+      .velocity = kDefaultVelocity,
+      .note = note,
+    };
+    if (IsRecording()) {
+      PatternChainRunner<Synth> * pattern_chain_runner = GetSynthPatternChainRunner(_channel_index);
+      Step<Synth> *step = pattern_chain_runner->GetStep();
+      // If exceed capacity, synth will be returned as a nullptr.
+      Synth *synth = step->AddNote(note);
+      event.synth = synth;
+    }
+    _impromptu_notes.push_back(event);
+    _output->NoteOn(event.midi_note, event.velocity);
   }
 }
 
@@ -219,11 +248,12 @@ void SynthViewController::ReleaseNote(const Note &note) {
   if (_editing_step) {
     // no-op.
   } else {
-    for (std::map<Synth *, Note>::iterator it = _active_atoms.begin();
-         it != _active_atoms.end();
+    for (std::vector<NoteEvent>::iterator it = _impromptu_notes.begin();
+         it != _impromptu_notes.end();
          /* empty */) {
-      if (NoteIdentical(it->second, note)) {
-      it = _active_atoms.erase(it);
+      if (NoteIdentical(it->note, note)) {
+        _output->NoteOff(it->midi_note);
+        it = _impromptu_notes.erase(it);
       } else {
         ++it;
       }

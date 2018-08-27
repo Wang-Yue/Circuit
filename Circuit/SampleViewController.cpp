@@ -21,7 +21,7 @@
 SampleViewController::SampleViewController(CircuitController *parent, const ChannelIndex &channel)
 : ScreenController(parent),
 _channel_index(channel),
-_companion_channel_index(channel % 2 ? channel + 1 : channel - 1),
+_companion_channel_index(channel % 2 ? channel - 1 : channel + 1),
 _pattern_view_controller(nullptr),
 _companion_pattern_view_controller(nullptr),
 _gate_view_controller(nullptr),
@@ -150,12 +150,16 @@ void SampleViewController::Update() {
   }
 
   if (_length_view_controller) {
+    // In Pattern related mode (nudge and length), we don't allow editing step.
+    _editing_step = nullptr;
     // Behave the same in playing, record, stop mode.
     _length_view_controller->SetPattern(pattern, compainion_pattern);
     _length_view_controller->Update();
   }
   
   if (_nudge_view_controller) {
+    // In Pattern related mode (nudge and length), we don't allow editing step.
+    _editing_step = nullptr;
     // Behave the same in playing, record, stop mode.
     _nudge_view_controller->SetPattern(pattern);
     _nudge_view_controller->Update();

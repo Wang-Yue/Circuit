@@ -44,15 +44,6 @@ void SessionRunner::TickMicrostep() {
   }
 }
 
-void SessionRunner::Restart() {
-  for (ChannelRunner<Synth> *runner: _synth_channel_runners) {
-    runner->Restart();
-  }
-  for (ChannelRunner<Sample> *runner: _sample_channel_runners) {
-    runner->Restart();
-  }
-}
-
 ChannelRunner<Synth> *SessionRunner::GetSynthChannelRunner(const ChannelIndex &index) const {
   return _synth_channel_runners[index];
 }

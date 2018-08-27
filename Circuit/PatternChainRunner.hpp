@@ -71,12 +71,6 @@ public:
     _pattern_counter = 0;
   }
 
-  void Restart()  {
-    _remaining_pattern = nullptr;
-    _pattern_counter = 0;
-    _step_counter = 0;
-  }
-
   void AddAtom(AtomClass *atom)  {
     Step<AtomClass> *step = GetStep();
     step->AddAtom(atom);

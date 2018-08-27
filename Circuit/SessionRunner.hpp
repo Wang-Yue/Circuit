@@ -28,7 +28,7 @@ public:
   ChannelIndex GetSampleChannelRunnerCount() const;
   
   void TickMicrostep();
-  void Restart();
+
 private:
   Session *_session;
   std::vector<ChannelRunner<Synth> *> _synth_channel_runners;

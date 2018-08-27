@@ -42,7 +42,7 @@ void SampleGateView::SetMicrostepTicks(const Microstep &microstep_ticks) {
   _microstep_ticks = microstep_ticks;
   for (PadIndex i = 0; i < _pads.size(); ++i ){
     Pad *pad = _pads[i];
-    if (i > kMicrosteps) {
+    if (i >= kMicrosteps) {
       pad->SetColor(kDisabledColor);
     } else {
       bool enabled = microstep_ticks & (1 << i);
@@ -52,15 +52,15 @@ void SampleGateView::SetMicrostepTicks(const Microstep &microstep_ticks) {
 }
 
 void SampleGateView::Tap(Pad *pad) {
-  if (_delegate) {
+  if (!_delegate) {
     return;
   }
   PadIndex pad_index = pad->GetPadIndex();
   if (_pad_index_mapping.find(pad_index) == _pad_index_mapping.end()) {
     return;
   }
-  _microstep_ticks ^= _pad_index_mapping[pad_index];
-  _delegate->Tap(_microstep_ticks);
+   Microstep toggle = _pad_index_mapping[pad_index];
+  _delegate->ToggleMicrostepTicks(toggle);
 }
 
 void SampleGateView::Release(Pad *pad) {

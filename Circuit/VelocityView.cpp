@@ -51,18 +51,16 @@ void VelocityView::SetVelocity(const Velocity &velocity) {
 void VelocityView::Tap(Pad *pad) {
   PadIndex pad_index = pad->GetPadIndex();
   PadIndex previous_pad = _previous_velocity / kVelocityIncrementPerPad;
-  Velocity velocity = 0;
   if (pad_index != previous_pad) {
-    velocity = (1 + pad_index) * kVelocityIncrementPerPad - 1;
+    _previous_velocity = (1 + pad_index) * kVelocityIncrementPerPad - 1;
   } else {
-    ++_previous_velocity;
-    if (_previous_velocity % kVelocityIncrementPerPad) {
-      _previous_velocity -= kVelocityIncrementPerPad;
+    --_previous_velocity;
+    if (_previous_velocity % kVelocityIncrementPerPad == 0) {
+      _previous_velocity += kVelocityIncrementPerPad;
     }
-    velocity = _previous_velocity;
   }
   if (_delegate) {
-    _delegate->Tap(velocity);
+    _delegate->Tap(_previous_velocity);
   }
 }
 

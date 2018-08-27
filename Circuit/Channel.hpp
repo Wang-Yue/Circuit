@@ -95,17 +95,17 @@ public:
   Channel(Session *session) : ChannelBase<Sample>(session), _pattern_index(0) {
 
   }
-  void SetPatternIndex(const SynthIndex &synth_index) {
-    _pattern_index = synth_index;
+  void SetSampleIndex(const SampleIndex &sample_index) {
+    _pattern_index = sample_index;
   }
-  SynthIndex GetPatternIndex() {
+  SampleIndex GetSampleIndex() {
     return _pattern_index;
   }
 private:
   virtual Channel<Sample> *GetThisPointer() override {
     return this;
   }
-  SynthIndex _pattern_index;
+  SampleIndex _pattern_index;
 };
 
 template <>
