@@ -40,6 +40,7 @@ public:
 private:
   void KillAllControllers();
   const ChannelIndex _channel_index;
+  const ChannelIndex _companion_channel_index;
   PatternViewController<Sample> *_pattern_view_controller;
   PatternViewController<Sample> *_companion_pattern_view_controller;
   SampleGateViewController *_gate_view_controller;

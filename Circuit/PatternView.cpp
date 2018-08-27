@@ -15,7 +15,6 @@ static const Color kGhostKeyColor(0x000000ff); // has note but disabled.
 static const Color kEnabledKeyColor(0x00ffffff);
 static const Color kSelectedKeyColor(0x00ffff00);
 
-
 PatternView::PatternView(const std::map<StepIndex, Pad *> &step_pad_mapping, PatternViewDelegate *delegate):
 _step_pad_mapping(step_pad_mapping), _delegate(delegate) {
   for (auto const& keyval : step_pad_mapping) {
