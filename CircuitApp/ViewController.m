@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 
-#import "Bridge.hpp"
+#import "Bridge.h"
 
 // Quick and hacky way to make the test environment working.
 
@@ -17,13 +17,13 @@
 - (void)setColorCode:(uint32_t)colorCode forPad:(size_t)pad;
 @end
 
-static CircuitView *_circuitView = nullptr;
+static CircuitView *_circuitView = NULL;
 
-void WritePadColor(const int &pad, const uint32_t &color) {
+void WritePadColor(const uint32_t pad, const uint32_t color) {
   if (!_circuitView) {
     return;
   }
-    dispatch_sync(dispatch_get_main_queue(), ^(void){
+    dispatch_async(dispatch_get_main_queue(), ^(void){
       [_circuitView setColorCode:color forPad:pad];
     });
 }

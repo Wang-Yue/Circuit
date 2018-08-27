@@ -6,7 +6,10 @@
 //  Copyright © 2018 Yue Wang. All rights reserved.
 //
 
-#include "Bridge.hpp"
+extern "C" {
+#include "Bridge.h"
+}
+
 #include "CircuitController.hpp"
 #include "MidiController.hpp"
 #include "MIDIDelegate.hpp"
@@ -139,15 +142,18 @@ private:
 
 static BridgeController *controller = nullptr;
 
-void InitializeCircuit() {
+
+
+void InitializeCircuit(void) {
   controller = new BridgeController;
 }
 
-void TapPad(uint8_t key) {
-  controller->TapPad(key);
+void TapPad(uint8_t pad) {
+  controller->TapPad(pad);
 }
 
-void ReleasePad(uint8_t key) {
-  controller->ReleasePad(key);
+void ReleasePad(uint8_t pad) {
+  controller->ReleasePad(pad);
 }
+
 

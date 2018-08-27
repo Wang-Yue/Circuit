@@ -23,7 +23,6 @@
 
 #include "ChannelOutputFactory.hpp"
 #include "ChannelOutputInterface.hpp"
-#include "Bridge.hpp"
 #include "Session.hpp"
 
 template <typename AtomClass> class Channel;
