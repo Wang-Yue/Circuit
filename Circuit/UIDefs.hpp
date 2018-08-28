@@ -31,6 +31,7 @@ enum CircuitPad : PadIndex {
   PadDrum2,
   PadDrum3,
   PadDrum4,
+  PadShift,
   PadNote,
   PadGate,
   PadVelocity,
@@ -45,7 +46,6 @@ enum CircuitPad : PadIndex {
   PadDuplicate,
   PadSave,
   PadSessions,
-  PadShift,
   PadPatterns,
   PadMixer,
   PadFX,
@@ -66,6 +66,21 @@ enum CircuitEditingMode : uint8_t {
   CircuitEditVelocityMode,
   CircuitEditNudgeMode,
   CircuitEditLengthMode,
+  // This is never set to the circuit controller. Instead, it will be returned if it's in the
+  // CircuitSettingPatchMode. The reason to that is we need to use the SynthViewController and
+  // SampleViewController to handle taps. When user exit this mode, we want to revert to the
+  // original editing mode.
+  CircuitEditPatchMode,
+};
+
+enum CircuitSettingMode : uint8_t {
+  CircuitSetRegularMode,
+  CircuitSetPatchMode,
+  CircuitSetFxMode,
+  CircuitSetPatternChainMode,
+  CircuitSetMixerMode,
+  CircuitSetPanMode,
+  CircuitSetScaleMode,
 };
 
 enum CircuitViewMode : uint8_t {

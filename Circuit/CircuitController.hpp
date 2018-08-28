@@ -44,7 +44,6 @@ public:
   bool IsFixedVelocityMode() const;
 
   enum CircuitEditingMode GetEditingMode() const;
-  void SetEditingMode(enum CircuitEditingMode &mode);
   void Stop();
   
   bool IsStopped() const;
@@ -73,6 +72,9 @@ public:
   virtual void Release(Pad *) override;
   
 private:
+  void SetEditingMode(const enum CircuitEditingMode &mode);
+  void SetSettingMode(const enum CircuitSettingMode &mode);
+
   void SwitchToSynth(const ChannelIndex &index);
   void SwitchToSample(const ChannelIndex &index);
   void SwitchToScaleMode();
@@ -83,6 +85,7 @@ private:
   ScreenController *_screen_controller;
   CircuitRunningMode _circuit_mode;
   CircuitEditingMode _editing_mode;
+  CircuitSettingMode _setting_mode;
   CircuitViewMode _atom_mode;
   ChannelIndex _channel_index;
   bool _is_holding_shift;

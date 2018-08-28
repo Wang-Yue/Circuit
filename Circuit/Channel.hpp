@@ -92,20 +92,20 @@ class Channel : public ChannelBase<AtomClass> {
 template <>
 class Channel<Sample> : public ChannelBase<Sample> {
 public:
-  Channel(Session *session) : ChannelBase<Sample>(session), _pattern_index(0) {
+  Channel(Session *session) : ChannelBase<Sample>(session), _sample_index(0) {
 
   }
   void SetSampleIndex(const SampleIndex &sample_index) {
-    _pattern_index = sample_index;
+    _sample_index = sample_index;
   }
   SampleIndex GetSampleIndex() {
-    return _pattern_index;
+    return _sample_index;
   }
 private:
   virtual Channel<Sample> *GetThisPointer() override {
     return this;
   }
-  SampleIndex _pattern_index;
+  SampleIndex _sample_index;
 };
 
 template <>

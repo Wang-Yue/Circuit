@@ -13,6 +13,7 @@ CircuitController::CircuitController() {
   _circuit_mode = CircuitStopMode;
   _workspace = new Workspace();
   _editing_mode = CircuitEditNoteMode;
+  _setting_mode = CircuitSetRegularMode;
   _atom_mode = CircuitAtomSynth;
   _channel_index = 0;
   _session_runner = new SessionRunner(GetCurrentSession());
@@ -55,7 +56,7 @@ bool CircuitController::IsFixedVelocityMode() const {
 }
 
 void CircuitController::SwitchToSynth(const ChannelIndex &index){
-  if (_atom_mode == CircuitAtomSynth && _channel_index == index) {
+  if (_atom_mode == CircuitAtomSynth && _channel_index == index && _setting_mode == CircuitSetRegularMode) {
     return;
   }
   if (_screen_controller) {
@@ -63,38 +64,54 @@ void CircuitController::SwitchToSynth(const ChannelIndex &index){
   }
   _atom_mode = CircuitAtomSynth;
   _channel_index = index;
+  _setting_mode = CircuitSetRegularMode;
   _screen_controller = new SynthViewController(this, index);
 }
 
 
 void CircuitController::SwitchToSample(const ChannelIndex &index) {
-  if (_atom_mode == CircuitAtomSample && _channel_index == index) {
+  if (_atom_mode == CircuitAtomSample && _channel_index == index && _setting_mode == CircuitSetRegularMode) {
     return;
   }
   if (_screen_controller) {
     delete _screen_controller;
   }
   _atom_mode = CircuitAtomSample;
+  _setting_mode = CircuitSetRegularMode;
   _channel_index = index;
   _screen_controller = new SampleViewController(this, index);
 }
 
 void CircuitController::SwitchToScaleMode() {
+  if (_setting_mode == CircuitSetRegularMode) {
+    return;
+  }
   if (_screen_controller) {
     delete _screen_controller;
   }
+  _setting_mode = CircuitSetRegularMode;
   _screen_controller = new ScaleViewController(this);
 }
 
 enum CircuitEditingMode CircuitController::GetEditingMode() const {
+  // Cheat the view controller.
+  if (_setting_mode == CircuitSetPatchMode) {
+    return CircuitEditPatchMode;
+  }
   return _editing_mode;
 }
 
-void CircuitController::SetEditingMode(enum CircuitEditingMode &mode) {
-  if (mode == _editing_mode) {
+void CircuitController::SetEditingMode(const enum CircuitEditingMode &mode) {
+  if (mode == GetEditingMode()) {
     return;
   }
-  _editing_mode = mode;
+  // Cheat the view controller.
+  if (mode == CircuitEditPatchMode) {
+    _setting_mode = CircuitSetPatchMode;
+  } else {
+    _setting_mode = CircuitSetRegularMode;
+    _editing_mode = mode;
+  }
   _screen_controller->UpdateEditingMode();
 }
 
@@ -172,26 +189,26 @@ void CircuitController::Tap(Pad *pad){
   }
   if (index == PadNote) {
     if (_is_holding_shift) {
-      _editing_mode = CircuitEditExpandNoteMode;
+      SetEditingMode(CircuitEditExpandNoteMode);
     } else {
-      _editing_mode = CircuitEditNoteMode;
+      SetEditingMode(CircuitEditNoteMode);
     }
   }
   if (index == PadGate) {
-      _editing_mode = CircuitEditGateMode;
+    SetEditingMode(CircuitEditGateMode);
   }
   if (index == PadVelocity) {
     if (_is_holding_shift) {
       _is_fixed_velocity_mode = !_is_fixed_velocity_mode;
     } else {
-      _editing_mode = CircuitEditVelocityMode;
+      SetEditingMode(CircuitEditVelocityMode);
     }
   }
   if (index == PadNudge) {
-    _editing_mode = CircuitEditNudgeMode;
+    SetEditingMode(CircuitEditNudgeMode);
   }
   if (index == PadLength) {
-    _editing_mode = CircuitEditLengthMode;
+    SetEditingMode(CircuitEditLengthMode);
   }
   if (index == PadScale) {
     SwitchToScaleMode();
@@ -219,18 +236,21 @@ void CircuitController::Tap(Pad *pad){
   }
   if (index == PadSynth1 || index == PadSynth2) {
     SwitchToSynth(index - PadSynth1);
+    if (_is_holding_shift) {
+      SetEditingMode(CircuitEditPatchMode);
+    }
     return;
   }
 
   if (index >= PadDrum1 && index <= PadDrum4) {
     SwitchToSample(index - PadDrum1);
+    if (_is_holding_shift) {
+      SetEditingMode(CircuitEditPatchMode);
+    }
     return;
   }
   if (!_screen_controller) {
     return;
-  }
-  if (index >= PadNote && index <= PadLength) {
-    _screen_controller->UpdateEditingMode();
   }
   if (index == PadOctUp) {
     _screen_controller->HandleOctUp();

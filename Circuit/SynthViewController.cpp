@@ -35,6 +35,7 @@ _gate_view_controller(nullptr),
 _velocity_view_controller(nullptr),
 _length_view_controller(nullptr),
 _nudge_view_controller(nullptr),
+_patch_selection_view_controller(nullptr),
 _editing_step(nullptr) {
   _output = ChannelOutputFactory::GetInstance().GetSynthChannelOutput(channel);
   UpdateEditingMode();
@@ -71,6 +72,10 @@ void SynthViewController::KillAllControllers() {
     delete _nudge_view_controller;
     _nudge_view_controller = nullptr;
   }
+  if (_patch_selection_view_controller) {
+    delete _patch_selection_view_controller;
+    _patch_selection_view_controller = nullptr;
+  }
 }
 
 void SynthViewController::ReleaseImpromptuNotes() {
@@ -94,6 +99,12 @@ void SynthViewController::UpdateEditingMode() {
       _keyboard_controller = new KeyboardViewController(base_note, tonic_degree, keyboard_pads, this);
       // We don't need to create the pattern view so return early.
       return;
+  }
+  if (mode == CircuitEditPatchMode) {
+    std::vector<Pad *> patch_pads = GetView()->GetRegularPads(0, pads_count);
+    _patch_selection_view_controller = new SynthPatchSelectionViewController(patch_pads, this);
+    // We don't need to create the pattern view so return early.
+    return;
   }
   // Put the pattern pads to the last.
   pads_count -= kStepCapacity;
@@ -179,6 +190,13 @@ void SynthViewController::Update() {
     }
     _keyboard_controller->SetPlayingNotes(notes);
     _keyboard_controller->Update();
+  }
+
+  if (_patch_selection_view_controller) {
+    Channel<Synth> *channel = pattern->GetChannel();
+    SynthIndex index = channel->GetSynthIndex();
+    _patch_selection_view_controller->SetSelectedAtomPatchIndex(true, index);
+    _patch_selection_view_controller->Update();
   }
 
   for (const NoteEvent &e : _impromptu_notes) {
@@ -309,4 +327,10 @@ void SynthViewController::HandleOctDown() {
     session->SetBaseNote(base_note);
     UpdateEditingMode();
   }
+}
+
+void SynthViewController::TapPatch(const SynthIndex &index) {
+  Pattern<Synth> *pattern = GetCurrentSynthPattern(_channel_index);
+  Channel<Synth> *channel = pattern->GetChannel();
+  channel->SetSynthIndex(index);
 }

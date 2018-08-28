@@ -13,6 +13,7 @@
 
 #include "PatternViewController.hpp"
 #include "KeyboardViewController.hpp"
+#include "PatchSelectionViewController.hpp"
 
 #include "TypeDefs.hpp"
 #include <vector>
@@ -34,7 +35,8 @@ class SynthViewController :
 public ScreenController,
 public PatternViewControllerDelegate<Synth>,
 public KeyboardViewControllerDelegate,
-public MIDIDelegate {
+public MIDIDelegate,
+public SynthPatchSelectionViewControllerDelegate {
   
 public:
   SynthViewController(CircuitController *parent,
@@ -55,6 +57,8 @@ public:
   // MidiDelegate.
   virtual void NoteOn(const Note &note, const Velocity &velocity) override;
   virtual void NoteOff(const Note &note) override;
+  // SynthPatchSelectionViewControllerDelegate.
+  virtual void TapPatch(const SynthIndex &index) override;
 private:
   void KillAllControllers();
   void ReleaseImpromptuNotes();
@@ -68,6 +72,7 @@ private:
   VelocityViewController<Synth> *_velocity_view_controller;
   LengthViewController<Synth> *_length_view_controller;
   NudgeViewController<Synth> *_nudge_view_controller;
+  SynthPatchSelectionViewController *_patch_selection_view_controller;
   struct NoteEvent {
     Synth *synth;
     MIDINote midi_note;

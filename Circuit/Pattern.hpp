@@ -90,6 +90,9 @@ public:
       step->OctDown();
     }
   }
+  Channel<AtomClass> *GetChannel() {
+    return _channel;
+  }
 private:
   Pattern(const StepIndex &pattern_capacity, Channel<AtomClass> * const channel) :
   _pattern_capacity(pattern_capacity), _channel(channel) {
