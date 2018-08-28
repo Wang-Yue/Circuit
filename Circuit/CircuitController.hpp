@@ -65,8 +65,8 @@ public:
 
   void SetMidiDelegate(MIDIDelegate *midi_delegate);
   // MIDIDelegate.
-  virtual void NoteOn(const Note &note, const Velocity &velocity) override;
-  virtual void NoteOff(const Note &note) override;
+  virtual void NoteOn(const MIDINote &note, const Velocity &velocity) override;
+  virtual void NoteOff(const MIDINote &note) override;
   // PadDelegate.
   virtual void Tap(Pad *pad) override;
   virtual void Release(Pad *) override;

@@ -13,8 +13,8 @@
 
 class MIDIDelegate {
 public:
-  virtual void NoteOn(const Note &note, const Velocity &velocity) = 0;
-  virtual void NoteOff(const Note &note) = 0;
+  virtual void NoteOn(const MIDINote &note, const Velocity &velocity) = 0;
+  virtual void NoteOff(const MIDINote &note) = 0;
 };
 
 #endif /* MIDIDelegate_hpp */

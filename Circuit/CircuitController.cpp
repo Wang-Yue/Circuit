@@ -184,7 +184,8 @@ void CircuitController::SetSessionRunner(SessionRunner *runner) {
 void CircuitController::Tap(Pad *pad){
   PadIndex index = pad->GetPadIndex();
   if (index == PadShift) {
-    _is_holding_shift = true;
+//    _is_holding_shift = true;
+    _is_holding_shift = !_is_holding_shift;
     return;
   }
   if (index == PadNote) {
@@ -262,7 +263,7 @@ void CircuitController::Tap(Pad *pad){
 void CircuitController::Release(Pad *pad) {
   PadIndex index = pad->GetPadIndex();
   if (index == PadShift) {
-    _is_holding_shift = false;
+//    _is_holding_shift = false;
     return;
   }
 }
@@ -272,13 +273,13 @@ void CircuitController::SetMidiDelegate(MIDIDelegate *midi_delegate) {
 }
 
 // MIDIDelegate.
-void CircuitController::NoteOn(const Note &note, const Velocity &velocity) {
+void CircuitController::NoteOn(const MIDINote &note, const Velocity &velocity) {
   if (_midi_delegate) {
     _midi_delegate->NoteOn(note, velocity);
   }
 }
 
-void CircuitController::NoteOff(const Note &note) {
+void CircuitController::NoteOff(const MIDINote &note) {
   if (_midi_delegate) {
     _midi_delegate->NoteOff(note);
   }

@@ -243,14 +243,16 @@ void SynthViewController::TapNote(const Note &note) {
 }
 
 void SynthViewController::ReleaseNote(const Note &note) {
-  SignlalNoteOff(note);
+  SignalNoteOff(note);
 }
 
-void SynthViewController::NoteOn(const Note &note, const Velocity &velocity) {
-  SignalNoteOn(note, velocity);
+void SynthViewController::NoteOn(const MIDINote &note, const Velocity &velocity) {
+  Note n = MIDIToNote(note, ScaleChromatic, 0);
+  SignalNoteOn(n, velocity);
 }
-void SynthViewController::NoteOff(const Note &note) {
-  SignlalNoteOff(note);
+void SynthViewController::NoteOff(const MIDINote &note) {
+  Note n = MIDIToNote(note, ScaleChromatic, 0);
+  SignalNoteOff(n);
 }
 
 void SynthViewController::SignalNoteOn(const Note &note, const Velocity &velocity) {
@@ -280,7 +282,7 @@ void SynthViewController::SignalNoteOn(const Note &note, const Velocity &velocit
   }
 }
 
-void SynthViewController::SignlalNoteOff(const Note &note) {
+void SynthViewController::SignalNoteOff(const Note &note) {
   if (_editing_step) {
     // no-op.
   } else {
@@ -333,4 +335,18 @@ void SynthViewController::TapPatch(const SynthIndex &index) {
   Pattern<Synth> *pattern = GetCurrentSynthPattern(_channel_index);
   Channel<Synth> *channel = pattern->GetChannel();
   channel->SetSynthIndex(index);
+  // TODO: send cc message.
+  if (IsHoldingShift() || IsRecording()) {
+    return;
+  }
+  Note base_note = GetCurrentSession()->GetBaseNote();
+  SignalNoteOn(base_note, kDefaultVelocity);
+}
+
+void SynthViewController::ReleasePatch(const SynthIndex &index) {
+   if (IsHoldingShift() || IsRecording()) {
+     return;
+   }
+   Note base_note = GetCurrentSession()->GetBaseNote();
+   SignalNoteOff(base_note);
 }

@@ -23,6 +23,7 @@ template <typename AtomClass = Atom, typename AtomPatchIndex = uint8_t>
 class PatchSelectionViewControllerDelegate {
 public:
   virtual void TapPatch(const AtomPatchIndex &index) = 0;
+  virtual void ReleasePatch(const AtomPatchIndex &index) = 0;
 };
 
 template <typename AtomClass = Atom, typename AtomPatchIndex = uint8_t>
@@ -95,7 +96,14 @@ void PatchSelectionViewController<AtomClass, AtomPatchIndex>::Tap(Pad *pad) {
 
 template <typename AtomClass, typename AtomPatchIndex>
 void PatchSelectionViewController<AtomClass, AtomPatchIndex>::Release(Pad *pad) {
-  // no-op
+  if (_delegate) {
+    PadIndex pad_index = pad->GetPadIndex();
+    AtomPatchIndex AtomClass_index = pad_index;
+    if (!_first_page) {
+      AtomClass_index += kRegularPadCount;
+    }
+    _delegate->ReleasePatch(AtomClass_index);
+  }
 }
 
 template <typename AtomClass, typename AtomPatchIndex>

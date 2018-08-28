@@ -96,11 +96,9 @@ public:
   }
   
   virtual void NoteOn(const unsigned char &midi_note, const unsigned char &velocity) override {
-    Note note = MIDIToNote(midi_note, ScaleChromatic, 0);
-    printf("Octave %d, Degree %d\n", note.octave, note.degree);
-
+    printf("Note on: %d\n", midi_note);
     MIDICommand command = {
-      .note = note,
+      .note = static_cast<MIDINote>(midi_note),
       .velocity = velocity,
       .note_on = true,
     };
@@ -108,11 +106,8 @@ public:
   }
   
   virtual void NoteOff(const unsigned char &midi_note) override {
-    Note note = MIDIToNote(midi_note, ScaleChromatic, 0);
-    printf("Octave %d, Degree %d\n", note.octave, note.degree);
-    
     MIDICommand command = {
-      .note = note,
+      .note = static_cast<MIDINote>(midi_note),
       .velocity = 0,
       .note_on = false,
     };
@@ -128,7 +123,7 @@ private:
   ThreadSafeQueue<PadCommand> _pad_command_queue;
   
   struct MIDICommand {
-    Note note;
+    MIDINote note;
     Velocity velocity;
     bool note_on;
   };

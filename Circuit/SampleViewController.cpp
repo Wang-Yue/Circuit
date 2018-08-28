@@ -16,6 +16,8 @@
 #include "VelocityViewController.hpp"
 #include "LengthViewController.hpp"
 #include "NudgeViewController.hpp"
+#include "ChannelOutputFactory.hpp"
+#include "ChannelOutputInterface.hpp"
 #include "Sample.hpp"
 
 SampleViewController::SampleViewController(CircuitController *parent, const ChannelIndex &channel)
@@ -28,7 +30,9 @@ _gate_view_controller(nullptr),
 _velocity_view_controller(nullptr),
 _length_view_controller(nullptr),
 _nudge_view_controller(nullptr),
+_patch_selection_view_controller(nullptr),
 _editing_step(nullptr) {
+  _output = ChannelOutputFactory::GetInstance().GetSampleChannelOutput(channel);
   UpdateEditingMode();
 }
 
@@ -62,6 +66,10 @@ void SampleViewController::KillAllControllers() {
     delete _nudge_view_controller;
     _nudge_view_controller = nullptr;
   }
+  if (_patch_selection_view_controller) {
+    delete _patch_selection_view_controller;
+    _patch_selection_view_controller = nullptr;
+  }
 }
 
 void SampleViewController::UpdateEditingMode() {
@@ -69,17 +77,26 @@ void SampleViewController::UpdateEditingMode() {
   
   CircuitEditingMode mode = GetEditingMode();
   
+  PadIndex pads_count = kRegularPadCount;
+
   if (mode == CircuitEditExpandNoteMode) {
     // TODO.
     return;
   }
   
+  if (mode == CircuitEditPatchMode) {
+    std::vector<Pad *> patch_pads = GetView()->GetRegularPads(0, pads_count);
+    _patch_selection_view_controller = new SamplePatchSelectionViewController(patch_pads, this);
+    // We don't need to create the pattern view so return early.
+    return;
+  }
+  
   // Put the pattern pads to the last.
 
-  PadIndex pads_count = kRegularPadCount - kStepCapacity;
+  pads_count -= kStepCapacity;
   std::vector<Pad *> pattern_pads;
   std::vector<Pad *> remaining_pads;
-  if (_channel_index % 2) {
+  if (_channel_index % 2 == 0) {
     remaining_pads = GetView()->GetRegularPads(pads_count, kStepCapacity);
     pattern_pads= GetView()->GetRegularPads(0, pads_count);
   } else {
@@ -164,6 +181,20 @@ void SampleViewController::Update() {
     _nudge_view_controller->SetPattern(pattern);
     _nudge_view_controller->Update();
   }
+  
+  if (_patch_selection_view_controller) {
+    std::vector<Sample *> atoms = current_step->GetAtoms();
+    SynthIndex index;
+    if (atoms.size()) {
+      index = atoms[0]->GetSampleIndex();
+    } else {
+      Channel<Sample> *channel = pattern->GetChannel();
+      index = channel->GetSampleIndex();
+    }
+    _patch_selection_view_controller->SetSelectedAtomPatchIndex(true, index);
+    _patch_selection_view_controller->Update();
+  }
+
 }
 
 void SampleViewController::SelectStep(Step<Sample> *step, const StepIndex &selected_index) {
@@ -214,3 +245,40 @@ void SampleViewController::ReleaseStep(const StepIndex &selected_index) {
 }
 
 
+void SampleViewController::TapPatch(const SynthIndex &index) {
+  if (IsStopped()) {
+    Pattern<Sample> *pattern = GetCurrentSamplePattern(_channel_index);
+    Channel<Sample> *channel = pattern->GetChannel();
+    channel->SetSampleIndex(index);
+  }
+  // When holding shift, we don't make sound. We also don't record.
+  if (IsHoldingShift()) {
+    return;
+  }
+  // Make the sound.
+  SignalSample(index, kDefaultVelocity);
+}
+
+void SampleViewController::ReleasePatch(const SynthIndex &index) {
+  // no-op
+}
+
+void SampleViewController::NoteOn(const MIDINote &note, const Velocity &velocity) {
+  SignalSample(note, velocity);
+}
+
+void SampleViewController::NoteOff(const MIDINote &note) {
+  // no-op.
+}
+
+void SampleViewController::SignalSample(const SampleIndex &index, const Velocity &velocity) {
+  _output->Play(velocity, index);
+  // If in record mode, record to the current step.
+  if (IsRecording()) {
+    Sample * atom = new Sample(index);
+    atom->SetVelocity(velocity);
+    PatternChainRunner<Sample> * pattern_chain_runner = GetSamplePatternChainRunner(_channel_index);
+    Step<Sample> *current_step = pattern_chain_runner->GetStep();
+    current_step->AddAtom(atom);
+  }
+}

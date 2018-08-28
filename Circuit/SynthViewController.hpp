@@ -55,15 +55,16 @@ public:
   void HandleOctUp() override;
   void HandleOctDown() override;
   // MidiDelegate.
-  virtual void NoteOn(const Note &note, const Velocity &velocity) override;
-  virtual void NoteOff(const Note &note) override;
+  virtual void NoteOn(const MIDINote &note, const Velocity &velocity) override;
+  virtual void NoteOff(const MIDINote &note) override;
   // SynthPatchSelectionViewControllerDelegate.
   virtual void TapPatch(const SynthIndex &index) override;
+  virtual void ReleasePatch(const SynthIndex &index) override;
 private:
   void KillAllControllers();
   void ReleaseImpromptuNotes();
   void SignalNoteOn(const Note &note, const Velocity &velocity);
-  void SignlalNoteOff(const Note &note);
+  void SignalNoteOff(const Note &note);
 
   const ChannelIndex _channel_index;
   PatternViewController<Synth> *_pattern_controller;
