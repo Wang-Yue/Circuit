@@ -34,10 +34,12 @@ _patch_selection_view_controller(nullptr),
 _expanded_note_view_controller(nullptr),
 _editing_step(nullptr) {
   UpdateEditingMode();
+  SetMidiDelegate(this);
 }
 
 SampleViewController::~SampleViewController() {
   KillAllControllers();
+  SetMidiDelegate(nullptr);
 }
 
 
