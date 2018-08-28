@@ -31,8 +31,8 @@ _velocity_view_controller(nullptr),
 _length_view_controller(nullptr),
 _nudge_view_controller(nullptr),
 _patch_selection_view_controller(nullptr),
+_expanded_note_view_controller(nullptr),
 _editing_step(nullptr) {
-  _output = ChannelOutputFactory::GetInstance().GetSampleChannelOutput(channel);
   UpdateEditingMode();
 }
 
@@ -70,6 +70,11 @@ void SampleViewController::KillAllControllers() {
     delete _patch_selection_view_controller;
     _patch_selection_view_controller = nullptr;
   }
+  if (_expanded_note_view_controller) {
+    delete _expanded_note_view_controller;
+    _expand_note_view_tapped_channel.clear();
+    _expanded_note_view_controller = nullptr;
+  }
 }
 
 void SampleViewController::UpdateEditingMode() {
@@ -80,7 +85,14 @@ void SampleViewController::UpdateEditingMode() {
   PadIndex pads_count = kRegularPadCount;
 
   if (mode == CircuitEditExpandNoteMode) {
-    // TODO.
+    ChannelIndex channel_count = GetCurrentSession()->GetSampleChannelCount();
+    std::vector<Pad *> patch_pads = GetView()->GetRegularPads(0, pads_count);
+    _expanded_note_view_controller =
+        new SampleExpandNoteViewController(patch_pads, this, channel_count);
+    for (ChannelIndex i = 0; i < channel_count; ++i) {
+      _expand_note_view_tapped_channel.push_back(false);
+    }
+    // We don't need to create the pattern view so return early.
     return;
   }
   
@@ -128,6 +140,25 @@ void SampleViewController::UpdateRunningMode() {
 }
 
 void SampleViewController::Update() {
+  if (_expanded_note_view_controller) {
+    std::vector<bool> highlight_channels;
+    for (ChannelIndex channel_index = 0;
+         channel_index < GetCurrentSession()->GetSampleChannelCount();
+         ++channel_index) {
+      PatternChainRunner<Sample> * runner = GetSamplePatternChainRunner(channel_index);
+      Step<Sample> *current_step = runner->GetStep();
+      if (current_step->GetAtoms().size() || _expand_note_view_tapped_channel[channel_index]) {
+        highlight_channels.push_back(true);
+      } else {
+        highlight_channels.push_back(false);
+      }
+    }
+    _expanded_note_view_controller->SetHightlightChannels(highlight_channels);
+    _expanded_note_view_controller->Update();
+    // Expanded note view occupies whole screen so we can return early.
+    return;
+  }
+
   Pattern<Sample> *pattern = GetCurrentSamplePattern(_channel_index);
   Pattern<Sample> *compainion_pattern = GetCurrentSamplePattern(_companion_channel_index);
   PatternChainRunner<Sample> * pattern_chain_runner = GetSamplePatternChainRunner(_channel_index);
@@ -194,7 +225,6 @@ void SampleViewController::Update() {
     _patch_selection_view_controller->SetSelectedAtomPatchIndex(true, index);
     _patch_selection_view_controller->Update();
   }
-
 }
 
 void SampleViewController::SelectStep(Step<Sample> *step, const StepIndex &selected_index) {
@@ -256,7 +286,7 @@ void SampleViewController::TapPatch(const SynthIndex &index) {
     return;
   }
   // Make the sound.
-  SignalSample(index, kDefaultVelocity);
+  SignalSample(_channel_index, index, kDefaultVelocity);
 }
 
 void SampleViewController::ReleasePatch(const SynthIndex &index) {
@@ -264,20 +294,34 @@ void SampleViewController::ReleasePatch(const SynthIndex &index) {
 }
 
 void SampleViewController::NoteOn(const MIDINote &note, const Velocity &velocity) {
-  SignalSample(note, velocity);
+  SignalSample(_channel_index, note, velocity);
 }
 
 void SampleViewController::NoteOff(const MIDINote &note) {
   // no-op.
 }
 
-void SampleViewController::SignalSample(const SampleIndex &index, const Velocity &velocity) {
-  _output->Play(velocity, index);
+void SampleViewController::TapChannel(const ChannelIndex &channel_index) {
+  _expand_note_view_tapped_channel[channel_index] = true;
+  Pattern<Sample> *pattern = GetCurrentSamplePattern(channel_index);
+  Channel<Sample> *channel = pattern->GetChannel();
+  SignalSample(channel_index, channel->GetSampleIndex(), kDefaultVelocity);
+}
+
+void SampleViewController::ReleaseChannel(const ChannelIndex &channel_index) {
+  _expand_note_view_tapped_channel[channel_index] = false;
+}
+void SampleViewController::SignalSample(const ChannelIndex channel,
+                                        const SampleIndex &index,
+                                        const Velocity &velocity) {
+  SampleChannelOutputInterface *output =
+      ChannelOutputFactory::GetInstance().GetSampleChannelOutput(channel);
+  output->Play(velocity, index);
   // If in record mode, record to the current step.
   if (IsRecording()) {
     Sample * atom = new Sample(index);
     atom->SetVelocity(velocity);
-    PatternChainRunner<Sample> * pattern_chain_runner = GetSamplePatternChainRunner(_channel_index);
+    PatternChainRunner<Sample> * pattern_chain_runner = GetSamplePatternChainRunner(channel);
     Step<Sample> *current_step = pattern_chain_runner->GetStep();
     current_step->AddAtom(atom);
   }

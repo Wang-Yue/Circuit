@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8907AC662135216F00CEF7D7 /* SampleExpandNoteViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8907AC642135216F00CEF7D7 /* SampleExpandNoteViewController.cpp */; };
 		8913D17121330C1C00CEF7D7 /* ScaleViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8913D16F21330C1B00CEF7D7 /* ScaleViewController.cpp */; };
 		8913D17421330FAF00CEF7D7 /* ScaleSelectionView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8913D17221330FAF00CEF7D7 /* ScaleSelectionView.cpp */; };
 		891883BF2132820900CEF7D7 /* NudgeView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 891883BD2132820900CEF7D7 /* NudgeView.cpp */; };
@@ -44,6 +45,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8907AC642135216F00CEF7D7 /* SampleExpandNoteViewController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SampleExpandNoteViewController.cpp; sourceTree = "<group>"; };
+		8907AC652135216F00CEF7D7 /* SampleExpandNoteViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SampleExpandNoteViewController.hpp; sourceTree = "<group>"; };
 		8913D16F21330C1B00CEF7D7 /* ScaleViewController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ScaleViewController.cpp; sourceTree = "<group>"; };
 		8913D17021330C1C00CEF7D7 /* ScaleViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ScaleViewController.hpp; sourceTree = "<group>"; };
 		8913D17221330FAF00CEF7D7 /* ScaleSelectionView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ScaleSelectionView.cpp; sourceTree = "<group>"; };
@@ -269,6 +272,8 @@
 				89E710F82133B49600CEF7D7 /* ChannelOutputFactory.hpp */,
 				8919C29B2129359400CEF7D7 /* MidiController.hpp */,
 				895E1CC52134675100CEF7D7 /* ThreadSafeQueue.hpp */,
+				8907AC642135216F00CEF7D7 /* SampleExpandNoteViewController.cpp */,
+				8907AC652135216F00CEF7D7 /* SampleExpandNoteViewController.hpp */,
 			);
 			path = Circuit;
 			sourceTree = "<group>";
@@ -351,6 +356,7 @@
 				8913D17421330FAF00CEF7D7 /* ScaleSelectionView.cpp in Sources */,
 				891883BF2132820900CEF7D7 /* NudgeView.cpp in Sources */,
 				8964D673212BC45300CEF7D7 /* main.m in Sources */,
+				8907AC662135216F00CEF7D7 /* SampleExpandNoteViewController.cpp in Sources */,
 				89A3CFA2212E1ECD00CEF7D7 /* KeyboardViewController.cpp in Sources */,
 				8964D660212BC44900CEF7D7 /* Workspace.cpp in Sources */,
 				8964D661212BC44900CEF7D7 /* SessionRunner.cpp in Sources */,

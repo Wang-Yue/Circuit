@@ -86,11 +86,11 @@ template <typename AtomClass, typename AtomPatchIndex>
 void PatchSelectionViewController<AtomClass, AtomPatchIndex>::Tap(Pad *pad) {
   if (_delegate) {
     PadIndex pad_index = pad->GetPadIndex();
-    AtomPatchIndex AtomClass_index = pad_index;
+    AtomPatchIndex patch_index = pad_index;
     if (!_first_page) {
-      AtomClass_index += kRegularPadCount;
+      patch_index += kRegularPadCount;
     }
-    _delegate->TapPatch(AtomClass_index);
+    _delegate->TapPatch(patch_index);
   }
 }
 
@@ -98,11 +98,11 @@ template <typename AtomClass, typename AtomPatchIndex>
 void PatchSelectionViewController<AtomClass, AtomPatchIndex>::Release(Pad *pad) {
   if (_delegate) {
     PadIndex pad_index = pad->GetPadIndex();
-    AtomPatchIndex AtomClass_index = pad_index;
+    AtomPatchIndex patch_index = pad_index;
     if (!_first_page) {
-      AtomClass_index += kRegularPadCount;
+      patch_index += kRegularPadCount;
     }
-    _delegate->ReleasePatch(AtomClass_index);
+    _delegate->ReleasePatch(patch_index);
   }
 }
 
@@ -118,11 +118,11 @@ template <typename AtomClass, typename AtomPatchIndex>
 void PatchSelectionViewController<AtomClass, AtomPatchIndex>::Update() {
   for (Pad *pad : _pads) {
     PadIndex pad_index = pad->GetPadIndex();
-    AtomPatchIndex AtomClass_index = pad_index;
+    AtomPatchIndex patch_index = pad_index;
     if (!_first_page) {
-      AtomClass_index += kRegularPadCount;
+      patch_index += kRegularPadCount;
     }
-    if (_highlight_selected && AtomClass_index == _selected_index){
+    if (_highlight_selected && patch_index == _selected_index){
       pad->SetColor(kHighlightColor);
     } else {
       pad->SetColor(kEnabledColor);
