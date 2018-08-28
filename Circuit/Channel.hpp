@@ -23,9 +23,14 @@ template <typename AtomClass = Atom>
 class ChannelBase {
 public:
   // Warning! The parent is responsible to call Initialize class afterwards.
-  ChannelBase(Session *parent) : ChannelBase(kPatternCapacity, parent) {
+  ChannelBase(Session *parent, const ChannelIndex &channel_index) :
+  ChannelBase(kPatternCapacity, parent, channel_index) {
   }
 
+  const ChannelIndex GetChannelIndex() const {
+    return _channel_index;
+  }
+  
   virtual ~ChannelBase() {
     for (PatternIndex i = 0; i < _patterns.size(); ++i) {
       Pattern<AtomClass> *pattern = _patterns[i];
@@ -74,13 +79,16 @@ public:
 protected:
   virtual Channel<AtomClass> *GetThisPointer() = 0;
 private:
-  ChannelBase(const PatternIndex &pattern_capacity, Session *session) :
-  _pattern_capacity(pattern_capacity), _session(session) {
+  ChannelBase(const PatternIndex &pattern_capacity,
+              Session *session,
+              const ChannelIndex &channel_index) :
+  _pattern_capacity(pattern_capacity), _session(session), _channel_index(channel_index) {
 
   }
   PatternChain<AtomClass> *_pattern_chain;
   std::vector<Pattern<AtomClass> *> _patterns;
   const PatternIndex _pattern_capacity;
+  const ChannelIndex _channel_index;
   Session *_session;
 };
 
@@ -92,8 +100,8 @@ class Channel : public ChannelBase<AtomClass> {
 template <>
 class Channel<Sample> : public ChannelBase<Sample> {
 public:
-  Channel(Session *session) : ChannelBase<Sample>(session), _sample_index(0) {
-
+  Channel(Session *session, const ChannelIndex &channel_index) :
+  ChannelBase<Sample>(session, channel_index), _sample_index(0) {
   }
   void SetSampleIndex(const SampleIndex &sample_index) {
     _sample_index = sample_index;
@@ -111,7 +119,8 @@ private:
 template <>
 class Channel<Synth> : public ChannelBase<Synth> {
 public:
-  Channel(Session *session) : ChannelBase<Synth>(session), _synth_index(0) {
+  Channel(Session *session, const ChannelIndex &channel_index) :
+  ChannelBase<Synth>(session, channel_index), _synth_index(0) {
 
   }
   void SetSynthIndex(const SynthIndex &synth_index) {

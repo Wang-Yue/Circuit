@@ -23,12 +23,12 @@ Session::Session(const ChannelIndex &synth_channels_capacity,
   _synth_channels.reserve(synth_channels_capacity);
   _sample_channels.reserve(sample_channels_capacity);
   for (ChannelIndex i = 0; i < synth_channels_capacity; ++i) {
-    Channel<Synth> *channel = new Channel<Synth>(this);
+    Channel<Synth> *channel = new Channel<Synth>(this, i);
     channel->InitializeChannel();
     _synth_channels.push_back(channel);
   }
   for (ChannelIndex i = 0; i < sample_channels_capacity; ++i) {
-    Channel<Sample> *channel = new Channel<Sample>(this);
+    Channel<Sample> *channel = new Channel<Sample>(this, i);
     channel->InitializeChannel();
     _sample_channels.push_back(channel);
   }

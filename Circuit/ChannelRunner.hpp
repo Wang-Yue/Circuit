@@ -71,7 +71,7 @@ class ChannelRunner<Sample> : public BaseChannelRunner<Sample> {
 public:
   ChannelRunner(Channel<Sample> *channel)  :
   BaseChannelRunner<Sample>(channel) {
-    _output = ChannelOutputFactory::GetInstance().GetSampleChannelOutput(channel->GetSampleIndex());
+    _output = ChannelOutputFactory::GetInstance().GetSampleChannelOutput(channel->GetChannelIndex());
   }
 
   virtual ~ChannelRunner()  {
@@ -133,7 +133,7 @@ class ChannelRunner<Synth> : public BaseChannelRunner<Synth> {
 public:
   ChannelRunner(Channel<Synth> *channel) :
   BaseChannelRunner<Synth>(channel) {
-    _output = ChannelOutputFactory::GetInstance().GetSynthChannelOutput(channel->GetSynthIndex());
+    _output = ChannelOutputFactory::GetInstance().GetSynthChannelOutput(channel->GetChannelIndex());
   }
 
   virtual ~ChannelRunner()  {
