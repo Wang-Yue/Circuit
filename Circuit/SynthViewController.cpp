@@ -38,12 +38,12 @@ _nudge_view_controller(nullptr),
 _editing_step(nullptr) {
   _output = ChannelOutputFactory::GetInstance().GetSynthChannelOutput(channel);
   UpdateEditingMode();
-  parent->SetMidiDelegate(this);
+  SetMidiDelegate(this);
 }
 
 SynthViewController::~SynthViewController() {
   KillAllControllers();
-  _parent->SetMidiDelegate(nullptr);
+  SetMidiDelegate(nullptr);
 }
 
 void SynthViewController::KillAllControllers() {
@@ -247,7 +247,7 @@ void SynthViewController::SignalNoteOn(const Note &note, const Velocity &velocit
     struct NoteEvent event = {
       .synth = nullptr,
       .midi_note = midi_note,
-      .velocity = velocity,
+      .velocity = IsFixedVelocityMode() ? kDefaultVelocity : velocity,
       .note = note,
     };
     if (IsRecording()) {
@@ -276,5 +276,37 @@ void SynthViewController::SignlalNoteOff(const Note &note) {
         ++it;
       }
     }
+  }
+}
+
+void SynthViewController::HandleOctUp() {
+  if (IsHoldingShift()) {
+    Pattern<Synth> *pattern = GetCurrentSynthPattern(_channel_index);
+    pattern->OctUp();
+  } else {
+    Session *session = GetCurrentSession();
+    Note base_note = session->GetBaseNote();
+    ++base_note.octave;
+    if (base_note.octave > kMaxOctave) {
+      base_note.octave = kMaxOctave;
+    }
+    session->SetBaseNote(base_note);
+    UpdateEditingMode();
+  }
+}
+
+void SynthViewController::HandleOctDown() {
+  if (IsHoldingShift()) {
+    Pattern<Synth> *pattern = GetCurrentSynthPattern(_channel_index);
+    pattern->OctDown();
+  } else {
+    Session *session = GetCurrentSession();
+    Note base_note = session->GetBaseNote();
+    --base_note.octave;
+    if (base_note.octave < kMinOctave) {
+      base_note.octave = kMinOctave;
+    }
+    session->SetBaseNote(base_note);
+    UpdateEditingMode();
   }
 }

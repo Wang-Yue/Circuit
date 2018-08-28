@@ -18,18 +18,12 @@ public:
 
   Synth(const Synth &a);
   virtual ~Synth();
-  Gate GetGate() const {
-    return _gate;
-  }
-  void SetGate(const Gate &gate) {
-    _gate = gate;
-  }
-  Note GetNote() const {
-    return _note;
-  }
-  void SetNote(const Note &note) {
-    _note = note;
-  }
+  Gate GetGate() const;
+  void SetGate(const Gate &gate);
+  Note GetNote() const;
+  void SetNote(const Note &note);
+  void OctUp();
+  void OctDown();
 private:
   Gate _gate;
   Note _note;

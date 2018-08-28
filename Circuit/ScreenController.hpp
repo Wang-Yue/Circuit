@@ -18,6 +18,7 @@ class SessionRunner;
 class Session;
 class Sample;
 class Synth;
+class MIDIDelegate;
 template <typename AtomClass> class PatternChainRunner;
 template <typename AtomClass> class ChannelRunner;
 template <typename AtomClass> class Pattern;
@@ -30,6 +31,9 @@ public:
   CircuitView *GetView();
   virtual void UpdateEditingMode() = 0;
   virtual void UpdateRunningMode() = 0;
+  virtual void HandleOctUp();
+  virtual void HandleOctDown();
+
 protected:
   Session *GetCurrentSession();
   SessionRunner *GetSessionRunner();
@@ -39,6 +43,9 @@ protected:
   PatternChainRunner<Synth> *GetSynthPatternChainRunner(const ChannelIndex &index);
   ChannelRunner<Sample> *GetSampleChannelRunner(const ChannelIndex &index);
   ChannelRunner<Synth> *GetSynthChannelRunner(const ChannelIndex &index);
+  void SetMidiDelegate(MIDIDelegate *midi_delegate);
+  bool IsHoldingShift() const;
+  bool IsFixedVelocityMode() const;
   
   bool IsStopped() const;
   bool IsPlaying() const;

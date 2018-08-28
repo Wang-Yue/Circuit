@@ -215,6 +215,20 @@ public:
     }
     return notes;
   }
+  
+  void OctUp() {
+    std::vector<Synth *> atoms = GetAtoms();
+    for (Synth *synth : atoms) {
+      synth->OctUp();
+    }
+  }
+  
+  void OctDown() {
+    std::vector<Synth *> atoms = GetAtoms();
+    for (Synth *synth : atoms) {
+      synth->OctDown();
+    }
+  }
 private:
   Microstep _microstep_delay;
   bool _is_tie;

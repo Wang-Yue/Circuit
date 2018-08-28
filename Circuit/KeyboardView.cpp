@@ -45,6 +45,8 @@ public:
         PadIndex pad_index = pad->GetPadIndex();
         _pad_note_mapping[pad_index] = note;
         pad->SetDelegate(this);
+      } else {
+        pad->SetColor(kDisabledKeyColor);
       }
     }
     for (PadIndex index = size + 1; index < _pads.size(); ++index) {
@@ -97,11 +99,18 @@ public:
 
   void AllNotesOff() {
     Degree scale_degree_size = GetScaleDegreeSize(_base_note.scale);
-    for (Degree degree = 1; degree <  scale_degree_size; ++degree) {
-      _pads[degree]->SetColor(kAvailableKeyColor);
+    for (Degree degree = 0; degree <=  scale_degree_size; ++degree) {
+      // Pads not in _pad_note_mapping are out of midi range.
+      PadIndex pad_index = _pads[degree]->GetPadIndex();
+
+      if (_pad_note_mapping.find(pad_index) == _pad_note_mapping.end()) {
+        _pads[degree]->SetColor(kDisabledKeyColor);
+      } else if (degree == 0 || degree == scale_degree_size) {
+        _pads[degree]->SetColor(kOctaveKeyColor);
+      } else {
+        _pads[degree]->SetColor(kAvailableKeyColor);
+      }
     }
-    _pads[0]->SetColor(kOctaveKeyColor);
-    _pads[scale_degree_size]->SetColor(kOctaveKeyColor);
   }
   
   virtual void Tap(Pad *pad) override {

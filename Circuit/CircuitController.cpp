@@ -50,6 +50,10 @@ bool CircuitController::IsHoldingShift() const {
   return _is_holding_shift;
 }
 
+bool CircuitController::IsFixedVelocityMode() const {
+  return _is_fixed_velocity_mode;
+}
+
 void CircuitController::SwitchToSynth(const ChannelIndex &index){
   if (_atom_mode == CircuitAtomSynth && _channel_index == index) {
     return;
@@ -228,7 +232,12 @@ void CircuitController::Tap(Pad *pad){
   if (index >= PadNote && index <= PadLength) {
     _screen_controller->UpdateEditingMode();
   }
-  
+  if (index == PadOctUp) {
+    _screen_controller->HandleOctUp();
+  }
+  if (index == PadOctDown) {
+    _screen_controller->HandleOctDown();
+  }
 }
 void CircuitController::Release(Pad *pad) {
   PadIndex index = pad->GetPadIndex();

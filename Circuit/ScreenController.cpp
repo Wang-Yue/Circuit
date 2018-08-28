@@ -53,6 +53,26 @@ SessionRunner *ScreenController::GetSessionRunner() {
   return _parent->GetSessionRunner();
 }
 
+void ScreenController::SetMidiDelegate(MIDIDelegate *midi_delegate) {
+  _parent->SetMidiDelegate(midi_delegate);
+}
+
+bool ScreenController::IsHoldingShift() const {
+  return _parent->IsHoldingShift();
+}
+
+bool ScreenController::IsFixedVelocityMode() const {
+  return _parent->IsFixedVelocityMode();
+}
+
+void ScreenController::HandleOctUp() {
+  return;
+}
+
+void ScreenController::HandleOctDown() {
+  return;
+}
+
 bool ScreenController::IsStopped() const {
   return _parent->IsStopped();
 }
@@ -67,4 +87,4 @@ bool ScreenController::IsRecording() const {
 
 enum CircuitEditingMode ScreenController::GetEditingMode() const {
   return _parent->GetEditingMode();
-  }
+}

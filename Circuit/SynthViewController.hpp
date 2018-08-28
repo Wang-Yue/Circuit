@@ -25,6 +25,7 @@ class SynthChannelOutputInterface;
 class SynthGateViewController;
 class KeyboardViewController;
 class Synth;
+
 template <typename AtomClass> class VelocityViewController;
 template <typename AtomClass> class LengthViewController;
 template <typename AtomClass> class NudgeViewController;
@@ -49,6 +50,8 @@ public:
   virtual void UpdateRunningMode() override;
   virtual void UpdateEditingMode() override;
   virtual void Update() override;
+  void HandleOctUp() override;
+  void HandleOctDown() override;
   // MidiDelegate.
   virtual void NoteOn(const Note &note, const Velocity &velocity) override;
   virtual void NoteOff(const Note &note) override;

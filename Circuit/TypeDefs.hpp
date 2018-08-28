@@ -92,6 +92,8 @@ typedef int8_t Octave;
 
 static const Degree kOctaveDegree = 12;
 static const Octave kBaseOctave = 5; // C5 have octave 0.
+static const Octave kMaxOctave = 6;
+static const Octave kMinOctave = - kBaseOctave - 1;
 static const Degree kMIDIDegreeRange = 128;
 
 struct Note {

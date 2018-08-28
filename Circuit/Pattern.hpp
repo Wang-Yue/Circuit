@@ -78,6 +78,18 @@ public:
     }
     _steps[0] = last;
   }
+  
+  void OctUp() {
+    for (Step<AtomClass> *step : _steps) {
+      step->OctUp();
+    }
+  }
+  
+  void OctDown() {
+    for (Step<AtomClass> *step : _steps) {
+      step->OctDown();
+    }
+  }
 private:
   Pattern(const StepIndex &pattern_capacity, Channel<AtomClass> * const channel) :
   _pattern_capacity(pattern_capacity), _channel(channel) {
