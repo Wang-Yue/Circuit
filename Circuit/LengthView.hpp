@@ -30,8 +30,8 @@ public:
   virtual void Release(Pad *pad) override;
 private:
   std::vector<Pad *> _pads;
-  // pad's own PadIndex -> index in _pads vector.
-  std::map<PadIndex, PadIndex> _pad_index_mapping;
+  // pad's own PadIndex -> StepIndex in _pads vector.
+  std::map<PadIndex, StepIndex> _pad_index_mapping;
   LengthViewDelegate *_delegate;
 };
 

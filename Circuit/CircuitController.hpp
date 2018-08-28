@@ -32,210 +32,51 @@
 
 class CircuitController : public PadDelegate, public MIDIDelegate {
 public:
-  CircuitController() {
-    _view = new CircuitView();
-    _circuit_mode = CircuitStopMode;
-    _workspace = new Workspace();
-    _editing_mode = CircuitEditNoteMode;
-    _atom_mode = CircuitAtomSynth;
-    _session_runner = new SessionRunner(GetCurrentSession());
-    _screen_controller = new SynthViewController(this, 0);
-    _bpm = kDefaultBPM;
-    for (PadIndex index = kRegularPadCount; index < PadUnknown; ++index) {
-      Pad *pad = GetView()->GetControlPad(index);
-      pad->SetDelegate(this);
-    }
-  }
+  CircuitController();
   
-  ~CircuitController() {
-    delete _view;
-    delete _screen_controller;
-    delete _session_runner;
-    delete _workspace;
-  }
+  ~CircuitController();
   
-  CircuitView *GetView() const {
-    return _view;
-  }
+  CircuitView *GetView() const;
 
-  
-  void RestartRunning() {
-    if (_session_runner) {
-      delete _session_runner;
-    }
-    _session_runner = new SessionRunner(GetCurrentSession());
-  }
+  void RestartRunning();
 
-  void SwitchToSynth() {
-    if (_atom_mode == CircuitAtomSynth) {
-      return;
-    }
-    if (_screen_controller) {
-      delete _screen_controller;
-    }
-    _screen_controller = new SynthViewController(this, 0);
-  }
-  
-  void SwitchToSample() {
-    if (_atom_mode == CircuitAtomSample) {
-      return;
-    }
-    if (_screen_controller) {
-      delete _screen_controller;
-    }
-    _screen_controller = new SampleViewController(this, 0);
-  }
- 
-  void SwitchToScaleMode() {
-    if (_screen_controller) {
-      delete _screen_controller;
-    }
-    _screen_controller = new ScaleViewController(this);
-  }
-  
-  enum CircuitEditingMode GetEditingMode() const {
-    return _editing_mode;
-  }
-  
-  void SetEditingMode(enum CircuitEditingMode &mode) {
-    if (mode == _editing_mode) {
-      return;
-    }
-    _editing_mode = mode;
-    _screen_controller->UpdateEditingMode();
-  }
-  
-  void Stop() {
-    _circuit_mode = CircuitStopMode;
-    if (_screen_controller) {
-      _screen_controller->UpdateRunningMode();
-    }
-  }
-  
-  bool IsStopped() const {
-    return _circuit_mode == CircuitStopMode;
-  }
-  
-  void Play() {
-    _circuit_mode = CircuitPlayingMode;
-    RestartRunning();
-    if (_screen_controller) {
-      _screen_controller->UpdateRunningMode();
-    }
-  }
-  
-  bool IsPlaying() const {
-    return _circuit_mode == CircuitPlayingMode;
-  }
-  
-  void Record() {
-    _circuit_mode = CircuitRecordMode;
-    if (_screen_controller) {
-      _screen_controller->UpdateRunningMode();
-    }
-  }
-  
-  bool IsRecording() const {
-    return _circuit_mode == CircuitRecordMode;
-  }
+  bool IsHoldingShift() const;
+  bool IsFixedVelocityMode() const;
 
-  void TickMicrostep() {
-    if (_screen_controller) {
-      _screen_controller->Update();
-    }
-    if (_circuit_mode == CircuitStopMode) {
-      return;
-    }
-    _session_runner->TickMicrostep();
-  }
+  enum CircuitEditingMode GetEditingMode() const;
+  void SetEditingMode(enum CircuitEditingMode &mode);
+  void Stop();
   
-  Pad *GetPad(const PadIndex &index) const {
-    if (!_screen_controller) {
-      return nullptr;
-    }
-    CircuitView *view = _screen_controller->GetView();
-    if (view) {
-      return view->GetPad(index);
-    }
-    return nullptr;
-  }
+  bool IsStopped() const;
   
-  Session *GetCurrentSession() {
-    return _workspace->CurrentSession();
-  }
+  void Play();
+  
+  bool IsPlaying() const;
+  void Record();
+  bool IsRecording() const;
+  void TickMicrostep();
+  Pad *GetPad(const PadIndex &index) const;
+  
+  Session *GetCurrentSession();
+  SessionRunner *GetSessionRunner();
+  
+  void SetSessionRunner(SessionRunner *runner);
 
-  SessionRunner *GetSessionRunner() {
-    return _session_runner;
-  }
-  
-  void SetSessionRunner(SessionRunner *runner) {
-    _session_runner = runner;
-  }
-  
-  virtual void Tap(Pad *pad) override {
-    PadIndex index = pad->GetPadIndex();
-    if (index == PadNote) {
-      _editing_mode = CircuitEditNoteMode;
-    }
-    if (index == PadGate) {
-      _editing_mode = CircuitEditGateMode;
-    }
-    if (index == PadVelocity) {
-      _editing_mode = CircuitEditVelocityMode;
-    }
-    if (index == PadNudge) {
-      _editing_mode = CircuitEditNudgeMode;
-    }
-    if (index == PadLength) {
-      _editing_mode = CircuitEditLengthMode;
-    }
-    if (index == PadScale) {
-      SwitchToScaleMode();
-    }
-    if (index == PadRecord) {
-      if (_circuit_mode == CircuitPlayingMode) {
-        Record();
-      }
-    }
-    if (index == PadPlay) {
-      if (_circuit_mode == CircuitStopMode) {
-        Play();
-      } else {
-        Stop();
-      }
-    }
-    if (!_screen_controller) {
-      return;
-    }
-    if (index >= PadNote && index <= PadLength) {
-      _screen_controller->UpdateEditingMode();
-    }
+  BPM GetBPM() const;
 
-  }
-  virtual void Release(Pad *) override {
-    // no-op.
-  }
-  
-  void SetMidiDelegate(MIDIDelegate *midi_delegate) {
-    _midi_delegate = midi_delegate;
-  }
-  
+  void SetMidiDelegate(MIDIDelegate *midi_delegate);
   // MIDIDelegate.
-  virtual void NoteOn(const Note &note, const Velocity &velocity) override {
-    if (_midi_delegate) {
-      _midi_delegate->NoteOn(note, velocity);
-    }
-  }
-  virtual void NoteOff(const Note &note) override {
-    if (_midi_delegate) {
-      _midi_delegate->NoteOff(note);
-    }
-  }
-  BPM GetBPM() const {
-    return _bpm;
-  }
+  virtual void NoteOn(const Note &note, const Velocity &velocity) override;
+  virtual void NoteOff(const Note &note) override;
+  // PadDelegate.
+  virtual void Tap(Pad *pad) override;
+  virtual void Release(Pad *) override;
   
 private:
+  void SwitchToSynth(const ChannelIndex &index);
+  void SwitchToSample(const ChannelIndex &index);
+  void SwitchToScaleMode();
+  
   CircuitView *_view;
   Workspace *_workspace;
   SessionRunner *_session_runner;
@@ -243,6 +84,10 @@ private:
   CircuitRunningMode _circuit_mode;
   CircuitEditingMode _editing_mode;
   CircuitViewMode _atom_mode;
+  ChannelIndex _channel_index;
+  bool _is_holding_shift;
+  bool _is_fixed_velocity_mode;
+  bool _recording_button_pressed;
   MIDIDelegate *_midi_delegate;
   BPM _bpm;
 };

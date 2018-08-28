@@ -30,7 +30,7 @@ public:
   PatternViewController(const std::vector<Pad *> &pads,
                          Pattern<AtomClass> *pattern,
                          PatternViewControllerDelegate<AtomClass> *delegate):
-  _delegate(delegate) {
+  _delegate(delegate), _selected_step(nullptr), _curser_step(nullptr) {
     std::map<StepIndex, Pad *> step_pad_mapping;
     for (StepIndex i = 0; i < pads.size(); ++i) {
       step_pad_mapping[i] = pads[i];

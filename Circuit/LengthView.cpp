@@ -41,8 +41,9 @@ void LengthView::SetLength(const StepIndex &length) {
 
 void LengthView::Tap(Pad *pad) {
   PadIndex pad_index = pad->GetPadIndex();
+  StepIndex length = _pad_index_mapping[pad_index] + 1;
   if (_delegate) {
-    _delegate->Tap(pad_index + 1);
+    _delegate->Tap(length);
   }
 }
 

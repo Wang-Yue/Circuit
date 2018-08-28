@@ -36,9 +36,6 @@ SampleGateView::~SampleGateView() {
 }
 
 void SampleGateView::SetMicrostepTicks(const Microstep &microstep_ticks) {
-  if (_microstep_ticks == microstep_ticks) {
-    return;
-  }
   _microstep_ticks = microstep_ticks;
   for (PadIndex i = 0; i < _pads.size(); ++i ){
     Pad *pad = _pads[i];
