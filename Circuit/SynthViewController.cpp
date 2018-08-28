@@ -267,7 +267,7 @@ void SynthViewController::SignalNoteOn(const Note &note, const Velocity &velocit
     struct NoteEvent event = {
       .synth = nullptr,
       .midi_note = midi_note,
-      .velocity = IsFixedVelocityMode() ? kDefaultVelocity : velocity,
+      .velocity = velocity,
       .note = note,
     };
     if (IsRecording()) {

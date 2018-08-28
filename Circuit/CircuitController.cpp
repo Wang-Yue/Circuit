@@ -275,7 +275,7 @@ void CircuitController::SetMidiDelegate(MIDIDelegate *midi_delegate) {
 // MIDIDelegate.
 void CircuitController::NoteOn(const MIDINote &note, const Velocity &velocity) {
   if (_midi_delegate) {
-    _midi_delegate->NoteOn(note, velocity);
+    _midi_delegate->NoteOn(note, IsFixedVelocityMode() ? kDefaultVelocity :  velocity);
   }
 }
 

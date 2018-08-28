@@ -61,10 +61,6 @@ bool ScreenController::IsHoldingShift() const {
   return _parent->IsHoldingShift();
 }
 
-bool ScreenController::IsFixedVelocityMode() const {
-  return _parent->IsFixedVelocityMode();
-}
-
 void ScreenController::HandleOctUp() {
   return;
 }

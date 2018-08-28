@@ -45,7 +45,6 @@ protected:
   ChannelRunner<Synth> *GetSynthChannelRunner(const ChannelIndex &index);
   void SetMidiDelegate(MIDIDelegate *midi_delegate);
   bool IsHoldingShift() const;
-  bool IsFixedVelocityMode() const;
   
   bool IsStopped() const;
   bool IsPlaying() const;
