@@ -57,11 +57,8 @@ CircuitView *CircuitController::GetView() const {
 }
 
 
-void CircuitController::RestartRunning() {
-  if (_session_runner) {
-    delete _session_runner;
-  }
-  _session_runner = new SessionRunner(GetCurrentSession());
+void CircuitController::Restart() {
+  _session_runner->Restart();
 }
 
 bool CircuitController::IsHoldingShift() const {
@@ -211,22 +208,26 @@ void CircuitController::SetSessionRunner(SessionRunner *runner) {
 void CircuitController::Tap(Pad *pad){
   PadIndex index = pad->GetPadIndex();
   if (index == PadShift) {
-    _is_holding_shift = true;
-//    _is_holding_shift = !_is_holding_shift;
+//    _is_holding_shift = true;
+    _is_holding_shift = !_is_holding_shift;
     return;
   }
   if (index == PadNote) {
-    if (_is_holding_shift) {
+    if (IsHoldingShift()) {
       SetEditingMode(CircuitEditExpandNoteMode);
     } else {
       SetEditingMode(CircuitEditNoteMode);
     }
   }
   if (index == PadGate) {
-    SetEditingMode(CircuitEditGateMode);
+    if (IsHoldingShift()){
+      SetEditingMode(CircuitEditSynthMicrostepDelayMode);
+    } else {
+      SetEditingMode(CircuitEditGateMode);
+    }
   }
   if (index == PadVelocity) {
-    if (_is_holding_shift) {
+    if (IsHoldingShift()) {
       _is_fixed_velocity_mode = !_is_fixed_velocity_mode;
     } else {
       SetEditingMode(CircuitEditVelocityMode);
@@ -256,7 +257,7 @@ void CircuitController::Tap(Pad *pad){
   }
   if (index == PadPlay) {
     if (_circuit_mode == CircuitStopMode) {
-      RestartRunning();
+      Restart();
       if (_recording_button_pressed) {
         Record();
       } else {
@@ -294,7 +295,7 @@ void CircuitController::Tap(Pad *pad){
 void CircuitController::Release(Pad *pad) {
   PadIndex index = pad->GetPadIndex();
   if (index == PadShift) {
-    _is_holding_shift = false;
+//    _is_holding_shift = false;
     return;
   }
 }

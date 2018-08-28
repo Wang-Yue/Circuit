@@ -21,7 +21,7 @@ class SessionRunner {
 public:
   SessionRunner(Session *session);
   virtual ~SessionRunner();
-  
+  void Restart();
   ChannelRunner<Synth> *GetSynthChannelRunner(const ChannelIndex &index) const;
   ChannelIndex GetSynthChannelRunnerCount() const;
   ChannelRunner<Sample> *GetSampleChannelRunner(const ChannelIndex &index) const;

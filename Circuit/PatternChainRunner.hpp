@@ -40,6 +40,11 @@ public:
     _pattern_chain->Reset(pattern);
   }
 
+  void Restart() {
+    _remaining_pattern = nullptr;
+    _pattern_counter = 0;
+    _step_counter = 0;
+  }
 
   // NotNull
   Pattern<AtomClass> *GetPattern() const  {

@@ -25,6 +25,7 @@ class CircuitController;
 class SynthChannelOutputInterface;
 class SynthGateViewController;
 class KeyboardViewController;
+class SynthMicrostepDelayViewController;
 class Synth;
 
 template <typename AtomClass> class VelocityViewController;
@@ -74,6 +75,7 @@ private:
   LengthViewController<Synth> *_length_view_controller;
   NudgeViewController<Synth> *_nudge_view_controller;
   SynthPatchSelectionViewController *_patch_selection_view_controller;
+  SynthMicrostepDelayViewController *_microstep_delay_view_controller;
   struct NoteEvent {
     Synth *synth;
     MIDINote midi_note;

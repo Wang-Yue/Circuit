@@ -37,6 +37,7 @@ public:
   }
 
   void Reset(Pattern<AtomClass> *pattern) {
+    _patterns.clear();
     AddPattern(pattern);
   }
 

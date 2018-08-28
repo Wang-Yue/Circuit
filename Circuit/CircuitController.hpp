@@ -31,7 +31,7 @@ public:
   
   CircuitView *GetView() const;
 
-  void RestartRunning();
+  void Restart();
 
   bool IsHoldingShift() const;
   bool IsFixedVelocityMode() const;

@@ -21,8 +21,8 @@ static const Velocity kDefaultVelocity = 96;
 static const Velocity kDiscreteVelocityValues = 128;
 
 typedef uint8_t Gate;
-static const Gate kDiscreteGateValues = 128;
-static const Gate kDefaultGate = 8;
+static const Gate kDiscreteGateValues = 96;
+static const Gate kDefaultGate = 6;
 
 typedef uint8_t Volume;
 static const Volume kDefaultVolume = 127;

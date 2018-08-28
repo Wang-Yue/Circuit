@@ -24,9 +24,15 @@ public:
   void SetNote(const Note &note);
   void OctUp();
   void OctDown();
+  void SetMicrostepDelay(const Microstep &microstep_delay);
+  Microstep GetMicrostepDelay() const;
+  void SetTie(const bool &tie);
+  bool GetTie() const;
 private:
   Gate _gate;
   Note _note;
+  Microstep _microstep_delay;
+  bool _tie;
 };
 
 #endif /* Synth_hpp */

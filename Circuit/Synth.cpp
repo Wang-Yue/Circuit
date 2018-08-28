@@ -51,3 +51,19 @@ void Synth::OctDown() {
     _note.octave = kMinOctave;
   }
 }
+
+void Synth::SetMicrostepDelay(const Microstep &microstep_delay)  {
+  _microstep_delay = microstep_delay;
+}
+
+Microstep Synth::GetMicrostepDelay() const  {
+  return _microstep_delay;
+}
+
+void Synth::SetTie(const bool &tie) {
+  _tie = tie;
+}
+
+bool Synth::GetTie() const {
+  return _tie;
+}

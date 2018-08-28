@@ -126,22 +126,34 @@ template <>
 class Step<Synth> : public StepBase<Synth>{
 public:
   Step(Pattern<Synth> * const parent) : StepBase<Synth>(parent, kSynthPolyphonyCapacity)  {
-    SetMicrostepDelay(0);
   }
   void SetMicrostepDelay(const Microstep &microstep_delay)  {
-    _microstep_delay = microstep_delay;
+    std::vector<Synth *> atoms = GetAtoms();
+    for (Synth *atom : atoms) {
+      atom->SetMicrostepDelay(microstep_delay);
+    }
   }
   
   Microstep GetMicrostepDelay() const  {
-    return _microstep_delay;
+    std::vector<Synth *> atoms = GetAtoms();
+    return atoms[0]->GetMicrostepDelay();
   }
   
-  void SetIsTie(const bool &tie) {
-    _is_tie = tie;
+  void SetTie(const bool &tie) {
+    std::vector<Synth *> atoms = GetAtoms();
+    for (Synth *atom : atoms) {
+      atom->SetTie(tie);
+    }
   }
   
-  bool GetIsTie() const {
-    return _is_tie;
+  bool GetTie() const {
+    std::vector<Synth *> atoms = GetAtoms();
+    for (Synth *atom : atoms) {
+      if (atom->GetTie()) {
+        return true;
+      }
+    }
+    return false;
   }
   
   Gate GetGate() const  {
@@ -229,9 +241,6 @@ public:
       synth->OctDown();
     }
   }
-private:
-  Microstep _microstep_delay;
-  bool _is_tie;
 };
 
 #endif /* Step_hpp */

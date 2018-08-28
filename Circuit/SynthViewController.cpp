@@ -18,6 +18,7 @@
 #include "Session.hpp"
 #include "KeyboardViewController.hpp"
 #include "SynthGateViewController.hpp"
+#include "SynthMicrostepDelayViewController.hpp"
 #include "VelocityViewController.hpp"
 #include "LengthViewController.hpp"
 #include "NudgeViewController.hpp"
@@ -36,6 +37,7 @@ _velocity_view_controller(nullptr),
 _length_view_controller(nullptr),
 _nudge_view_controller(nullptr),
 _patch_selection_view_controller(nullptr),
+_microstep_delay_view_controller(nullptr),
 _editing_step(nullptr) {
   _output = ChannelOutputFactory::GetInstance().GetSynthChannelOutput(channel);
   UpdateEditingMode();
@@ -75,6 +77,10 @@ void SynthViewController::KillAllControllers() {
   if (_patch_selection_view_controller) {
     delete _patch_selection_view_controller;
     _patch_selection_view_controller = nullptr;
+  }
+  if (_microstep_delay_view_controller) {
+    delete _microstep_delay_view_controller;
+    _microstep_delay_view_controller = nullptr;
   }
 }
 
@@ -124,6 +130,8 @@ void SynthViewController::UpdateEditingMode() {
     _nudge_view_controller = new NudgeViewController<Synth>(remaining_pads);
   } else if (mode == CircuitEditLengthMode) {
     _length_view_controller = new LengthViewController<Synth>(remaining_pads);
+  } else if (mode == CircuitEditSynthMicrostepDelayMode) {
+    _microstep_delay_view_controller = new SynthMicrostepDelayViewController(remaining_pads);
   }
 }
 
@@ -149,6 +157,10 @@ void SynthViewController::Update() {
     _gate_view_controller->SetCurrentStep(current_step);
     _gate_view_controller->SetCurrentEditingStep(_editing_step);
     _gate_view_controller->Update();
+  }
+  if (_microstep_delay_view_controller) {
+    _microstep_delay_view_controller->SetStep(_editing_step);
+    _microstep_delay_view_controller->Update();
   }
   
   if (_velocity_view_controller) {

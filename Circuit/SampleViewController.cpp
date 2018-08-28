@@ -126,7 +126,8 @@ void SampleViewController::UpdateEditingMode() {
     Pattern<Sample> *companion_pattern = GetCurrentSamplePattern(_companion_channel_index);
     _companion_pattern_view_controller =
         new PatternViewController<Sample>(remaining_pads, companion_pattern, this);
-  } else if (mode == CircuitEditGateMode) {
+  } else if (mode == CircuitEditGateMode || mode == CircuitEditSynthMicrostepDelayMode) {
+    // Sample does not have microstep delays.
     _gate_view_controller = new SampleGateViewController(remaining_pads);
   } else if (mode == CircuitEditVelocityMode) {
     _velocity_view_controller = new VelocityViewController<Sample>(remaining_pads);
@@ -278,7 +279,7 @@ void SampleViewController::ReleaseStep(const StepIndex &selected_index) {
 
 
 void SampleViewController::TapPatch(const SynthIndex &index) {
-  if (IsStopped()) {
+  if (!IsRecording()) {
     Pattern<Sample> *pattern = GetCurrentSamplePattern(_channel_index);
     Channel<Sample> *channel = pattern->GetChannel();
     channel->SetSampleIndex(index);

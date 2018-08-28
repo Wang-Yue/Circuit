@@ -22,7 +22,7 @@ public:
   BridgeController() {
     MidiController::GetInstance().SetDelegate(this);
     _circuit = new CircuitController();
-    _circuit->RestartRunning();
+    _circuit->Restart();
     _bpm = _circuit->GetBPM();
     _running = true;
     _thread = std::thread(&BridgeController::Loop, this);

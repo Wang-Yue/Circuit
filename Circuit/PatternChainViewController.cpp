@@ -12,6 +12,7 @@
 #include "PatternChainRunner.hpp"
 #include "CircuitView.hpp"
 #include "Step.hpp"
+#include "CircuitController.hpp"
 
 static const Color kAvailableColor(0x0000003f);
 static const Color kEnabledColor(0x000000ff);
@@ -72,6 +73,9 @@ void PatternChainViewController::Tap(Pad *pad) {
       pattern_chain_runner->AddPattern(pattern);
     } else {
       pattern_chain_runner->Reset(pattern);
+      if (IsStopped()) {
+        _parent->Restart();
+      }
     }
   } else {
     channel_index = (channel_index - kSynthChannelsCapacity) * 2;
@@ -90,6 +94,9 @@ void PatternChainViewController::Tap(Pad *pad) {
     } else {
       pattern_chain_runner->Reset(pattern);
       companion_pattern_chain_runner->Reset(companion_pattern);
+      if (IsStopped()) {
+        _parent->Restart();
+      }
     }
   }
 }

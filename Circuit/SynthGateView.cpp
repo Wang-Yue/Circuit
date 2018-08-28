@@ -13,7 +13,7 @@
 static const Color kZeroGateColor(0x00000000);
 static const ColorCode kFullGateColorCode = 0x000000ff;
 static const Color kFullGateColor(kFullGateColorCode);
-static const uint8_t kGateIncrementPerPad = 8;
+static const uint8_t kGateIncrementPerPad = kMicrosteps;
 
 SynthGateView::SynthGateView(const std::vector<Pad *> &pads, SynthGateViewDelegate *delegate):
 _pads(pads), _delegate(delegate) {

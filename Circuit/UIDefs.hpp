@@ -66,6 +66,7 @@ enum CircuitEditingMode : uint8_t {
   CircuitEditVelocityMode,
   CircuitEditNudgeMode,
   CircuitEditLengthMode,
+  CircuitEditSynthMicrostepDelayMode,
   // This is never set to the circuit controller. Instead, it will be returned if it's in the
   // CircuitSettingPatchMode. The reason to that is we need to use the SynthViewController and
   // SampleViewController to handle taps. When user exit this mode, we want to revert to the
