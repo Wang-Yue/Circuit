@@ -31,8 +31,8 @@ public:
   }
 
 
-  void AddPattern(Pattern<AtomClass> *pattern)  {
-    _pattern_chain->AddPattern(pattern);
+  bool AddPattern(Pattern<AtomClass> *pattern)  {
+    return _pattern_chain->AddPattern(pattern);
   }
 
   void Reset(Pattern<AtomClass> *pattern)  {

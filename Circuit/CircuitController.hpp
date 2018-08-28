@@ -9,26 +9,19 @@
 #ifndef CircuitController_hpp
 #define CircuitController_hpp
 
-#include "CircuitView.hpp"
-
-#include "Workspace.hpp"
-#include "Session.hpp"
-#include "Channel.hpp"
-#include "Step.hpp"
-#include "Sample.hpp"
-#include "Synth.hpp"
-#include "PatternChain.hpp"
-#include "SessionRunner.hpp"
-#include "ChannelRunner.hpp"
-
-#include "SampleViewController.hpp"
-#include "SynthViewController.hpp"
-#include "ScaleViewController.hpp"
-#include "ScreenController.hpp"
 
 #include "UIDefs.hpp"
-
+#include "Pad.hpp"
 #include "MIDIDelegate.hpp"
+
+class Workspace;
+class Sample;
+class Synth;
+class CircuitView;
+class Session;
+class ScreenController;
+template <typename AtomClass> class PatternChainRunner;
+class SessionRunner;
 
 class CircuitController : public PadDelegate, public MIDIDelegate {
 public:
@@ -78,6 +71,7 @@ private:
   void SwitchToSynth(const ChannelIndex &index);
   void SwitchToSample(const ChannelIndex &index);
   void SwitchToScaleMode();
+  void SwitchToPatternChainMode();
   
   CircuitView *_view;
   Workspace *_workspace;

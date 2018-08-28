@@ -1,8 +1,18 @@
-Circuit is a very incomplete simulator of Novation Circuit groovebox. It was a hacking project
-for my past weekend, and the prototype showcases a fully fledged groovebox is easy. Most necessary
-data structures are there. A few basic UI controls (synth note edit and sample edit) are available.
+Circuit is a incomplete simulator of Novation Circuit groovebox. It was a hacking project for my
+past two weekends, and the prototype showcases a fully fledged groovebox is easy. Most necessary
+data structures are there. Many UI controls are available:
 
-Many UIs (such as mixer, pattern, fx) are still missing, but could be implemented easily. 
+- Synth mode and Drum mode
+- Pattern chain setting
+- Patch selection
+- Note setting
+- Gate setting
+- Velocity setting
+- Length setting
+- Nudge setting
+
+A few UIs (such as mixer, fx, knobs related controls) are still missing, but could be trivial to
+implemented. 
 
 Everything inside the Circuit/ directory is cross platform. Views and view controllers are created
 from scratch. Currently a very hacky and thin Cocoa wrapper is in the CircuitApp folder. But

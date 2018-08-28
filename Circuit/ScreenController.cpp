@@ -9,8 +9,13 @@
 #include "ScreenController.hpp"
 #include "CircuitController.hpp"
 #include "CircuitView.hpp"
+#include "Channel.hpp"
+#include "Step.hpp"
+#include "Sample.hpp"
+#include "Synth.hpp"
+#include "PatternChain.hpp"
 #include "SessionRunner.hpp"
-
+#include "ChannelRunner.hpp"
 
 ScreenController::ScreenController(CircuitController *parent) : _parent(parent) {
 }

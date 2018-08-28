@@ -68,7 +68,7 @@ public:
     _patterns.reserve(_pattern_capacity);
     Pattern<AtomClass> *initial_pattern = nullptr;
     for (PatternIndex i = 0; i < _pattern_capacity; ++i) {
-      Pattern<AtomClass> *pattern = new Pattern<AtomClass>(GetThisPointer());
+      Pattern<AtomClass> *pattern = new Pattern<AtomClass>(GetThisPointer(), i);
       if (i == 0) {
         initial_pattern = pattern;
         _pattern_chain = new PatternChain<AtomClass>(initial_pattern);

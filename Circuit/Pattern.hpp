@@ -23,7 +23,8 @@ template <typename AtomClass = Atom>
 class Pattern {
 public:
 
-  Pattern(Channel<AtomClass> * const channel) : Pattern(kStepCapacity, channel) {
+  Pattern(Channel<AtomClass> * const channel, const PatternIndex &pattern_index) :
+  Pattern(kStepCapacity, channel, pattern_index) {
   }
   virtual ~Pattern()  {
     for (StepIndex i = 0; i < _steps.size(); ++i) {
@@ -32,6 +33,9 @@ public:
     }
   }
 
+  PatternIndex GetPatternIndex() const {
+    return _pattern_index;
+  }
   void SetLength(const StepIndex &length)  {
     if (length > _pattern_capacity) {
       throw std::out_of_range("Pattern length should be less than the capacity.");
@@ -94,8 +98,10 @@ public:
     return _channel;
   }
 private:
-  Pattern(const StepIndex &pattern_capacity, Channel<AtomClass> * const channel) :
-  _pattern_capacity(pattern_capacity), _channel(channel) {
+  Pattern(const StepIndex &pattern_capacity,
+          Channel<AtomClass> * const channel,
+          const PatternIndex &pattern_index) :
+  _pattern_capacity(pattern_capacity), _channel(channel), _pattern_index(pattern_index) {
     _steps.reserve(pattern_capacity);
     for (StepIndex i = 0; i < pattern_capacity; ++i) {
       Step<AtomClass> *step = new Step<AtomClass>(this);
@@ -103,7 +109,7 @@ private:
     }
     SetLength(kStepCapacity);
   }
-  
+  const PatternIndex _pattern_index;
   std::vector<Step<AtomClass> *> _steps;
   StepIndex _length;
   Channel<AtomClass> * const _channel;

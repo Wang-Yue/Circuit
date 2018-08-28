@@ -28,11 +28,12 @@ public:
     // no-op
   }
 
-  void AddPattern(Pattern<AtomClass> *pattern)  {
+  bool AddPattern(Pattern<AtomClass> *pattern)  {
     if (_patterns.size() >= _pattern_chain_capacity) {
-      throw std::overflow_error("Pattern chain size reached");
+      return false;
     }
     _patterns.push_back(pattern);
+    return true;
   }
 
   void Reset(Pattern<AtomClass> *pattern) {

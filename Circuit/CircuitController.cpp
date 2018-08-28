@@ -8,6 +8,23 @@
 
 #include "CircuitController.hpp"
 
+#include "CircuitView.hpp"
+#include "Workspace.hpp"
+#include "Session.hpp"
+#include "Channel.hpp"
+#include "Step.hpp"
+#include "Sample.hpp"
+#include "Synth.hpp"
+#include "PatternChain.hpp"
+#include "SessionRunner.hpp"
+#include "ChannelRunner.hpp"
+#include "SampleViewController.hpp"
+#include "SynthViewController.hpp"
+#include "ScaleViewController.hpp"
+#include "PatternChainViewController.hpp"
+#include "ScreenController.hpp"
+
+
 CircuitController::CircuitController() {
   _view = new CircuitView();
   _circuit_mode = CircuitStopMode;
@@ -68,7 +85,6 @@ void CircuitController::SwitchToSynth(const ChannelIndex &index){
   _screen_controller = new SynthViewController(this, index);
 }
 
-
 void CircuitController::SwitchToSample(const ChannelIndex &index) {
   if (_atom_mode == CircuitAtomSample && _channel_index == index && _setting_mode == CircuitSetRegularMode) {
     return;
@@ -83,14 +99,25 @@ void CircuitController::SwitchToSample(const ChannelIndex &index) {
 }
 
 void CircuitController::SwitchToScaleMode() {
-  if (_setting_mode == CircuitSetRegularMode) {
+  if (_setting_mode == CircuitSetScaleMode) {
     return;
   }
   if (_screen_controller) {
     delete _screen_controller;
   }
-  _setting_mode = CircuitSetRegularMode;
+  _setting_mode = CircuitSetScaleMode;
   _screen_controller = new ScaleViewController(this);
+}
+
+void CircuitController::SwitchToPatternChainMode() {
+  if (_setting_mode == CircuitSetPatternChainMode) {
+    return;
+  }
+  if (_screen_controller) {
+    delete _screen_controller;
+  }
+  _setting_mode = CircuitSetPatternChainMode;
+  _screen_controller = new PatternChainViewController(this);
 }
 
 enum CircuitEditingMode CircuitController::GetEditingMode() const {
@@ -184,8 +211,8 @@ void CircuitController::SetSessionRunner(SessionRunner *runner) {
 void CircuitController::Tap(Pad *pad){
   PadIndex index = pad->GetPadIndex();
   if (index == PadShift) {
-//    _is_holding_shift = true;
-    _is_holding_shift = !_is_holding_shift;
+    _is_holding_shift = true;
+//    _is_holding_shift = !_is_holding_shift;
     return;
   }
   if (index == PadNote) {
@@ -213,6 +240,10 @@ void CircuitController::Tap(Pad *pad){
   }
   if (index == PadScale) {
     SwitchToScaleMode();
+    return;
+  }
+  if (index == PadPatterns) {
+    SwitchToPatternChainMode();
     return;
   }
   if (index == PadRecord) {
@@ -263,7 +294,7 @@ void CircuitController::Tap(Pad *pad){
 void CircuitController::Release(Pad *pad) {
   PadIndex index = pad->GetPadIndex();
   if (index == PadShift) {
-//    _is_holding_shift = false;
+    _is_holding_shift = false;
     return;
   }
 }
