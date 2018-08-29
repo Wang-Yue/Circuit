@@ -23,38 +23,41 @@ ScreenController::ScreenController(CircuitController *parent) : _parent(parent) 
 ScreenController::~ScreenController() {
 }
 
-Pattern<Sample> * ScreenController::GetCurrentSamplePattern(const ChannelIndex &index) {
+Pattern<Sample> * ScreenController::GetCurrentSamplePattern(const ChannelIndex &index) const {
   return GetSamplePatternChainRunner(index)->GetPattern();
 }
 
-Pattern<Synth> * ScreenController::GetCurrentSynthPattern(const ChannelIndex &index) {
+Pattern<Synth> * ScreenController::GetCurrentSynthPattern(const ChannelIndex &index) const {
   return GetSynthPatternChainRunner(index)->GetPattern();
 }
 
-PatternChainRunner<Sample> *ScreenController::GetSamplePatternChainRunner(const ChannelIndex &index) {
+PatternChainRunner<Sample> *ScreenController::GetSamplePatternChainRunner(const ChannelIndex &index) const {
   return GetSampleChannelRunner(index)->GetPatternChainRunner();
 }
 
-PatternChainRunner<Synth> *ScreenController::GetSynthPatternChainRunner(const ChannelIndex &index) {
+PatternChainRunner<Synth> *ScreenController::GetSynthPatternChainRunner(const ChannelIndex &index) const {
   return GetSynthChannelRunner(index)->GetPatternChainRunner();
 }
 
-ChannelRunner<Sample> *ScreenController::GetSampleChannelRunner(const ChannelIndex &index) {
+ChannelRunner<Sample> *ScreenController::GetSampleChannelRunner(const ChannelIndex &index) const {
   return GetSessionRunner()->GetSampleChannelRunner(index);
 }
-ChannelRunner<Synth> *ScreenController::GetSynthChannelRunner(const ChannelIndex &index) {
+ChannelRunner<Synth> *ScreenController::GetSynthChannelRunner(const ChannelIndex &index) const {
   return GetSessionRunner()->GetSynthChannelRunner(index);
 }
 
-CircuitView *ScreenController::GetView() {
+CircuitView *ScreenController::GetView() const {
   return _parent->GetView();
 }
 
-Session *ScreenController::GetCurrentSession() {
+CircuitController *ScreenController::GetParent() const {
+  return _parent;
+}
+Session *ScreenController::GetCurrentSession() const {
   return _parent->GetCurrentSession();
 }
 
-SessionRunner *ScreenController::GetSessionRunner() {
+SessionRunner *ScreenController::GetSessionRunner() const  {
   return _parent->GetSessionRunner();
 }
 

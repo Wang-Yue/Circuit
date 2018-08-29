@@ -55,6 +55,7 @@ public:
   void SetSessionRunner(SessionRunner *runner);
 
   BPM GetBPM() const;
+  Swing GetSwing() const;
 
   void SetMidiDelegate(MIDIDelegate *midi_delegate);
   // MIDIDelegate.
@@ -72,7 +73,9 @@ private:
   void SwitchToSample(const ChannelIndex &index);
   void SwitchToScaleMode();
   void SwitchToPatternChainMode();
-  
+  void SwitchToTempoMode();
+  void SwitchToSwingMode();
+
   CircuitView *_view;
   Workspace *_workspace;
   SessionRunner *_session_runner;
@@ -87,5 +90,6 @@ private:
   bool _recording_button_pressed;
   MIDIDelegate *_midi_delegate;
   BPM _bpm;
+  Swing _swing;
 };
 #endif /* CircuitController_hpp */

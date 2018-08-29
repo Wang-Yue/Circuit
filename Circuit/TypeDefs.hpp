@@ -16,6 +16,9 @@
 typedef uint8_t BPM;
 static const BPM kDefaultBPM = 90;
 
+typedef uint8_t Swing;
+static const Swing kDefaultSwing = 50;
+
 typedef uint8_t Velocity;
 static const Velocity kDefaultVelocity = 96;
 static const Velocity kDiscreteVelocityValues = 128;

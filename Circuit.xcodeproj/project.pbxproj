@@ -41,6 +41,9 @@
 		89E16C682135CD8A00CEF7D7 /* PatternChainViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89E16C662135CD8A00CEF7D7 /* PatternChainViewController.cpp */; };
 		89E16C6B2135F1CF00CEF7D7 /* SynthMicrostepDelayView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89E16C692135F1CF00CEF7D7 /* SynthMicrostepDelayView.cpp */; };
 		89E16C6E2135F57200CEF7D7 /* SynthMicrostepDelayViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89E16C6C2135F57200CEF7D7 /* SynthMicrostepDelayViewController.cpp */; };
+		89E16C71213616F700CEF7D7 /* DigitView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89E16C6F213616F700CEF7D7 /* DigitView.cpp */; };
+		89E16C742136210700CEF7D7 /* TempoViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89E16C722136210700CEF7D7 /* TempoViewController.cpp */; };
+		89E16C77213626CA00CEF7D7 /* SwingViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89E16C75213626CA00CEF7D7 /* SwingViewController.cpp */; };
 		89E710EE213346D900CEF7D7 /* SampleGateViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89E710EC213346D900CEF7D7 /* SampleGateViewController.cpp */; };
 		89E710F1213346F800CEF7D7 /* SampleGateView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89E710EF213346F800CEF7D7 /* SampleGateView.cpp */; };
 		89E710F32133473B00CEF7D7 /* SynthGateViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89E710F22133473B00CEF7D7 /* SynthGateViewController.cpp */; };
@@ -135,6 +138,12 @@
 		89E16C6A2135F1CF00CEF7D7 /* SynthMicrostepDelayView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SynthMicrostepDelayView.hpp; sourceTree = "<group>"; };
 		89E16C6C2135F57200CEF7D7 /* SynthMicrostepDelayViewController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SynthMicrostepDelayViewController.cpp; sourceTree = "<group>"; };
 		89E16C6D2135F57200CEF7D7 /* SynthMicrostepDelayViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SynthMicrostepDelayViewController.hpp; sourceTree = "<group>"; };
+		89E16C6F213616F700CEF7D7 /* DigitView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DigitView.cpp; sourceTree = "<group>"; };
+		89E16C70213616F700CEF7D7 /* DigitView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DigitView.hpp; sourceTree = "<group>"; };
+		89E16C722136210700CEF7D7 /* TempoViewController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TempoViewController.cpp; sourceTree = "<group>"; };
+		89E16C732136210700CEF7D7 /* TempoViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TempoViewController.hpp; sourceTree = "<group>"; };
+		89E16C75213626CA00CEF7D7 /* SwingViewController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SwingViewController.cpp; sourceTree = "<group>"; };
+		89E16C76213626CA00CEF7D7 /* SwingViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SwingViewController.hpp; sourceTree = "<group>"; };
 		89E710EC213346D900CEF7D7 /* SampleGateViewController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SampleGateViewController.cpp; sourceTree = "<group>"; };
 		89E710ED213346D900CEF7D7 /* SampleGateViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SampleGateViewController.hpp; sourceTree = "<group>"; };
 		89E710EF213346F800CEF7D7 /* SampleGateView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SampleGateView.cpp; sourceTree = "<group>"; };
@@ -276,6 +285,12 @@
 				8913D17321330FAF00CEF7D7 /* ScaleSelectionView.hpp */,
 				89E16C662135CD8A00CEF7D7 /* PatternChainViewController.cpp */,
 				89E16C672135CD8A00CEF7D7 /* PatternChainViewController.hpp */,
+				89E16C6F213616F700CEF7D7 /* DigitView.cpp */,
+				89E16C70213616F700CEF7D7 /* DigitView.hpp */,
+				89E16C722136210700CEF7D7 /* TempoViewController.cpp */,
+				89E16C732136210700CEF7D7 /* TempoViewController.hpp */,
+				89E16C75213626CA00CEF7D7 /* SwingViewController.cpp */,
+				89E16C76213626CA00CEF7D7 /* SwingViewController.hpp */,
 				8964D5DD212B998700CEF7D7 /* CircuitView.cpp */,
 				8964D5DE212B998700CEF7D7 /* CircuitView.hpp */,
 				89A13C2B212CBB7500CEF7D7 /* ScreenController.cpp */,
@@ -364,11 +379,13 @@
 			files = (
 				89E16C6E2135F57200CEF7D7 /* SynthMicrostepDelayViewController.cpp in Sources */,
 				8964D671212BC45300CEF7D7 /* AppDelegate.m in Sources */,
+				89E16C71213616F700CEF7D7 /* DigitView.cpp in Sources */,
 				89A0903A2130B1F800CEF7D7 /* VelocityView.cpp in Sources */,
 				89E710F32133473B00CEF7D7 /* SynthGateViewController.cpp in Sources */,
 				89A13C2D212CBB7500CEF7D7 /* ScreenController.cpp in Sources */,
 				8964D672212BC45300CEF7D7 /* ViewController.m in Sources */,
 				89E710F1213346F800CEF7D7 /* SampleGateView.cpp in Sources */,
+				89E16C742136210700CEF7D7 /* TempoViewController.cpp in Sources */,
 				8913D17421330FAF00CEF7D7 /* ScaleSelectionView.cpp in Sources */,
 				891883BF2132820900CEF7D7 /* NudgeView.cpp in Sources */,
 				8964D673212BC45300CEF7D7 /* main.m in Sources */,
@@ -393,6 +410,7 @@
 				8964D66D212BC44900CEF7D7 /* CircuitView.cpp in Sources */,
 				89E710F92133B49600CEF7D7 /* ChannelOutputFactory.cpp in Sources */,
 				8964D66E212BC44900CEF7D7 /* CircuitController.cpp in Sources */,
+				89E16C77213626CA00CEF7D7 /* SwingViewController.cpp in Sources */,
 				89A13C33212D0E0500CEF7D7 /* Scale.cpp in Sources */,
 				8964D670212BC44900CEF7D7 /* Bridge.cpp in Sources */,
 				89A3CF9C212DDE3900CEF7D7 /* KeyboardView.cpp in Sources */,

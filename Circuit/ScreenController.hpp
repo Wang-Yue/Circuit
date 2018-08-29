@@ -28,21 +28,22 @@ public:
   ScreenController(CircuitController *parent);
   virtual ~ScreenController();
   virtual void Update() = 0;
-  CircuitView *GetView();
+  CircuitView *GetView() const;
+  CircuitController *GetParent() const;
   virtual void UpdateEditingMode() = 0;
   virtual void UpdateRunningMode() = 0;
   virtual void HandleOctUp();
   virtual void HandleOctDown();
 
 protected:
-  Session *GetCurrentSession();
-  SessionRunner *GetSessionRunner();
-  Pattern<Sample> * GetCurrentSamplePattern(const ChannelIndex &index);
-  Pattern<Synth> * GetCurrentSynthPattern(const ChannelIndex &index);
-  PatternChainRunner<Sample> *GetSamplePatternChainRunner(const ChannelIndex &index);
-  PatternChainRunner<Synth> *GetSynthPatternChainRunner(const ChannelIndex &index);
-  ChannelRunner<Sample> *GetSampleChannelRunner(const ChannelIndex &index);
-  ChannelRunner<Synth> *GetSynthChannelRunner(const ChannelIndex &index);
+  Session *GetCurrentSession() const ;
+  SessionRunner *GetSessionRunner() const;
+  Pattern<Sample> * GetCurrentSamplePattern(const ChannelIndex &index) const;
+  Pattern<Synth> * GetCurrentSynthPattern(const ChannelIndex &index) const;
+  PatternChainRunner<Sample> *GetSamplePatternChainRunner(const ChannelIndex &index) const;
+  PatternChainRunner<Synth> *GetSynthPatternChainRunner(const ChannelIndex &index) const;
+  ChannelRunner<Sample> *GetSampleChannelRunner(const ChannelIndex &index) const;
+  ChannelRunner<Synth> *GetSynthChannelRunner(const ChannelIndex &index) const;
   void SetMidiDelegate(MIDIDelegate *midi_delegate);
   bool IsHoldingShift() const;
   
@@ -53,7 +54,7 @@ protected:
   enum CircuitEditingMode GetEditingMode() const;
   
   
-protected:
+private:
   CircuitView *_view;
   CircuitController *_parent;
 };

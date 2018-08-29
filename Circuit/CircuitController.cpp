@@ -22,6 +22,8 @@
 #include "SynthViewController.hpp"
 #include "ScaleViewController.hpp"
 #include "PatternChainViewController.hpp"
+#include "TempoViewController.hpp"
+#include "SwingViewController.hpp"
 #include "ScreenController.hpp"
 
 
@@ -36,6 +38,7 @@ CircuitController::CircuitController() {
   _session_runner = new SessionRunner(GetCurrentSession());
   _screen_controller = new SynthViewController(this, 0);
   _bpm = kDefaultBPM;
+  _swing = kDefaultSwing;
   _is_holding_shift = false;
   _is_fixed_velocity_mode = false;
   _recording_button_pressed = false;
@@ -76,7 +79,10 @@ void CircuitController::SwitchToSynth(const ChannelIndex &index){
   if (_screen_controller) {
     delete _screen_controller;
   }
-  _atom_mode = CircuitAtomSynth;
+  if (_atom_mode != CircuitAtomSynth) {
+    _atom_mode = CircuitAtomSynth;
+    _editing_mode = CircuitEditNoteMode;
+  }
   _channel_index = index;
   _setting_mode = CircuitSetRegularMode;
   _screen_controller = new SynthViewController(this, index);
@@ -89,7 +95,10 @@ void CircuitController::SwitchToSample(const ChannelIndex &index) {
   if (_screen_controller) {
     delete _screen_controller;
   }
-  _atom_mode = CircuitAtomSample;
+  if (_atom_mode != CircuitAtomSample) {
+    _atom_mode = CircuitAtomSample;
+    _editing_mode = CircuitEditNoteMode;
+  }
   _setting_mode = CircuitSetRegularMode;
   _channel_index = index;
   _screen_controller = new SampleViewController(this, index);
@@ -115,6 +124,28 @@ void CircuitController::SwitchToPatternChainMode() {
   }
   _setting_mode = CircuitSetPatternChainMode;
   _screen_controller = new PatternChainViewController(this);
+}
+
+void CircuitController::SwitchToTempoMode() {
+  if (_setting_mode == CircuitSetTempoMode) {
+    return;
+  }
+  if (_screen_controller) {
+    delete _screen_controller;
+  }
+  _setting_mode = CircuitSetTempoMode;
+  _screen_controller = new TempoViewController(this);
+}
+
+void CircuitController::SwitchToSwingMode() {
+  if (_setting_mode == CircuitSetSwingMode) {
+    return;
+  }
+  if (_screen_controller) {
+    delete _screen_controller;
+  }
+  _setting_mode = CircuitSetSwingMode;
+  _screen_controller = new SwingViewController(this);
 }
 
 enum CircuitEditingMode CircuitController::GetEditingMode() const {
@@ -247,6 +278,14 @@ void CircuitController::Tap(Pad *pad){
     SwitchToPatternChainMode();
     return;
   }
+  if (index == PadTempo) {
+    SwitchToTempoMode();
+    return;
+  }
+  if (index == PadSwing) {
+    SwitchToSwingMode();
+    return;
+  }
   if (index == PadRecord) {
     _recording_button_pressed = !_recording_button_pressed;
     if (_circuit_mode == CircuitPlayingMode) {
@@ -319,5 +358,9 @@ void CircuitController::NoteOff(const MIDINote &note) {
 
 BPM CircuitController::GetBPM() const {
   return _bpm;
+}
+
+Swing CircuitController::GetSwing() const {
+  return _swing;
 }
 

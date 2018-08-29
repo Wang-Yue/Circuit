@@ -74,7 +74,7 @@ void PatternChainViewController::Tap(Pad *pad) {
     } else {
       pattern_chain_runner->Reset(pattern);
       if (IsStopped()) {
-        _parent->Restart();
+        GetParent()->Restart();
       }
     }
   } else {
@@ -95,7 +95,7 @@ void PatternChainViewController::Tap(Pad *pad) {
       pattern_chain_runner->Reset(pattern);
       companion_pattern_chain_runner->Reset(companion_pattern);
       if (IsStopped()) {
-        _parent->Restart();
+        GetParent()->Restart();
       }
     }
   }
