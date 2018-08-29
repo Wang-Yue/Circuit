@@ -27,7 +27,6 @@
 #import "module.h"
 #import "freqlut.h"
 #import "sin.h"
-#import "sawtooth.h"
 
 using namespace ::std;
 

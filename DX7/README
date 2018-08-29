@@ -1,0 +1,9 @@
+This folder contains Google's Android synthesizer code demo which modeled after the famous
+Yamaha DX7 synthesizer. 
+
+The project is available at https://github.com/google/music-synthesizer-for-android.
+
+Google seems no longer updating the code base, and there's active development happening at 
+https://github.com/asb2m10/dexed. I update the existing code to the Dexed version, and
+make changes to synth_unit accordingly.
+ 

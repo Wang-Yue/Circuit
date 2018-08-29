@@ -67,10 +67,17 @@ SynthUnit::SynthUnit(RingBuffer *ring_buffer) {
   memcpy(patch_data_, epiano, sizeof(epiano));
   ProgramChange(0);
   current_note_ = 0;
-  filter_control_[0] = 258847126;
-  filter_control_[1] = 0;
-  filter_control_[2] = 0;
   controllers_.values_[kControllerPitch] = 0x2000;
+  controllers_.values_[kControllerPitchRange] = 3;
+  controllers_.values_[kControllerPitchStep] = 0;
+  controllers_.masterTune = 0;
+  controllers_.modwheel_cc = 0;
+  controllers_.foot_cc = 0;
+  controllers_.breath_cc = 0;
+  controllers_.aftertouch_cc = 0;
+  controllers_.refresh();
+  controllers_.core = &engineMsfa;
+
   sustain_ = false;
   extra_buf_size_ = 0;
 }
@@ -112,12 +119,8 @@ int SynthUnit::AllocateNote() {
 void SynthUnit::ProgramChange(int p) {
   current_patch_ = p;
   const uint8_t *patch = patch_data_ + 128 * current_patch_;
-  UnpackPatch((const char *)patch, unpacked_patch_);
+  UnpackPatch(patch, unpacked_patch_);
   lfo_.reset(unpacked_patch_ + 137);
-}
-
-void SynthUnit::SetController(int controller, int value) {
-  controllers_.values_[controller] = value;
 }
 
 int SynthUnit::ProcessMidiMessage(const uint8_t *buf, int buf_size) {
@@ -162,12 +165,30 @@ int SynthUnit::ProcessMidiMessage(const uint8_t *buf, int buf_size) {
       // TODO: move more logic into SetController
       int controller = buf[1];
       int value = buf[2];
-      if (controller == 1) {
-        filter_control_[0] = 142365917 + value * 917175;
+      if (controller == 0) {
+        controllers_.aftertouch_cc = value;
+        controllers_.refresh();
+      } else if (controller == 1) {
+        controllers_.values_[kControllerPitch] = value;
+        controllers_.refresh();
       } else if (controller == 2) {
-        filter_control_[1] = value * 528416;
+        controllers_.masterTune = value;
+        controllers_.refresh();
       } else if (controller == 3) {
-        filter_control_[2] = value * 528416;
+        controllers_.values_[kControllerPitchStep] = value;
+        controllers_.refresh();
+      } else if (controller == 4) {
+        controllers_.values_[kControllerPitchRange] = value;
+        controllers_.refresh();
+      } else if (controller == 5) {
+        controllers_.foot_cc = value;
+        controllers_.refresh();
+      } else if (controller == 6) {
+        controllers_.breath_cc = value;
+        controllers_.refresh();
+      } else if (controller == 7) {
+        controllers_.modwheel_cc = value;
+        controllers_.refresh();
       } else if (controller == 64) {
         sustain_ = value != 0;
         if (!sustain_) {
@@ -196,10 +217,6 @@ int SynthUnit::ProcessMidiMessage(const uint8_t *buf, int buf_size) {
       return 2;
     }
     return 0;
-  } else if (cmd == 0xe0) {
-    // pitch bend
-    SetController(kControllerPitch, buf[1] | (buf[2] << 7));
-    return 3;
   } else if (cmd == 0xf0) {
     // sysex
     if (buf_size >= 6 && buf[1] == 0x43 && buf[2] == 0x00 && buf[3] == 0x09 &&
@@ -250,7 +267,6 @@ void SynthUnit::GetSamples(int n_samples, int16_t *buffer) {
 
   for (; i < n_samples; i += N) {
     AlignedBuf<int32_t, N> audiobuf;
-    AlignedBuf<int32_t, N> audiobuf2;
     for (int j = 0; j < N; ++j) {
       audiobuf.get()[j] = 0;
     }
@@ -262,12 +278,9 @@ void SynthUnit::GetSamples(int n_samples, int16_t *buffer) {
           &controllers_);
       }
     }
-    const int32_t *bufs[] = { audiobuf.get() };
-    int32_t *bufs2[] = { audiobuf2.get() };
-    filter_.process(bufs, filter_control_, filter_control_, bufs2);
     int jmax = n_samples - i;
     for (int j = 0; j < N; ++j) {
-      int32_t val = audiobuf2.get()[j] >> 4;
+      int32_t val = audiobuf.get()[j] >> 4;
       int clip_val = val < -(1 << 24) ? 0x8000 : val >= (1 << 24) ? 0x7fff :
         val >> 9;
       // TODO: maybe some dithering?

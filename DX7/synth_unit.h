@@ -18,7 +18,6 @@
 #include "dx7note.h"
 #include "lfo.h"
 #include "ringbuffer.h"
-#include "resofilter.h"
 
 struct ActiveNote {
   int midi_note;
@@ -47,8 +46,6 @@ class SynthUnit {
   // zero-based
   void ProgramChange(int p);
 
-  void SetController(int controller, int value);
-
   int ProcessMidiMessage(const uint8_t *buf, int buf_size);
 
   RingBuffer *ring_buffer_;
@@ -61,7 +58,7 @@ class SynthUnit {
   uint8_t patch_data_[4096];
   int current_patch_;
 
-  char unpacked_patch_[156];
+  uint8_t unpacked_patch_[156];
 
   // The original DX7 had one single LFO. Later units had an LFO per note.
   Lfo lfo_;
@@ -69,8 +66,7 @@ class SynthUnit {
   // in MIDI units (0x4000 is neutral)
   Controllers controllers_;
 
-  ResoFilter filter_;
-  int32_t filter_control_[3];
+  FmCore engineMsfa;
   bool sustain_;
 
   // Extra buffering for when GetSamples wants a buffer not a multiple of N

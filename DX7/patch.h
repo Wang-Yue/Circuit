@@ -17,6 +17,8 @@
 #ifndef SYNTH_PATCH_H_
 #define SYNTH_PATCH_H_
 
-void UnpackPatch(const char bulk[128], char patch[156]);
+#include <cstdint>
+
+void UnpackPatch(const uint8_t bulk[128], uint8_t patch[156]);
 
 #endif

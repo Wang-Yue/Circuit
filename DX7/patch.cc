@@ -18,7 +18,7 @@
 
 #include "patch.h"
 
-void UnpackPatch(const char bulk[128], char patch[156]) {
+void UnpackPatch(const uint8_t bulk[128], uint8_t patch[156]) {
 	for (int op = 0; op < 6; op++) {
 		// eg rate and level, brk pt, depth, scaling
 		memcpy(patch + op * 21, bulk + op * 17, 11);
