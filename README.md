@@ -27,3 +27,6 @@ The code is released in 3-clause BSD license.
 
 ![Screenshot](/Screenshot.png?raw=true)
 
+My three-year-old seems to have great fun with this half baked step sequencer (Youtube link):
+
+[![Screenshot](https://img.youtube.com/vi/ho_5mZv6vVc/0.jpg)](https://youtu.be/ho_5mZv6vVc)
