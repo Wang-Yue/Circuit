@@ -26,17 +26,17 @@ public:
     static MidiController instance;
     return instance;
   }
-  void SendPlayNoteMessage(const char &note, const char &velocity){
+  void SendPlayNoteMessage(const char &channel, const char &note, const char &velocity){
     std::vector<unsigned char> message;
-    message.push_back(144);
+    message.push_back(144 + channel);
     message.push_back(note);
     message.push_back(velocity);
     printf("Play note %d\n", note);
     _midi_out->sendMessage( &message );
   };
-  void SendStopNoteMessage(const char &note){
+  void SendStopNoteMessage(const char &channel, const char &note){
     std::vector<unsigned char> message;
-    message.push_back( 128 );
+    message.push_back( 128 + channel);
     message.push_back(note);
     message.push_back(0);
     printf("Stop note %d\n", note);

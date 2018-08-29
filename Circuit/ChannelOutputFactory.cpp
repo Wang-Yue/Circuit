@@ -13,19 +13,27 @@
 
 class MIDISynthChannelOutput : public SynthChannelOutputInterface {
 public:
+  MIDISynthChannelOutput(const ChannelIndex &channel_index) : _channel_index(channel_index) {
+  }
   virtual void NoteOn(const MIDINote &note, const Velocity &velocity) override {
-    MidiController::GetInstance().SendPlayNoteMessage(note, velocity);
+    MidiController::GetInstance().SendPlayNoteMessage(_channel_index, note, velocity);
   }
   virtual void NoteOff(const MIDINote &note) override {
-    MidiController::GetInstance().SendStopNoteMessage(note);
+    MidiController::GetInstance().SendStopNoteMessage(_channel_index, note);
   }
+private:
+  const ChannelIndex _channel_index;
 };
 
 class MIDISampleChannelOutput : public SampleChannelOutputInterface {
 public:
-  virtual void Play(const Velocity &velocity, const SampleIndex &sample_index) override {
-    MidiController::GetInstance().SendPlayNoteMessage(sample_index, velocity);
+  MIDISampleChannelOutput(const ChannelIndex &channel_index) : _channel_index(channel_index) {
   }
+  virtual void Play(const Velocity &velocity, const SampleIndex &sample_index) override {
+    MidiController::GetInstance().SendPlayNoteMessage(_channel_index, sample_index, velocity);
+  }
+private:
+  const ChannelIndex _channel_index;
 };
 
 ChannelOutputFactory& ChannelOutputFactory::GetInstance() {
@@ -35,10 +43,10 @@ ChannelOutputFactory& ChannelOutputFactory::GetInstance() {
 
 ChannelOutputFactory::ChannelOutputFactory() {
   for (ChannelIndex i = 0; i < kSynthChannelsCapacity; ++i) {
-    _synth_output.push_back(new MIDISynthChannelOutput());
+    _synth_output.push_back(new MIDISynthChannelOutput(i));
   }
   for (ChannelIndex i = 0; i < kSampleChannelsCapacity; ++i) {
-    _sample_output.push_back(new MIDISampleChannelOutput());
+    _sample_output.push_back(new MIDISampleChannelOutput(i + kSynthChannelsCapacity));
   }
 }
 SynthChannelOutputInterface *ChannelOutputFactory::GetSynthChannelOutput(const ChannelIndex &index) {
