@@ -287,6 +287,9 @@ void SynthViewController::SignalNoteOn(const Note &note, const Velocity &velocit
       Step<Synth> *step = pattern_chain_runner->GetStep();
       // If exceed capacity, synth will be returned as a nullptr.
       Synth *synth = step->AddNote(note);
+      if (synth) {
+        synth->SetGate(0);
+      }
       event.synth = synth;
     }
     _impromptu_notes.push_back(event);
