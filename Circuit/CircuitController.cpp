@@ -175,6 +175,7 @@ void CircuitController::Stop() {
   if (_screen_controller) {
     _screen_controller->UpdateRunningMode();
   }
+  GetSessionRunner()->Stop();
 }
 
 bool CircuitController::IsStopped() const {

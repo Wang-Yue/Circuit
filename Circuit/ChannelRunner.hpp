@@ -38,7 +38,13 @@ public:
     delete _pattern_chain_runner;
   }
 
+  virtual void Stop() {
+  }
+  
   virtual void Restart() {
+    // It's a good practice to stop before the restart --- Child class may do extra work in stop
+    // like clearing up the playing notes.
+    Stop();
     _microstep_tick_counter = 0;
     GetPatternChainRunner()->Restart();
   }
@@ -145,8 +151,7 @@ public:
     Restart();
   }
   
-  virtual void Restart() override {
-    BaseChannelRunner::Restart();
+  virtual void Stop() override {
     for (SchedulerEvent &event : _stop_scheduled_event) {
       _output->NoteOff(event.midi_note);
     }

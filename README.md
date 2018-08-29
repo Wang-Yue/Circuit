@@ -14,8 +14,14 @@ data structures are there. Many UI controls are available:
 A few UIs (such as mixer, fx, knobs related controls) are still missing, but could be trivial to
 implemented. 
 
-Everything inside the Circuit/ directory is cross platform. Views and view controllers are created
-from scratch. Currently a very hacky and thin Cocoa wrapper is in the CircuitApp folder. But
+The sequencer can output to MIDI so you can hook it up with your favorate DAW or VST. By default it
+can fallback to the awesome Yamaha DX7 synthesizer simulator from Google.
+
+The main code is located in the Circuit/ folder. Google's DX7 code is located in the DX7/ folder.
+Everything inside the both directories are cross platform. Views and view controllers are created
+from scratch.
+
+Currently a very hacky and thin Cocoa wrapper is in the CircuitApp folder. But
 ideally this should be headless (with a Novation Launchpad as input and display for instance) or
 with a Qt based binding so one can play it in all kinds of devices (such as desktop computers,
 mobile devices, or raspberry pis).

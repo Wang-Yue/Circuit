@@ -38,6 +38,8 @@ public:
   virtual void Update() override;
   virtual void UpdateRunningMode() override;
   virtual void UpdateEditingMode() override;
+  virtual void HandleOctUp() override;
+  virtual void HandleOctDown() override;
   // PatternViewControllerDelegate.
   virtual void SelectStep(Step<Sample> *step, const StepIndex &selected_index) override;
   virtual void ReleaseStep(const StepIndex &selected_index) override;

@@ -21,8 +21,34 @@ public:
   virtual void NoteOff(const MIDINote &note) override {
     MidiController::GetInstance().SendStopNoteMessage(_channel_index, note);
   }
+  virtual void ProgramChange(const SynthIndex &index) override {
+    MidiController::GetInstance().SendProgramChange(_channel_index, index);
+  }
 private:
   const ChannelIndex _channel_index;
+};
+
+#include "SynthMain.h"
+
+class DX7SynthChannelOutput : public SynthChannelOutputInterface {
+public:
+  DX7SynthChannelOutput(const ChannelIndex &channel_index) : _channel_index(channel_index) {
+    _synth_main = new SynthMain();
+    _synth_main->SynthInit();
+  }
+  virtual void NoteOn(const MIDINote &note, const Velocity &velocity) override {
+    
+    _synth_main->SendPlayNoteMessage(_channel_index, note, velocity);
+  }
+  virtual void NoteOff(const MIDINote &note) override {
+    _synth_main->SendStopNoteMessage(_channel_index, note);
+  }
+  virtual void ProgramChange(const SynthIndex &index) override {
+    _synth_main->SendProgramChange(_channel_index, index);
+  }
+private:
+  const ChannelIndex _channel_index;
+  SynthMain *_synth_main;
 };
 
 class MIDISampleChannelOutput : public SampleChannelOutputInterface {
@@ -43,7 +69,8 @@ ChannelOutputFactory& ChannelOutputFactory::GetInstance() {
 
 ChannelOutputFactory::ChannelOutputFactory() {
   for (ChannelIndex i = 0; i < kSynthChannelsCapacity; ++i) {
-    _synth_output.push_back(new MIDISynthChannelOutput(i));
+    //    _synth_output.push_back(new MIDISynthChannelOutput(i));
+    _synth_output.push_back(new DX7SynthChannelOutput(i));
   }
   for (ChannelIndex i = 0; i < kSampleChannelsCapacity; ++i) {
     _sample_output.push_back(new MIDISampleChannelOutput(i + kSynthChannelsCapacity));

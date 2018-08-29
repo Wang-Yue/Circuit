@@ -35,6 +35,15 @@ SessionRunner::~SessionRunner() {
   }
 }
 
+void SessionRunner::Stop() {
+  for (ChannelRunner<Synth> *runner: _synth_channel_runners) {
+    runner->Stop();
+  }
+  for (ChannelRunner<Sample> *runner: _sample_channel_runners) {
+    runner->Stop();
+  }
+}
+
 void SessionRunner::Restart() {
   for (ChannelRunner<Synth> *runner: _synth_channel_runners) {
     runner->Restart();

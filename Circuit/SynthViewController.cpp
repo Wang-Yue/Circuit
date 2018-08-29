@@ -315,7 +315,9 @@ void SynthViewController::SignalNoteOff(const Note &note) {
 }
 
 void SynthViewController::HandleOctUp() {
-  if (IsHoldingShift()) {
+  if (_patch_selection_view_controller) {
+    _patch_selection_view_controller->HandleOctUp();
+  } else if (IsHoldingShift()) {
     Pattern<Synth> *pattern = GetCurrentSynthPattern(_channel_index);
     pattern->OctUp();
   } else {
@@ -331,7 +333,9 @@ void SynthViewController::HandleOctUp() {
 }
 
 void SynthViewController::HandleOctDown() {
-  if (IsHoldingShift()) {
+  if (_patch_selection_view_controller) {
+    _patch_selection_view_controller->HandleOctDown();
+  } else if (IsHoldingShift()) {
     Pattern<Synth> *pattern = GetCurrentSynthPattern(_channel_index);
     pattern->OctDown();
   } else {
@@ -349,8 +353,11 @@ void SynthViewController::HandleOctDown() {
 void SynthViewController::TapPatch(const SynthIndex &index) {
   Pattern<Synth> *pattern = GetCurrentSynthPattern(_channel_index);
   Channel<Synth> *channel = pattern->GetChannel();
-  channel->SetSynthIndex(index);
-  // TODO: send cc message.
+  SynthIndex old_patch = channel->GetSynthIndex();
+  if (old_patch != index) {
+    channel->SetSynthIndex(index);
+    _output->ProgramChange(index);
+  }
   if (IsHoldingShift() || IsRecording()) {
     return;
   }

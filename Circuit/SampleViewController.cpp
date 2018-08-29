@@ -43,6 +43,18 @@ SampleViewController::~SampleViewController() {
 }
 
 
+void SampleViewController::HandleOctUp() {
+  if (_patch_selection_view_controller) {
+    _patch_selection_view_controller->HandleOctUp();
+  }
+}
+
+void SampleViewController::HandleOctDown() {
+  if (_patch_selection_view_controller) {
+    _patch_selection_view_controller->HandleOctDown();
+  }
+}
+
 void SampleViewController::KillAllControllers() {
   if (_pattern_view_controller) {
     delete _pattern_view_controller;

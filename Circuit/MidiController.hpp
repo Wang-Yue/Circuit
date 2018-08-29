@@ -43,6 +43,14 @@ public:
     _midi_out->sendMessage( &message );
   };
   
+  void SendProgramChange(const char &channel, const char &program){
+    std::vector<unsigned char> message;
+    message.push_back( 192 + channel);
+    message.push_back(program);
+    printf("Stop note %d\n", program);
+    _midi_out->sendMessage( &message );
+  };
+  
   void Tick() {
     while (ReceiveNoteMessage()) {
     }
