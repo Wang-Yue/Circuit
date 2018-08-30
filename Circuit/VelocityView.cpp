@@ -56,7 +56,7 @@ void VelocityView::Tap(Pad *pad) {
   } else {
     --_previous_velocity;
     if (_previous_velocity % kVelocityIncrementPerPad == 0) {
-      _previous_velocity += kVelocityIncrementPerPad;
+      _previous_velocity += kVelocityIncrementPerPad - 1;
     }
   }
   if (_delegate) {

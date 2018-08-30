@@ -303,6 +303,7 @@ void SynthViewController::SignalNoteOn(const Note &note, const Velocity &velocit
       Synth *synth = step->AddNote(note);
       if (synth) {
         synth->SetGate(0);
+        synth->SetVelocity(velocity);
       }
       event.synth = synth;
     }

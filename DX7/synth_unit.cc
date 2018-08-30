@@ -168,18 +168,18 @@ int SynthUnit::ProcessMidiMessage(const uint8_t *buf, int buf_size) {
       if (controller == 0) {
         controllers_.aftertouch_cc = value;
         controllers_.refresh();
-      } else if (controller == 1) {
-        controllers_.values_[kControllerPitch] = value;
-        controllers_.refresh();
+//      } else if (controller == 1) {
+//        controllers_.values_[kControllerPitch] = value;
+//        controllers_.refresh();
       } else if (controller == 2) {
         controllers_.masterTune = value;
         controllers_.refresh();
-      } else if (controller == 3) {
-        controllers_.values_[kControllerPitchStep] = value;
-        controllers_.refresh();
-      } else if (controller == 4) {
-        controllers_.values_[kControllerPitchRange] = value;
-        controllers_.refresh();
+//      } else if (controller == 3) {
+//        controllers_.values_[kControllerPitchStep] = value;
+//        controllers_.refresh();
+//      } else if (controller == 4) {
+//        controllers_.values_[kControllerPitchRange] = value;
+//        controllers_.refresh();
       } else if (controller == 5) {
         controllers_.foot_cc = value;
         controllers_.refresh();

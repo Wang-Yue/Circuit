@@ -57,7 +57,7 @@ void SynthGateView::Tap(Pad *pad) {
   } else {
     --_previous_gate;
     if (_previous_gate % kGateIncrementPerPad == 0) {
-      _previous_gate += kGateIncrementPerPad;
+      _previous_gate += kGateIncrementPerPad - 1;
     }
   }
   if (_delegate) {

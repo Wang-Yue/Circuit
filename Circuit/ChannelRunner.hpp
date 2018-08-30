@@ -190,6 +190,8 @@ public:
           _output->ControlChange(i, cc);
         }
       }
+    }
+    if (GetMicrostepTickCounter() == kMicrosteps - 1) {
       GetPatternChainRunner()->TickStep();
     }
     PerformSchedule();
