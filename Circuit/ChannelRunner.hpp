@@ -97,9 +97,7 @@ public:
   }
 
   virtual void TickMicrostep() override {
-    BaseChannelRunner::TickMicrostep();
     if (GetMicrostepTickCounter() == 0) {
-      GetPatternChainRunner()->TickStep();
       Step<Sample> *step = GetPatternChainRunner()->GetStep();
       std::vector<Sample *> atoms = step->GetAtoms();
       assert(atoms.size() <= kSamplePolyphonyCapacity);
@@ -114,8 +112,10 @@ public:
           _output->ControlChange(i, cc);
         }
       }
+      GetPatternChainRunner()->TickStep();
     }
     PerformSchedule();
+    BaseChannelRunner::TickMicrostep();
   }
   
 private:
@@ -175,9 +175,7 @@ public:
   }
   
   virtual void TickMicrostep() override  {
-    BaseChannelRunner::TickMicrostep();
     if (GetMicrostepTickCounter() == 0) {
-      GetPatternChainRunner()->TickStep();
       Step<Synth> *step = GetPatternChainRunner()->GetStep();
       std::vector<Synth *> atoms = step->GetAtoms();
       assert(atoms.size() <= kSynthPolyphonyCapacity);
@@ -192,8 +190,10 @@ public:
           _output->ControlChange(i, cc);
         }
       }
+      GetPatternChainRunner()->TickStep();
     }
     PerformSchedule();
+    BaseChannelRunner::TickMicrostep();
   }
   
 

@@ -59,6 +59,7 @@ public:
   // MidiDelegate.
   virtual void NoteOn(const MIDINote &note, const Velocity &velocity) override;
   virtual void NoteOff(const MIDINote &note) override;
+  virtual void SendCC(const Control &control, const CC &cc) override;
   // SynthPatchSelectionViewControllerDelegate.
   virtual void TapPatch(const SynthIndex &index) override;
   virtual void ReleasePatch(const SynthIndex &index) override;
@@ -69,6 +70,7 @@ private:
   void ReleaseImpromptuNotes();
   void SignalNoteOn(const Note &note, const Velocity &velocity);
   void SignalNoteOff(const Note &note);
+  void SignalCC(const Control &control, const CC &cc);
 
   const ChannelIndex _channel_index;
   PatternViewController<Synth> *_pattern_controller;

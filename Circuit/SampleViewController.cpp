@@ -327,6 +327,11 @@ void SampleViewController::NoteOff(const MIDINote &note) {
   // no-op.
 }
 
+void SampleViewController::SendCC(const Control &control, const CC &cc) {
+  SignalCC(control, cc);
+}
+
+
 void SampleViewController::TapChannel(const ChannelIndex &channel_index) {
   _expand_note_view_tapped_channel[channel_index] = true;
   Pattern<Sample> *pattern = GetCurrentSamplePattern(channel_index);
@@ -351,14 +356,18 @@ void SampleViewController::SignalSample(const ChannelIndex channel,
   }
 }
 
-void SampleViewController::Change(Knob *knob, const CC &cc) {
-  KnobIndex index = knob->GetKnobIndex();
+void SampleViewController::SignalCC(const Control &control, const CC &cc) {
   if (IsRecording()) {
     PatternChainRunner<Sample> * runner = GetSamplePatternChainRunner(_channel_index);
     Step<Sample> *current_step = runner->GetStep();
-     current_step->RecordAutomation(index, knob->GetCC());
+    current_step->RecordAutomation(control, cc);
   }
   Channel<Sample> *channel = GetCurrentSampleChannel(_channel_index);
-  channel->SetDefaultCC(index, cc);
-  _output->ControlChange(index, cc);
+  channel->SetDefaultCC(control, cc);
+  _output->ControlChange(control, cc);
+}
+
+void SampleViewController::Change(Knob *knob, const CC &cc) {
+  KnobIndex index = knob->GetKnobIndex();
+  SignalCC(index, cc);
 }

@@ -53,6 +53,7 @@ public:
   // MidiDelegate.
   virtual void NoteOn(const MIDINote &note, const Velocity &velocity) override;
   virtual void NoteOff(const MIDINote &note) override;
+  virtual void SendCC(const Control &control, const CC &cc) override;
   // SampleExpandNoteViewControllerDelegate.
   virtual void TapChannel(const ChannelIndex &channel_index) override;
   virtual void ReleaseChannel(const ChannelIndex &channel_index) override;
@@ -61,6 +62,7 @@ public:
 private:
   void KillAllControllers();
   void SignalSample(const ChannelIndex channel, const SampleIndex &index, const Velocity &velocity);
+  void SignalCC(const Control &control, const CC &cc);
 
   const ChannelIndex _channel_index;
   const ChannelIndex _companion_channel_index;

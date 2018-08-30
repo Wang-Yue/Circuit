@@ -18,6 +18,8 @@ class MidiControllerDelegate {
 public:
   virtual void NoteOn(const unsigned char &midi_note, const unsigned char &velocity) = 0;
   virtual void NoteOff(const unsigned char &midi_note) = 0;
+  virtual void Control(const unsigned char &control, const unsigned char &cc) = 0;
+
 };
 
 class MidiController {
@@ -79,6 +81,12 @@ public:
     if (nBytes && message[0] == 128) {
       if (_delegate) {
         _delegate->NoteOff(message[1]);
+        return true;
+      }
+    }
+    if (nBytes && message[0] == 176) {
+      if (_delegate) {
+        _delegate->Control(message[1], message[2]);
         return true;
       }
     }

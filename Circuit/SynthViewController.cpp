@@ -271,9 +271,14 @@ void SynthViewController::NoteOn(const MIDINote &note, const Velocity &velocity)
   Note n = MIDIToNote(note, ScaleChromatic, 0);
   SignalNoteOn(n, velocity);
 }
+
 void SynthViewController::NoteOff(const MIDINote &note) {
   Note n = MIDIToNote(note, ScaleChromatic, 0);
   SignalNoteOff(n);
+}
+
+void SynthViewController::SendCC(const Control &control, const CC &cc) {
+  SignalCC(control, cc);
 }
 
 void SynthViewController::SignalNoteOn(const Note &note, const Velocity &velocity) {
@@ -321,6 +326,17 @@ void SynthViewController::SignalNoteOff(const Note &note) {
       }
     }
   }
+}
+
+void SynthViewController::SignalCC(const Control &control, const CC &cc) {
+  if (IsRecording()) {
+    PatternChainRunner<Synth> * runner = GetSynthPatternChainRunner(_channel_index);
+    Step<Synth> *current_step = runner->GetStep();
+    current_step->RecordAutomation(control, cc);
+  }
+  Channel<Synth> *channel = GetCurrentSynthChannel(_channel_index);
+  channel->SetDefaultCC(control, cc);
+  _output->ControlChange(control, cc);
 }
 
 void SynthViewController::HandleOctUp() {
@@ -385,12 +401,5 @@ void SynthViewController::ReleasePatch(const SynthIndex &index) {
 
 void SynthViewController::Change(Knob *knob, const CC &cc) {
   KnobIndex index = knob->GetKnobIndex();
-  if (IsRecording()) {
-    PatternChainRunner<Synth> * runner = GetSynthPatternChainRunner(_channel_index);
-    Step<Synth> *current_step = runner->GetStep();
-    current_step->RecordAutomation(index, knob->GetCC());
-  }
-  Channel<Synth> *channel = GetCurrentSynthChannel(_channel_index);
-  channel->SetDefaultCC(index, cc);
-  _output->ControlChange(index, cc);
+  SignalCC(index, cc);
 }

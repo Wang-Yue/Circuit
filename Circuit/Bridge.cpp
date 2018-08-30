@@ -57,14 +57,19 @@ public:
         _circuit->GetPad(command.pad_index)->Release();
       }
     }
-    while (!_midi_command_queue.empty()) {
-      MIDICommand command = _midi_command_queue.front();
-      _midi_command_queue.pop_front();
+    while (!_midi_note_queue.empty()) {
+      MIDINotePacket command = _midi_note_queue.front();
+      _midi_note_queue.pop_front();
       if (command.note_on) {
         _circuit->NoteOn(command.note, command.velocity);
       } else {
         _circuit->NoteOff(command.note);
       }
+    }
+    while (!_midi_control_queue.empty()) {
+      MIDIControlPacket command = _midi_control_queue.front();
+      _midi_control_queue.pop_front();
+      _circuit->SendCC(command.control, command.cc);
     }
     _circuit->TickMicrostep();
     MidiController::GetInstance().Tick();
@@ -97,22 +102,33 @@ public:
   
   virtual void NoteOn(const unsigned char &midi_note, const unsigned char &velocity) override {
     printf("Note on: %d\n", midi_note);
-    MIDICommand command = {
+    MIDINotePacket command = {
       .note = static_cast<MIDINote>(midi_note),
       .velocity = velocity,
       .note_on = true,
     };
-    _midi_command_queue.push_back(command);
+    _midi_note_queue.push_back(command);
   }
   
   virtual void NoteOff(const unsigned char &midi_note) override {
-    MIDICommand command = {
+    MIDINotePacket command = {
       .note = static_cast<MIDINote>(midi_note),
       .velocity = 0,
       .note_on = false,
     };
-    _midi_command_queue.push_back(command);
+    _midi_note_queue.push_back(command);
   }
+  virtual void Control(const unsigned char &control, const unsigned char &cc)  override {
+    if (control >= kControlCapacity) {
+      return;
+    }
+    MIDIControlPacket command = {
+      .control = control,
+      .cc = cc,
+    };
+    _midi_control_queue.push_back(command);
+  }
+
   
 private:
   CircuitController *_circuit;
@@ -122,12 +138,17 @@ private:
   };
   ThreadSafeQueue<PadCommand> _pad_command_queue;
   
-  struct MIDICommand {
+  struct MIDINotePacket {
     MIDINote note;
     Velocity velocity;
     bool note_on;
   };
-  ThreadSafeQueue<MIDICommand> _midi_command_queue;
+  struct MIDIControlPacket {
+    uint8_t control;
+    CC cc;
+  };
+  ThreadSafeQueue<MIDINotePacket> _midi_note_queue;
+  ThreadSafeQueue<MIDIControlPacket> _midi_control_queue;
   std::array<ColorCode, PadUnknown> _pad_color;
   BPM _bpm;
   std::thread _thread;

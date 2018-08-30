@@ -357,6 +357,13 @@ void CircuitController::NoteOff(const MIDINote &note) {
   }
 }
 
+void CircuitController::SendCC(const Control &control, const CC &cc) {
+  if (_midi_delegate) {
+    _midi_delegate->SendCC(control, cc);
+  }
+}
+
+
 BPM CircuitController::GetBPM() const {
   return _bpm;
 }
