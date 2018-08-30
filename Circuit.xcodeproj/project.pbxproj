@@ -55,6 +55,7 @@
 		89A3CF9C212DDE3900CEF7D7 /* KeyboardView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89A3CF9A212DDE3900CEF7D7 /* KeyboardView.cpp */; };
 		89A3CF9F212E1B8400CEF7D7 /* SynthViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89A3CF9D212E1B8400CEF7D7 /* SynthViewController.cpp */; };
 		89A3CFA2212E1ECD00CEF7D7 /* KeyboardViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89A3CFA0212E1ECD00CEF7D7 /* KeyboardViewController.cpp */; };
+		89A9FB682137C86E00CEF7D7 /* NovationLaunchpadController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89A9FB662137C86E00CEF7D7 /* NovationLaunchpadController.cpp */; };
 		89E16C682135CD8A00CEF7D7 /* PatternChainViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89E16C662135CD8A00CEF7D7 /* PatternChainViewController.cpp */; };
 		89E16C6B2135F1CF00CEF7D7 /* SynthMicrostepDelayView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89E16C692135F1CF00CEF7D7 /* SynthMicrostepDelayView.cpp */; };
 		89E16C6E2135F57200CEF7D7 /* SynthMicrostepDelayViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89E16C6C2135F57200CEF7D7 /* SynthMicrostepDelayViewController.cpp */; };
@@ -183,6 +184,8 @@
 		89A3CF9E212E1B8400CEF7D7 /* SynthViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SynthViewController.hpp; sourceTree = "<group>"; };
 		89A3CFA0212E1ECD00CEF7D7 /* KeyboardViewController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KeyboardViewController.cpp; sourceTree = "<group>"; };
 		89A3CFA1212E1ECD00CEF7D7 /* KeyboardViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = KeyboardViewController.hpp; sourceTree = "<group>"; };
+		89A9FB662137C86E00CEF7D7 /* NovationLaunchpadController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NovationLaunchpadController.cpp; sourceTree = "<group>"; };
+		89A9FB672137C86E00CEF7D7 /* NovationLaunchpadController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NovationLaunchpadController.hpp; sourceTree = "<group>"; };
 		89E16C662135CD8A00CEF7D7 /* PatternChainViewController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PatternChainViewController.cpp; sourceTree = "<group>"; };
 		89E16C672135CD8A00CEF7D7 /* PatternChainViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PatternChainViewController.hpp; sourceTree = "<group>"; };
 		89E16C692135F1CF00CEF7D7 /* SynthMicrostepDelayView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SynthMicrostepDelayView.cpp; sourceTree = "<group>"; };
@@ -360,6 +363,8 @@
 				895E1CC821346CA100CEF7D7 /* MIDIDelegate.hpp */,
 				8964D65D212BBCA200CEF7D7 /* Bridge.cpp */,
 				8964D65E212BBCA200CEF7D7 /* Bridge.h */,
+				89A9FB662137C86E00CEF7D7 /* NovationLaunchpadController.cpp */,
+				89A9FB672137C86E00CEF7D7 /* NovationLaunchpadController.hpp */,
 				89E710F72133B49600CEF7D7 /* ChannelOutputFactory.cpp */,
 				89E710F82133B49600CEF7D7 /* ChannelOutputFactory.hpp */,
 				8919C29B2129359400CEF7D7 /* MidiController.hpp */,
@@ -479,6 +484,7 @@
 				89717D26213750AA00CEF7D7 /* dx7note.cc in Sources */,
 				89E16C71213616F700CEF7D7 /* DigitView.cpp in Sources */,
 				89A0903A2130B1F800CEF7D7 /* VelocityView.cpp in Sources */,
+				89A9FB682137C86E00CEF7D7 /* NovationLaunchpadController.cpp in Sources */,
 				89E710F32133473B00CEF7D7 /* SynthGateViewController.cpp in Sources */,
 				89A13C2D212CBB7500CEF7D7 /* ScreenController.cpp in Sources */,
 				8964D672212BC45300CEF7D7 /* ViewController.m in Sources */,

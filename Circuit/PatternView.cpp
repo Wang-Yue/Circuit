@@ -12,7 +12,7 @@ static const Color kCurserColor(0x000000ff);
 static const Color kAvailableKeyColor(0x0000ffff);
 static const Color kDisabledKeyColor(0x00000000);
 static const Color kGhostKeyColor(0x000000ff); // has note but disabled.
-static const Color kEnabledKeyColor(0x00ffffff);
+static const Color kEnabledKeyColor(0x007f7f7f);
 static const Color kSelectedKeyColor(0x00ffff00);
 
 PatternView::PatternView(const std::map<StepIndex, Pad *> &step_pad_mapping, PatternViewDelegate *delegate):

@@ -12,7 +12,7 @@
 #include <array>
 
 static const Color kDisabledColor(0x00000000);
-static const Color kEnabledColor(0x00ffffff);
+static const Color kEnabledColor(0x007f7f7f);
 
 static const std::array<bool, 12> off = {
   false, false, false,

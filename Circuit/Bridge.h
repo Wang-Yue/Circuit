@@ -20,5 +20,6 @@ void ReleasePad(uint8_t pad);
 
 // Slave to implement.
 void WritePadColor(const uint32_t pad, const uint32_t color);
-  
+void WriteNovationPadColor(const uint32_t pad, const uint32_t color);
+
 #endif /* Bridge_h */

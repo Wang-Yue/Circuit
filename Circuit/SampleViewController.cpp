@@ -249,7 +249,7 @@ void SampleViewController::Update() {
   }
   for (Knob *knob : GetView()->GetKnobs()) {
     KnobIndex index = knob->GetKnobIndex();
-    knob->SetCC(GetCurrentSynthChannel(_channel_index)->GetDefaultCC(index));
+    knob->SetCC(GetCurrentSampleChannel(_channel_index)->GetDefaultCC(index));
   }
 }
 

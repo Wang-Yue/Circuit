@@ -16,6 +16,7 @@ extern "C" {
 #include "ThreadSafeQueue.hpp"
 #include <array>
 #include <thread>
+#include "NovationLaunchpadController.hpp"
 
 class BridgeController : public MidiControllerDelegate {
 public:
@@ -28,6 +29,7 @@ public:
     _thread = std::thread(&BridgeController::Loop, this);
     for (PadIndex i = 0; i < PadUnknown; ++i) {
         WritePadColor(i, 0);
+      WriteNovationPadColor(i, 0);
         _pad_color[i] = 0;
     }
   }
@@ -48,6 +50,7 @@ public:
   }
   
   void Tick () {
+    NovationLaunchpadController::GetInstance().Tick();
     while (!_pad_command_queue.empty()) {
       PadCommand command = _pad_command_queue.front();
       _pad_command_queue.pop_front();
@@ -77,6 +80,8 @@ public:
       ColorCode new_code = _circuit->GetPad(i)->GetColor().GetColorCode();
       if (new_code != _pad_color[i]) {
         WritePadColor(i, new_code);
+        WriteNovationPadColor(i, new_code);
+
         _pad_color[i] = new_code;
       }
     }
