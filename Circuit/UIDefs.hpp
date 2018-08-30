@@ -53,6 +53,9 @@ enum CircuitPad : PadIndex {
 };
 
 
+typedef uint8_t KnobIndex;
+static const KnobIndex kKnobCount = 8;
+
 enum CircuitRunningMode : uint8_t {
   CircuitStopMode,
   CircuitPlayingMode,

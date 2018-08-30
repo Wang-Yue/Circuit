@@ -148,7 +148,7 @@ void CircuitController::SwitchToSwingMode() {
   _screen_controller = new SwingViewController(this);
 }
 
-enum CircuitEditingMode CircuitController::GetEditingMode() const {
+CircuitEditingMode CircuitController::GetEditingMode() const {
   // Cheat the view controller.
   if (_setting_mode == CircuitSetPatchMode) {
     return CircuitEditPatchMode;
@@ -156,7 +156,7 @@ enum CircuitEditingMode CircuitController::GetEditingMode() const {
   return _editing_mode;
 }
 
-void CircuitController::SetEditingMode(const enum CircuitEditingMode &mode) {
+void CircuitController::SetEditingMode(const CircuitEditingMode &mode) {
   if (mode == GetEditingMode()) {
     return;
   }

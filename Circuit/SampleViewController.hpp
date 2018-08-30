@@ -16,9 +16,12 @@
 #include "PatchSelectionViewController.hpp"
 #include "SampleExpandNoteViewController.hpp"
 #include "MIDIDelegate.hpp"
+#include "Knob.hpp"
+
 
 class CircuitController;
 class SampleGateViewController;
+class SampleChannelOutputInterface;
 class Sample;
 template <typename AtomClass> class VelocityViewController;
 template <typename AtomClass> class LengthViewController;
@@ -30,7 +33,8 @@ public ScreenController,
 public PatternViewControllerDelegate<Sample>,
 public MIDIDelegate,
 public SamplePatchSelectionViewControllerDelegate,
-public SampleExpandNoteViewControllerDelegate {
+public SampleExpandNoteViewControllerDelegate,
+public KnobDelegate {
 public:
   SampleViewController(CircuitController *parent, const ChannelIndex &channel);
   virtual ~SampleViewController();
@@ -52,6 +56,8 @@ public:
   // SampleExpandNoteViewControllerDelegate.
   virtual void TapChannel(const ChannelIndex &channel_index) override;
   virtual void ReleaseChannel(const ChannelIndex &channel_index) override;
+  // KnobDelegate.
+  virtual void Change(Knob *, const CC &cc) override;
 private:
   void KillAllControllers();
   void SignalSample(const ChannelIndex channel, const SampleIndex &index, const Velocity &velocity);
@@ -69,5 +75,6 @@ private:
   std::vector<bool> _expand_note_view_tapped_channel;
   StepIndex _editing_step_index;
   Step<Sample> *_editing_step;
+  SampleChannelOutputInterface *_output;
 };
 #endif /* SampleViewController_hpp */

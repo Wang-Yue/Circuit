@@ -65,6 +65,14 @@ public:
     _microstep_tick_counter = 0;
   }
 
+  CC GetDefaultCC(const Control &control) const {
+    return _channel->GetDefaultCC(control);
+  }
+  
+  void SetDefaultCC(const Control &control, const CC &cc) {
+    return _channel->SetDefaultCC(control, cc);
+  }
+  
 protected:
   Channel<AtomClass> *_channel;
   PatternChainRunner<AtomClass> *_pattern_chain_runner;
@@ -97,6 +105,14 @@ public:
       assert(atoms.size() <= kSamplePolyphonyCapacity);
       for (Sample *atom : atoms) {
         ScheduleAtom(atom, step->GetMicrostepTicks());
+      }
+      // handle cc
+      for (Control i = 0; i < kControlCapacity; ++i) {
+        if (step->HasAutomation(i)) {
+          CC cc = step->GetAutomation(i);
+          _channel->SetDefaultCC(i, cc);
+          _output->ControlChange(i, cc);
+        }
       }
     }
     PerformSchedule();
@@ -167,6 +183,14 @@ public:
       assert(atoms.size() <= kSynthPolyphonyCapacity);
       for (Synth *atom : atoms) {
         SchedulePlay(atom, step->GetMicrostepDelay());
+      }
+      // handle cc.
+      for (Control i = 0; i < kControlCapacity; ++i) {
+        if (step->HasAutomation(i)) {
+          CC cc = step->GetAutomation(i);
+          _channel->SetDefaultCC(i, cc);
+          _output->ControlChange(i, cc);
+        }
       }
     }
     PerformSchedule();

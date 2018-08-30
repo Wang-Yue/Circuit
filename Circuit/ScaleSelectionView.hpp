@@ -16,19 +16,19 @@
 
 class ScaleSelectionViewDelegate {
 public:
-  virtual void Tap(const enum Scale &scale) = 0;
+  virtual void Tap(const Scale &scale) = 0;
 };
 
 class ScaleSelectionView : public PadDelegate {
 public:
   ScaleSelectionView(const std::vector<Pad *> &pads, ScaleSelectionViewDelegate *delegate);
   ~ScaleSelectionView();
-  void SetScale(const enum Scale &scale);
+  void SetScale(const Scale &scale);
   virtual void Tap(Pad *pad) override;
   virtual void Release(Pad *pad) override;
 private:
   ScaleSelectionViewDelegate *_delegate;
   std::vector<Pad *> _pads;
-  std::map<PadIndex, enum Scale> _scale_mapping;
+  std::map<PadIndex, Scale> _scale_mapping;
 };
 #endif /* ScaleSelectionView_hpp */

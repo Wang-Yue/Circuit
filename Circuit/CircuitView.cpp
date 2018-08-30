@@ -9,17 +9,25 @@
 #include "CircuitView.hpp"
 
 #include "Pad.hpp"
+#include "Knob.hpp"
 
 CircuitView::CircuitView() {
   for (PadIndex i = 0; i < PadUnknown; ++i) {
     Pad *pad = new Pad(i);
     _pads.push_back(pad);
   }
+  for (KnobIndex i = 0; i < kKnobCount; ++i) {
+    Knob *knob = new Knob(i);
+    _knobs.push_back(knob);
+  }
 }
 
 CircuitView::~CircuitView() {
   for (Pad *pad : _pads) {
     delete pad;
+  }
+  for (Knob *knob : _knobs) {
+    delete knob;
   }
 }
 
@@ -42,3 +50,11 @@ Pad *CircuitView::GetControlPad(const PadIndex &index) {
   return _pads[index];
 }
 
+std::vector<Knob *> CircuitView::GetKnobs() {
+  return _knobs;
+}
+
+Knob *CircuitView::GetKnob(const KnobIndex &index) const {
+  assert(index < kKnobCount);
+  return _knobs[index];
+}

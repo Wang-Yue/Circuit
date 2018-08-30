@@ -23,6 +23,14 @@ ScreenController::ScreenController(CircuitController *parent) : _parent(parent) 
 ScreenController::~ScreenController() {
 }
 
+
+Channel<Synth> *ScreenController::GetCurrentSynthChannel(const ChannelIndex &index) const {
+  return GetCurrentSession()->GetSynthChannel(index);
+}
+Channel<Sample> *ScreenController::GetCurrentSampleChannel(const ChannelIndex &index) const {
+  return GetCurrentSession()->GetSampleChannel(index);
+}
+
 Pattern<Sample> * ScreenController::GetCurrentSamplePattern(const ChannelIndex &index) const {
   return GetSamplePatternChainRunner(index)->GetPattern();
 }
@@ -89,6 +97,6 @@ bool ScreenController::IsRecording() const {
   return _parent->IsRecording();
 }
 
-enum CircuitEditingMode ScreenController::GetEditingMode() const {
+CircuitEditingMode ScreenController::GetEditingMode() const {
   return _parent->GetEditingMode();
 }

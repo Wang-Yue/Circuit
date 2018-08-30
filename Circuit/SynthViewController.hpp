@@ -19,7 +19,7 @@
 #include <vector>
 
 #include "MIDIDelegate.hpp"
-
+#include "Knob.hpp"
 
 class CircuitController;
 class SynthChannelOutputInterface;
@@ -37,7 +37,8 @@ public ScreenController,
 public PatternViewControllerDelegate<Synth>,
 public KeyboardViewControllerDelegate,
 public MIDIDelegate,
-public SynthPatchSelectionViewControllerDelegate {
+public SynthPatchSelectionViewControllerDelegate,
+public KnobDelegate {
   
 public:
   SynthViewController(CircuitController *parent,
@@ -61,6 +62,8 @@ public:
   // SynthPatchSelectionViewControllerDelegate.
   virtual void TapPatch(const SynthIndex &index) override;
   virtual void ReleasePatch(const SynthIndex &index) override;
+  // KnobDelegate.
+  virtual void Change(Knob *, const CC &cc) override;
 private:
   void KillAllControllers();
   void ReleaseImpromptuNotes();

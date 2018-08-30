@@ -36,7 +36,7 @@ public:
   bool IsHoldingShift() const;
   bool IsFixedVelocityMode() const;
 
-  enum CircuitEditingMode GetEditingMode() const;
+  CircuitEditingMode GetEditingMode() const;
   void Stop();
   
   bool IsStopped() const;
@@ -66,8 +66,8 @@ public:
   virtual void Release(Pad *) override;
   
 private:
-  void SetEditingMode(const enum CircuitEditingMode &mode);
-  void SetSettingMode(const enum CircuitSettingMode &mode);
+  void SetEditingMode(const CircuitEditingMode &mode);
+  void SetSettingMode(const CircuitSettingMode &mode);
 
   void SwitchToSynth(const ChannelIndex &index);
   void SwitchToSample(const ChannelIndex &index);

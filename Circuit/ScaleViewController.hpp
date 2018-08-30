@@ -33,7 +33,7 @@ public:
   virtual void Update() override;
   virtual void UpdateRunningMode() override;
   virtual void UpdateEditingMode() override;
-  virtual void Tap(const enum Scale &scale) override;
+  virtual void Tap(const Scale &scale) override;
   virtual void Tap(const Note &note) override;
   virtual void Release(const Note &note) override;
 private:

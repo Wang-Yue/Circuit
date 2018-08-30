@@ -29,6 +29,10 @@ static const Gate kDefaultGate = 6;
 
 typedef uint8_t Volume;
 static const Volume kDefaultVolume = 127;
+static const Volume kMaxVolume = 127;
+
+typedef uint8_t Pan;
+static const Volume kDefaultPan = 63;
 
 typedef uint8_t Microstep;
 static const Microstep kMicrosteps = 6;
@@ -49,25 +53,12 @@ static const size_t kSamplePolyphonyCapacity = 1;
 static const StepIndex kStepCapacity = 16;
 static const PatternIndex kPatternCapacity = 8;
 
-typedef int8_t Automation;
+typedef uint8_t Control;
+typedef uint8_t CC;
 
-enum AutomationTrait : uint8_t {
-  AutomationTraitVolume = 0,
-  AutomationTraitFX,
-  AutomationTraitPan,
-  AutomationTraitKnob = 1 << 4,
-};
+static const Control kControlCapacity = 8;
+static const CC kMaxCC = 127;
 
-enum KnobIndex : uint8_t {
-  KnobIndex0 = 0,
-  KnobIndex1,
-  KnobIndex2,
-  KnobIndex3,
-  KnobIndex4,
-  KnobIndex5,
-  KnobIndex6,
-  KnobIndex7
-};
 
 enum Scale : uint8_t {
   ScaleNaturalMinor = 0,

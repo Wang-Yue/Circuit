@@ -35,11 +35,18 @@ _expanded_note_view_controller(nullptr),
 _editing_step(nullptr) {
   UpdateEditingMode();
   SetMidiDelegate(this);
+  for (Knob *knob : GetView()->GetKnobs()) {
+    knob->SetDelegate(this);
+  }
+  _output = ChannelOutputFactory::GetInstance().GetSampleChannelOutput(_channel_index);
 }
 
 SampleViewController::~SampleViewController() {
   KillAllControllers();
   SetMidiDelegate(nullptr);
+  for (Knob *knob : GetView()->GetKnobs()) {
+    knob->SetDelegate(nullptr);
+  }
 }
 
 
@@ -240,6 +247,10 @@ void SampleViewController::Update() {
     _patch_selection_view_controller->SetSelectedAtomPatchIndex(true, index);
     _patch_selection_view_controller->Update();
   }
+  for (Knob *knob : GetView()->GetKnobs()) {
+    KnobIndex index = knob->GetKnobIndex();
+    knob->SetCC(GetCurrentSynthChannel(_channel_index)->GetDefaultCC(index));
+  }
 }
 
 void SampleViewController::SelectStep(Step<Sample> *step, const StepIndex &selected_index) {
@@ -329,9 +340,7 @@ void SampleViewController::ReleaseChannel(const ChannelIndex &channel_index) {
 void SampleViewController::SignalSample(const ChannelIndex channel,
                                         const SampleIndex &index,
                                         const Velocity &velocity) {
-  SampleChannelOutputInterface *output =
-      ChannelOutputFactory::GetInstance().GetSampleChannelOutput(channel);
-  output->Play(velocity, index);
+  _output->Play(velocity, index);
   // If in record mode, record to the current step.
   if (IsRecording()) {
     Sample * atom = new Sample(index);
@@ -340,4 +349,16 @@ void SampleViewController::SignalSample(const ChannelIndex channel,
     Step<Sample> *current_step = pattern_chain_runner->GetStep();
     current_step->AddAtom(atom);
   }
+}
+
+void SampleViewController::Change(Knob *knob, const CC &cc) {
+  KnobIndex index = knob->GetKnobIndex();
+  if (IsRecording()) {
+    PatternChainRunner<Sample> * runner = GetSamplePatternChainRunner(_channel_index);
+    Step<Sample> *current_step = runner->GetStep();
+     current_step->RecordAutomation(index, knob->GetCC());
+  }
+  Channel<Sample> *channel = GetCurrentSampleChannel(_channel_index);
+  channel->SetDefaultCC(index, cc);
+  _output->ControlChange(index, cc);
 }

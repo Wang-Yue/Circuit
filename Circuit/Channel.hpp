@@ -76,6 +76,17 @@ public:
       _patterns.push_back(pattern);
     }
   }
+  CC GetDefaultCC(const Control &control) const {
+    assert(control < kControlCapacity);
+    return _default_control_values[control];
+  }
+  
+  void SetDefaultCC(const Control &control, const CC &cc) {
+    assert(control < kControlCapacity);
+    assert(cc <= kMaxCC);
+    _default_control_values[control] = cc;
+  }
+  
 protected:
   virtual Channel<AtomClass> *GetThisPointer() = 0;
 private:
@@ -83,13 +94,16 @@ private:
               Session *session,
               const ChannelIndex &channel_index) :
   _pattern_capacity(pattern_capacity), _session(session), _channel_index(channel_index) {
-
+    for (Control i = 0; i < kControlCapacity; ++i) {
+      _default_control_values.push_back(0);
+    }
   }
   PatternChain<AtomClass> *_pattern_chain;
   std::vector<Pattern<AtomClass> *> _patterns;
   const PatternIndex _pattern_capacity;
   const ChannelIndex _channel_index;
   Session *_session;
+  std::vector<CC> _default_control_values;
 };
 
 

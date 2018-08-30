@@ -61,9 +61,9 @@ public:
     return _steps[index];
   }
   
-  void ClearAutomation(const AutomationTrait &trait)  {
+  void ClearAutomation(const Control &control)  {
     for (Step<AtomClass> *step : _steps) {
-      step->ClearAutomation(trait);
+      step->ClearAutomation(control);
     }
   }
   

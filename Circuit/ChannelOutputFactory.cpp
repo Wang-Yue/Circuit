@@ -24,6 +24,9 @@ public:
   virtual void ProgramChange(const SynthIndex &index) override {
     MidiController::GetInstance().SendProgramChange(_channel_index, index);
   }
+  virtual void ControlChange(const Control &index, const CC &cc) override {
+    MidiController::GetInstance().SendControlMessage(_channel_index, index, cc);
+  }
 private:
   const ChannelIndex _channel_index;
 };
@@ -46,6 +49,9 @@ public:
   virtual void ProgramChange(const SynthIndex &index) override {
     _synth_main->SendProgramChange(_channel_index, index);
   }
+  virtual void ControlChange(const Control &index, const CC &cc) override {
+    _synth_main->SendControlChange(_channel_index, index, cc);
+  }
 private:
   const ChannelIndex _channel_index;
   SynthMain *_synth_main;
@@ -57,6 +63,9 @@ public:
   }
   virtual void Play(const Velocity &velocity, const SampleIndex &sample_index) override {
     MidiController::GetInstance().SendPlayNoteMessage(_channel_index, sample_index, velocity);
+  }
+  virtual void ControlChange(const Control &index, const CC &cc) override {
+    MidiController::GetInstance().SendControlMessage(_channel_index, index, cc);
   }
 private:
   const ChannelIndex _channel_index;

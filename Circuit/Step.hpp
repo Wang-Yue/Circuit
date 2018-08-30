@@ -45,20 +45,20 @@ public:
     return _atom_packet->GetAtoms();
   }
   
-  void RecordAutomation(const AutomationTrait &trait, const Automation &automation)  {
-    _automations[trait] = automation;
+  void RecordAutomation(const Control &control, const CC &automation)  {
+    _automations[control] = automation;
   }
-  void ClearAutomation(const AutomationTrait &trait)  {
-    _automations.erase(trait);
+  void ClearAutomation(const Control &control)  {
+    _automations.erase(control);
   }
-  bool HasAutomation(const AutomationTrait &trait) const  {
-    return _automations.count(trait) != 0;
+  bool HasAutomation(const Control &control) const  {
+    return _automations.count(control) != 0;
   }
   
   // If no automation is available, return 0;
-  Automation GetAutomation(const AutomationTrait &trait) const  {
-    if (_automations.count(trait)) {
-      return _automations.at(trait);
+  CC GetAutomation(const Control &control) const  {
+    if (_automations.count(control)) {
+      return _automations.at(control);
     } else {
       return 0;
     }
@@ -92,7 +92,7 @@ private:
   const size_t _polyphony_capacity;
   Pattern<AtomClass> * const _parent;
   AtomPacket<AtomClass> *_atom_packet;
-  std::map<AutomationTrait, Automation> _automations;
+  std::map<Control, CC> _automations;
 };
 
 

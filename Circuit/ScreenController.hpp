@@ -19,6 +19,7 @@ class Session;
 class Sample;
 class Synth;
 class MIDIDelegate;
+template <typename AtomClass> class Channel;
 template <typename AtomClass> class PatternChainRunner;
 template <typename AtomClass> class ChannelRunner;
 template <typename AtomClass> class Pattern;
@@ -37,6 +38,8 @@ public:
 
 protected:
   Session *GetCurrentSession() const ;
+  Channel<Synth> *GetCurrentSynthChannel(const ChannelIndex &index) const ;
+  Channel<Sample> *GetCurrentSampleChannel(const ChannelIndex &index) const ;
   SessionRunner *GetSessionRunner() const;
   Pattern<Sample> * GetCurrentSamplePattern(const ChannelIndex &index) const;
   Pattern<Synth> * GetCurrentSynthPattern(const ChannelIndex &index) const;
@@ -51,7 +54,7 @@ protected:
   bool IsPlaying() const;
   bool IsRecording() const;
   
-  enum CircuitEditingMode GetEditingMode() const;
+  CircuitEditingMode GetEditingMode() const;
   
   
 private:

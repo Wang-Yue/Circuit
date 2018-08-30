@@ -45,7 +45,7 @@ void ScaleViewController::UpdateEditingMode() {
   // no-op.
 }
 
-void ScaleViewController::Tap(const enum Scale &scale) {
+void ScaleViewController::Tap(const Scale &scale) {
   Note note = GetCurrentSession()->GetBaseNote();
   note.scale = scale;
   GetCurrentSession()->SetBaseNote(note);

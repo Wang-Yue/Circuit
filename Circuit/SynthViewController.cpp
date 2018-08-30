@@ -42,11 +42,17 @@ _editing_step(nullptr) {
   _output = ChannelOutputFactory::GetInstance().GetSynthChannelOutput(channel);
   UpdateEditingMode();
   SetMidiDelegate(this);
+  for (Knob *knob : GetView()->GetKnobs()) {
+    knob->SetDelegate(this);
+  }
 }
 
 SynthViewController::~SynthViewController() {
   KillAllControllers();
   SetMidiDelegate(nullptr);
+  for (Knob *knob : GetView()->GetKnobs()) {
+    knob->SetDelegate(nullptr);
+  }
 }
 
 void SynthViewController::KillAllControllers() {
@@ -222,7 +228,10 @@ void SynthViewController::Update() {
       synth->SetGate(gate);
     }
   }
-  
+  for (Knob *knob : GetView()->GetKnobs()) {
+    KnobIndex index = knob->GetKnobIndex();
+    knob->SetCC(GetCurrentSynthChannel(_channel_index)->GetDefaultCC(index));
+  }
 }
 
 void SynthViewController::SelectStep(Step<Synth> *step, const StepIndex &selected_index) {
@@ -371,4 +380,17 @@ void SynthViewController::ReleasePatch(const SynthIndex &index) {
    }
    Note base_note = GetCurrentSession()->GetBaseNote();
    SignalNoteOff(base_note);
+}
+
+
+void SynthViewController::Change(Knob *knob, const CC &cc) {
+  KnobIndex index = knob->GetKnobIndex();
+  if (IsRecording()) {
+    PatternChainRunner<Synth> * runner = GetSynthPatternChainRunner(_channel_index);
+    Step<Synth> *current_step = runner->GetStep();
+    current_step->RecordAutomation(index, knob->GetCC());
+  }
+  Channel<Synth> *channel = GetCurrentSynthChannel(_channel_index);
+  channel->SetDefaultCC(index, cc);
+  _output->ControlChange(index, cc);
 }

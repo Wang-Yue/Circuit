@@ -51,6 +51,15 @@ public:
     _midi_out->sendMessage( &message );
   };
   
+  void SendControlMessage(const char &channel, const char &control, const char &cc){
+    std::vector<unsigned char> message;
+    message.push_back(176 + channel);
+    message.push_back(control);
+    message.push_back(cc);
+    printf("Control note %d, %d\n", control, cc);
+    _midi_out->sendMessage( &message );
+  };
+  
   void Tick() {
     while (ReceiveNoteMessage()) {
     }

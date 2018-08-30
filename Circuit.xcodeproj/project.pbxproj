@@ -46,6 +46,7 @@
 		89717D2C213750AA00CEF7D7 /* sin.cc in Sources */ = {isa = PBXBuildFile; fileRef = 89717D10213750A700CEF7D7 /* sin.cc */; };
 		89717D2D213750AA00CEF7D7 /* freqlut.cc in Sources */ = {isa = PBXBuildFile; fileRef = 89717D13213750A800CEF7D7 /* freqlut.cc */; };
 		89717D30213750AA00CEF7D7 /* pitchenv.cc in Sources */ = {isa = PBXBuildFile; fileRef = 89717D1D213750A900CEF7D7 /* pitchenv.cc */; };
+		89717D332137687000CEF7D7 /* Knob.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89717D312137687000CEF7D7 /* Knob.cpp */; };
 		89A0903721309E2400CEF7D7 /* SynthGateView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89A0903521309E2400CEF7D7 /* SynthGateView.cpp */; };
 		89A0903A2130B1F800CEF7D7 /* VelocityView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89A090382130B1F800CEF7D7 /* VelocityView.cpp */; };
 		89A090402130BA5B00CEF7D7 /* LengthView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89A0903E2130BA5B00CEF7D7 /* LengthView.cpp */; };
@@ -159,6 +160,8 @@
 		89717D1F213750A900CEF7D7 /* exp2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = exp2.h; sourceTree = "<group>"; };
 		89717D20213750A900CEF7D7 /* lfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lfo.h; sourceTree = "<group>"; };
 		89717D21213750A900CEF7D7 /* dx7note.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dx7note.h; sourceTree = "<group>"; };
+		89717D312137687000CEF7D7 /* Knob.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Knob.cpp; sourceTree = "<group>"; };
+		89717D322137687000CEF7D7 /* Knob.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Knob.hpp; sourceTree = "<group>"; };
 		899F2078212A150000CEF7D7 /* AtomPacket.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AtomPacket.hpp; sourceTree = "<group>"; };
 		89A039B1212DD72D00CEF7D7 /* PatternViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PatternViewController.hpp; sourceTree = "<group>"; };
 		89A0903321309E1100CEF7D7 /* SynthGateViewController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SynthGateViewController.hpp; sourceTree = "<group>"; };
@@ -298,6 +301,8 @@
 				89EF1F032131CF5C00CEF7D7 /* UIDefs.hpp */,
 				8964D5CD212B7EA100CEF7D7 /* Pad.cpp */,
 				8964D5CE212B7EA100CEF7D7 /* Pad.hpp */,
+				89717D312137687000CEF7D7 /* Knob.cpp */,
+				89717D322137687000CEF7D7 /* Knob.hpp */,
 				8964D5D1212B7ECE00CEF7D7 /* Color.hpp */,
 				89A0903E2130BA5B00CEF7D7 /* LengthView.cpp */,
 				89A0903F2130BA5B00CEF7D7 /* LengthView.hpp */,
@@ -504,6 +509,7 @@
 				89A3CF9F212E1B8400CEF7D7 /* SynthViewController.cpp in Sources */,
 				89717D2D213750AA00CEF7D7 /* freqlut.cc in Sources */,
 				89A090402130BA5B00CEF7D7 /* LengthView.cpp in Sources */,
+				89717D332137687000CEF7D7 /* Knob.cpp in Sources */,
 				89A0903721309E2400CEF7D7 /* SynthGateView.cpp in Sources */,
 				89E710EE213346D900CEF7D7 /* SampleGateViewController.cpp in Sources */,
 				89717D2A213750AA00CEF7D7 /* patch.cc in Sources */,

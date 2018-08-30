@@ -18,7 +18,7 @@ _pads(pads), _delegate(delegate){
   for (PadIndex i = 0; i < pads.size(); ++i) {
     Pad *pad = pads[i];
     PadIndex pad_index = pad->GetPadIndex();
-    enum Scale scale = static_cast<enum Scale>(i);
+    Scale scale = static_cast<Scale>(i);
     _scale_mapping[pad_index] = scale;
     pad->SetDelegate(this);
   }
@@ -30,16 +30,16 @@ ScaleSelectionView::~ScaleSelectionView() {
   }
 }
 
-void ScaleSelectionView::SetScale(const enum Scale &scale) {
+void ScaleSelectionView::SetScale(const Scale &scale) {
   for (Pad *pad : _pads) {
-    enum Scale pad_scale = _scale_mapping[pad->GetPadIndex()];
+    Scale pad_scale = _scale_mapping[pad->GetPadIndex()];
     pad->SetColor(pad_scale == scale ? kEnabledColor: kDisabledColor);
   }
 }
 
 void ScaleSelectionView::Tap(Pad *pad) {
   if (_delegate) {
-    enum Scale scale = _scale_mapping[pad->GetPadIndex()];
+    Scale scale = _scale_mapping[pad->GetPadIndex()];
     _delegate->Tap(scale);
   }
 }

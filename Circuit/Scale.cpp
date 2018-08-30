@@ -48,12 +48,12 @@ static const std::vector<const std::vector<Degree>> conversion_matrix = {
       choromatic,
 };
 
-Degree GetScaleDegreeSize(const enum Scale &scale) {
+Degree GetScaleDegreeSize(const Scale &scale) {
   assert(scale < ScaleUnknown);
   const std::vector<Degree> &degree_table = conversion_matrix[scale];
   return degree_table.size();
 }
-Degree ScaleDegreeToChromatic(const enum Scale &scale, const Degree &degree) {
+Degree ScaleDegreeToChromatic(const Scale &scale, const Degree &degree) {
   assert(scale < ScaleUnknown);
   const std::vector<Degree> &degree_table = conversion_matrix[scale];
   assert(degree < degree_table.size());
@@ -67,9 +67,9 @@ Note NoteToChromatic(const Note &note) {
   return c;
 }
 
-Degree ConvertScale(const enum Scale &source_scale,
+Degree ConvertScale(const Scale &source_scale,
                     const Degree &degree,
-                    const enum Scale &target_scale) {
+                    const Scale &target_scale) {
   // we specialize the case of chromatic scale here because it will be frequently called.
   if (target_scale == ScaleChromatic) {
     return ScaleDegreeToChromatic(source_scale, degree);
@@ -95,14 +95,14 @@ Degree ConvertScale(const enum Scale &source_scale,
   return optimal_degree;
 }
 
-Note ConvertNoteScale(const Note &note, const enum Scale &target_scale) {
+Note ConvertNoteScale(const Note &note, const Scale &target_scale) {
   Note n = note;
   n.scale = target_scale;
   n.degree = ConvertScale(note.scale, note.degree, target_scale);
   return n;
 }
 
-MIDINote ScaleDegreeToMIDI(const enum Scale &scale,
+MIDINote ScaleDegreeToMIDI(const Scale &scale,
                            const Degree &degree,
                            const Octave &octave,
                            const Degree &tonic_degree) {
@@ -115,7 +115,7 @@ MIDINote NoteToMIDI(const Note note, const Degree &tonic_degree) {
   return ScaleDegreeToMIDI(note.scale, note.degree, note.octave, tonic_degree);
 }
 
-Note MIDIToNote(const MIDINote &midi_note, const enum Scale &scale, const Degree &tonic_degree) {
+Note MIDIToNote(const MIDINote &midi_note, const Scale &scale, const Degree &tonic_degree) {
   Note note;
   note.scale = scale;
   MIDINote midi = midi_note;
@@ -131,7 +131,7 @@ Octave MIDIOctave(const MIDINote &midi_note, const Degree &tonic_degree) {
 }
 
 Degree MIDIToScaleDegree(const MIDINote &midi_note,
-                         const enum Scale &scale,
+                         const Scale &scale,
                          const Degree &tonic_degree) {
   return MIDIToNote(midi_note, ScaleChromatic, tonic_degree).degree;
 }

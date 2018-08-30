@@ -13,8 +13,10 @@
 #include <vector>
 
 #include "UIDefs.hpp"
+#include "TypeDefs.hpp"
 
 class Pad;
+class Knob;
 
 class CircuitView {
 public:
@@ -23,7 +25,10 @@ public:
   std::vector<Pad *> GetRegularPads(const PadIndex &start, const PadIndex &count);
   Pad *GetPad(const PadIndex &index);
   Pad *GetControlPad(const PadIndex &index);
+  std::vector<Knob *> GetKnobs();
+  Knob *GetKnob(const KnobIndex &index) const;
 private:
   std::vector<Pad *> _pads;
+  std::vector<Knob *> _knobs;
 };
 #endif /* CircuitView_hpp */

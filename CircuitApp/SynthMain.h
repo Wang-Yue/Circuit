@@ -34,7 +34,7 @@ class SynthMain {
     message[2] = velocity;
     ring_buffer_.Write(message, 3);
     printf("Start note %d, %d\n", note, velocity);
-  };
+  }
   void SendStopNoteMessage(const char &channel, const char &note){
     uint8_t message[3];
     message[0] = 128 + channel;
@@ -42,13 +42,21 @@ class SynthMain {
     message[2] = 0;
     ring_buffer_.Write(message, 3);
     printf("Stop note %d\n", note);
-  };
+  }
   void SendProgramChange(const char &channel, const char &program){
     uint8_t message[2];
     message[0] = 192 + channel;
     message[1] = program;
     ring_buffer_.Write(message, 2);
     printf("Program change %d\n", program);
+  }
+  void SendControlChange(const char &channel, const char control, const char &cc){
+    uint8_t message[3];
+    message[0] = 176 + channel;
+    message[1] = control;
+    message[2] = cc;
+    ring_buffer_.Write(message, 3);
+    printf("Control change %d, %d\n", control, cc);
   };
  private:
   OSStatus setupplayback(SynthUnit *synth_unit);
