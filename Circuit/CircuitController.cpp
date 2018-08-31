@@ -337,8 +337,8 @@ void CircuitController::SetSessionRunner(SessionRunner *runner) {
 void CircuitController::Tap(Pad *pad){
   PadIndex index = pad->GetPadIndex();
   if (index == PadShift) {
-//    _is_holding_shift = true;
-    _is_holding_shift = !_is_holding_shift;
+    _is_holding_shift = true;
+//    _is_holding_shift = !_is_holding_shift;
     return;
   }
   if (index == PadNote) {
@@ -432,7 +432,7 @@ void CircuitController::Tap(Pad *pad){
 void CircuitController::Release(Pad *pad) {
   PadIndex index = pad->GetPadIndex();
   if (index == PadShift) {
-//    _is_holding_shift = false;
+    _is_holding_shift = false;
     return;
   }
 }

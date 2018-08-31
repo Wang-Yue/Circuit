@@ -13,10 +13,11 @@ Synth::Synth(const Note &note): Synth(note, kDefaultGate, kDefaultVelocity) {
 }
 
 Synth::Synth(const Note &note, const Gate &gate, const Velocity &velocity) :
-Atom(velocity), _note(note), _gate(gate) {
+Atom(velocity), _note(note), _gate(gate),  _microstep_delay(0) {
 }
 
-Synth::Synth(const Synth &a) : Atom(a), _gate(a._gate), _note(a._note) {
+Synth::Synth(const Synth &a) :
+Atom(a), _gate(a._gate), _note(a._note),  _microstep_delay(0) {
 }
 
 Synth::~Synth() {

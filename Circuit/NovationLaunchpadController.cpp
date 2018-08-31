@@ -16,6 +16,7 @@ void WriteNovationPadColor(const uint32_t pad, const uint32_t color) {
 }
 
 }
+#include "UIDefs.hpp"
 
 static void callback( double deltatime, std::vector< unsigned char > *message, void *userData ) {
   size_t nBytes = message->size();
@@ -24,6 +25,9 @@ static void callback( double deltatime, std::vector< unsigned char > *message, v
     char row = key % 16;
     char column = key / 16;
     char pad = row + column * 8;
+    if (pad >= PadUnknown){
+      return;
+    }
     printf("Tap pad {%d, %d}\n", row, column);
     if (message->at(2)) {
       TapPad(pad);

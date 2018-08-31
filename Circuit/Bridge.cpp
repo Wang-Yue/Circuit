@@ -15,6 +15,7 @@ extern "C" {
 #include "MIDIDelegate.hpp"
 #include "ThreadSafeQueue.hpp"
 #include <array>
+#include <atomic>
 #include <thread>
 #include "NovationLaunchpadController.hpp"
 

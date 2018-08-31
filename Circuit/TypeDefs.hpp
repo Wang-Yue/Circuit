@@ -12,6 +12,8 @@
 #include <cstdint>
 #include <cstdlib>
 #include <cstddef>
+#include <stdexcept>
+#include <cassert>
 
 typedef uint8_t BPM;
 static const BPM kDefaultBPM = 90;

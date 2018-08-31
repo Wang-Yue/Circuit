@@ -10,6 +10,7 @@
 #define DigitView_hpp
 
 #include <vector>
+#include <cstdint>
 
 class Pad;
 
