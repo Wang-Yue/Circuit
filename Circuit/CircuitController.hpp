@@ -56,6 +56,8 @@ public:
 
   BPM GetBPM() const;
   Swing GetSwing() const;
+  void SetBPM(const BPM &bpm);
+  void SetSwing(const Swing &swing);
 
   void SetMidiDelegate(MIDIDelegate *midi_delegate);
   // MIDIDelegate.
@@ -76,6 +78,8 @@ private:
   void SwitchToPatternChainMode();
   void SwitchToTempoMode();
   void SwitchToSwingMode();
+  
+  void UpdateControlPadColor();
 
   CircuitView *_view;
   Workspace *_workspace;

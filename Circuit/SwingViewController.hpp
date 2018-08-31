@@ -11,13 +11,14 @@
 
 #include "ScreenController.hpp"
 #include "TypeDefs.hpp"
-
+#include "Knob.hpp"
 
 class CircuitController;
 class DigitView;
 
 class SwingViewController :
-public ScreenController {
+public ScreenController,
+public KnobDelegate {
 public:
   SwingViewController(CircuitController *parent);
   virtual ~SwingViewController();
@@ -25,6 +26,8 @@ public:
   virtual void Update() override;
   virtual void UpdateEditingMode() override;
   virtual void UpdateRunningMode() override;
+  // KnobDelegate.
+  virtual void Change(Knob *, const CC &cc) override;
 private:
   DigitView *_digit_view;
 };

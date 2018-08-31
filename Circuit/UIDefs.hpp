@@ -48,7 +48,7 @@ enum CircuitPad : PadIndex {
   PadSave,
   PadSessions,
   PadMixer,
-  PadFX,
+//  PadFX, I don't want to work on FX.
   PadUnknown,
 };
 
@@ -82,10 +82,9 @@ enum CircuitSettingMode : uint8_t {
   CircuitSetPatchMode,
   CircuitSetTempoMode,
   CircuitSetSwingMode,
-  CircuitSetFxMode,
+//  CircuitSetFxMode, I don't want to work on FX.
   CircuitSetPatternChainMode,
   CircuitSetMixerMode,
-  CircuitSetPanMode,
   CircuitSetScaleMode,
 };
 

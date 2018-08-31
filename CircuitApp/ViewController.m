@@ -19,7 +19,7 @@
 
 static CircuitView *_circuitView = NULL;
 
-void WritePadColor(const uint32_t pad, const uint32_t color) {
+void WriteCocoaPadColor(const uint32_t pad, const uint32_t color) {
   if (!_circuitView) {
     return;
   }
@@ -74,7 +74,7 @@ void WritePadColor(const uint32_t pad, const uint32_t color) {
   if (self) {
     _viewArray = [NSMutableArray array];
     NSUInteger uid = 0;
-    for (int i = 0; i < 6; ++i) {
+    for (int i = 0; i < 7; ++i) {
       for (int j = 0; j < 8; ++j) {
         CGFloat x = j * 50;
         CGFloat y = i * 50;

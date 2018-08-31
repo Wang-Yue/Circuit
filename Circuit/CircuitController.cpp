@@ -205,6 +205,7 @@ bool CircuitController::IsRecording() const {
 }
 
 void CircuitController::TickMicrostep() {
+  UpdateControlPadColor();
   if (_screen_controller) {
     _screen_controller->Update();
   }
@@ -213,6 +214,102 @@ void CircuitController::TickMicrostep() {
   }
   _session_runner->TickMicrostep();
 }
+
+void CircuitController::UpdateControlPadColor() {
+  static const Color kRecordingEnabledColor(0x000000ff);
+  static const Color kRecordingAvailableColor(0x0000003f);
+  GetPad(PadRecord)->SetColor(_recording_button_pressed ?
+                                kRecordingEnabledColor : kRecordingAvailableColor);
+ 
+  static const Color kPlayingEnabledColor(0x0000ff00);
+  static const Color kPlayingAvailableColor(0x00003f00);
+  GetPad(PadPlay)->SetColor(IsStopped() ? kPlayingAvailableColor: kPlayingEnabledColor);
+
+  static const Color kChannelEnabledColor(0x00007f7f);
+  static const Color kChannelAvailableColor(0x00003f3f);
+
+  static const Color kEditEnabledColor(0x0000ff7f);
+  static const Color kEditAvailableColor(0x00003f3f);
+
+  if (_setting_mode == CircuitSetRegularMode || _setting_mode == CircuitSetPatchMode) {
+    GetPad(PadSynth1)->SetColor(_channel_index == 0 && _atom_mode == CircuitAtomSynth ?
+                                kChannelEnabledColor : kChannelAvailableColor);
+    GetPad(PadSynth2)->SetColor(_channel_index == 1 && _atom_mode == CircuitAtomSynth ?
+                                kChannelEnabledColor : kChannelAvailableColor);
+    GetPad(PadDrum1)->SetColor(_channel_index == 0 && _atom_mode == CircuitAtomSample ?
+                                kChannelEnabledColor : kChannelAvailableColor);
+    GetPad(PadDrum2)->SetColor(_channel_index == 1 && _atom_mode == CircuitAtomSample ?
+                                kChannelEnabledColor : kChannelAvailableColor);
+    GetPad(PadDrum3)->SetColor(_channel_index == 2 && _atom_mode == CircuitAtomSample ?
+                                kChannelEnabledColor : kChannelAvailableColor);
+    GetPad(PadDrum4)->SetColor(_channel_index == 3 && _atom_mode == CircuitAtomSample ?
+                                kChannelEnabledColor : kChannelAvailableColor);
+    
+    GetPad(PadNote)->SetColor(GetEditingMode() == CircuitEditNoteMode ||
+                              GetEditingMode() == CircuitEditExpandNoteMode ?
+                              kEditEnabledColor : kEditAvailableColor);
+    GetPad(PadGate)->SetColor(GetEditingMode() == CircuitEditGateMode ||
+                              GetEditingMode() == CircuitEditSynthMicrostepDelayMode ?
+                              kEditEnabledColor : kEditAvailableColor);
+    GetPad(PadVelocity)->SetColor(GetEditingMode() == CircuitEditVelocityMode ?
+                                  kEditEnabledColor : kEditAvailableColor);
+    GetPad(PadNudge)->SetColor(GetEditingMode() == CircuitEditNudgeMode ?
+                               kEditEnabledColor : kEditAvailableColor);
+    GetPad(PadLength)->SetColor(GetEditingMode() == CircuitEditLengthMode ?
+                                kEditEnabledColor : kEditAvailableColor);
+  } else {
+    GetPad(PadSynth1)->SetColor(kChannelAvailableColor);
+    GetPad(PadSynth2)->SetColor(kChannelAvailableColor);
+    GetPad(PadDrum1)->SetColor(kChannelAvailableColor);
+    GetPad(PadDrum2)->SetColor(kChannelAvailableColor);
+    GetPad(PadDrum3)->SetColor(kChannelAvailableColor);
+    GetPad(PadDrum4)->SetColor(kChannelAvailableColor);
+    
+    GetPad(PadNote)->SetColor(kEditAvailableColor);
+    GetPad(PadGate)->SetColor(kEditAvailableColor);
+    GetPad(PadVelocity)->SetColor(kEditAvailableColor);
+    GetPad(PadNudge)->SetColor(kEditAvailableColor);
+    GetPad(PadLength)->SetColor(kEditAvailableColor);
+  }
+  
+  // TODO: Screen view responsibility
+  static const Color kOctaveAvailableColor(0x00007f7f);
+  static const Color kOctaveDisabledColor(0x00003f3f);
+
+  GetPad(PadOctUp)->SetColor(kOctaveAvailableColor);
+  GetPad(PadOctDown)->SetColor(kOctaveAvailableColor);
+  
+  static const Color kHoldingShiftColor(0x0000ff7f);
+  static const Color kReleasingShiftColor(0x00007f3f);
+  GetPad(PadShift)->SetColor(IsHoldingShift()? kHoldingShiftColor : kReleasingShiftColor);
+
+  static const Color kPatternEnabledColor(0x0000ffff);
+  static const Color kPatternAvailableColor(0x00007f7f);
+  GetPad(PadPatterns)->SetColor(_setting_mode == CircuitSetPatternChainMode ?
+                                kPatternEnabledColor : kPatternAvailableColor);
+
+  static const Color kScaleEnabledColor(0x0000ffff);
+  static const Color kScaleAvailableColor(0x00007f7f);
+  GetPad(PadScale)->SetColor(_setting_mode == CircuitSetScaleMode ?
+                                kScaleEnabledColor : kScaleAvailableColor);
+
+  static const Color kTempoEnabledColor(0x0000ffff);
+  static const Color kTempoAvailableColor(0x00007f7f);
+  GetPad(PadTempo)->SetColor(_setting_mode == CircuitSetTempoMode ?
+                             kTempoEnabledColor : kTempoAvailableColor);
+  
+  static const Color kSwingEnabledColor(0x0000ffff);
+  static const Color kSwingAvailableColor(0x00007f7f);
+  GetPad(PadSwing)->SetColor(_setting_mode == CircuitSetSwingMode ?
+                             kSwingEnabledColor : kSwingAvailableColor);
+  
+  static const Color kMixerEnabledColor(0x0000ffff);
+  static const Color kMixerAvailableColor(0x00007f7f);
+  GetPad(PadSwing)->SetColor(_setting_mode == CircuitSetMixerMode ?
+                             kSwingEnabledColor : kSwingAvailableColor);
+
+}
+
 
 Pad *CircuitController::GetPad(const PadIndex &index) const {
   if (!_screen_controller) {
@@ -370,5 +467,12 @@ BPM CircuitController::GetBPM() const {
 
 Swing CircuitController::GetSwing() const {
   return _swing;
+}
+
+void CircuitController::SetBPM(const BPM &bpm) {
+  _bpm = bpm;
+}
+void CircuitController::SetSwing(const Swing &swing) {
+  _swing = swing;
 }
 
